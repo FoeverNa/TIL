@@ -16,7 +16,7 @@ class Person{
     String name;
 
     public void work(){
-        System.out.println("일하기");
+        System.out.println("일하기");  
     }
 
     public void sleep(){
