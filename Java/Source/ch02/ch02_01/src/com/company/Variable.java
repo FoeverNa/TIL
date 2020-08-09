@@ -10,7 +10,7 @@ package com.company;
  * 변수명 규칙
  */
 public class Variable{
-
+    //상수의 변수명은 모두대문자로 사용하고 띄어쓰기는 _로함
     static int STATIC_VRIABlE = 10;
 
     public static void main(String[] args) {
@@ -43,8 +43,7 @@ public class Variable{
 
         int _8thWord; //숫자먼저쓸땐 _(언더바)먼저 사용, 언더바는 특수문자 X
 
-        //상수의 변수명은 모두대문자로 사용하고 띄어쓰기는 _로함
-        static int STATIC_VRIABlE = 10;
+
 
 
     }
