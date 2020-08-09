@@ -22,7 +22,10 @@ class Person{
     public void sleep(){
         System.out.println("잠자기");
     }
-
+ public Person() {}
+ public Person(String name) {
+        this.name = name;
+ }
 }
 
 // Person을 상속하는 자식 클래스
@@ -33,6 +36,7 @@ class Developer extends Person{
 
     public void writeCode(){
         System.out.println("돈 받은 만큼 코딩하기");
+
     }
 
 }
