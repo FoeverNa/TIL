@@ -5,7 +5,7 @@
 - 클래스, 변수, 메소드에 부가기능을 부여하는 키워드
 - 접근제어자(Access modifiers)
   - 접근할 수 있는 범위를 정하는 키워드
-  - public, protected, (default = pakage), private 
+  - public, protected, (default = package), private 
 
 - 그외 제어자(other modifiers)
  - 특별한 기능을 부여하는 제어자
@@ -14,16 +14,17 @@
 ## 제어자의 기능
 
 ### 접근제어자
+
  - 접근 가능한 범위를 정해, 데이터 은닉/보호(Encapsulation)기능을 추가한다.
-   - 인캡이 필요없으면 다 public하면 되겠지, 근데 편의성보다는 은닉하는게 더 좋은점이 많기에 사용됨
+   - 캡슐화가 필요 없으면 다 public하면 되겠지, 근데 편의성보다는 은닉하는게 더 좋은점이 많기에 사용됨
  - 접근제어자별 접근 범위(public > protected > default > private)
 
    - public  - 같은 클래스 / 같은 패키지(폴더)/ 다른패키지에 속한 자식 클래스(예를보자) / 전체(어디서든)
    - protected - 같은 클래스 / 같은 패키지/ 다른패키지에 속한 자식 클래스(자식까지만)(자식에 자식은 접근이안됨)
    - default - 같은 클래스 / 같은 패키지(다른패키지 자식은 볼수가 없음)
-   - private - 자기자신, (자식도 볼수 없음)
+   - private - 자기자신 (자식도 볼수 없음)
    
- - private 또는 protected 변수에 외부에서  접근하기 위해 앞에서 배운 getter와 sette 사용함
+ - private 또는 protected 변수에 접근하기 위해 앞에서 배운 getter와 setter 사용함
 
 - 코딩 실습1
 
@@ -132,19 +133,20 @@ public class ClassB {
 ```
 - 다른 패키지에 해당클래스를 상속받은 클래스는 public과 protect만 접근이 가능함
 - 다른 패키지에 상속받지 않는 보통의 클래스의 경우 public으로만 접근이 가능함
-
 - 위의 예제에서 처럼 접근제어자 키워드 별로 접근이 가능한 범위를 지정해 줄 수 있음
 
-#### 참고사항  : 클래스명이 public class와 같은 이유
+#### 참고사항  : 클래스명이 public class의 클래스명과 같은 이유
+
 - java 파일에는 무조건 하나의 클래스가 있기로 약속을 했고 하나의 클래스명은 파일이름과 같아야 한다는 규칙이있음
 - 해당 public 클래스는 전체 클래스를 대표해서 다른 클래스들에서 불러서 사용할 수 있게 됨
-- 그 외에 전체에 존재하는 다른 클래스는는 내부적으로 대표클래스를 구성하는 클래스로 인식을하게 됨
+- 그 외에 전체에 존재하는 다른 클래스는는 내부적으로 대표 클래스를 구성하는 클래스로 인식을하게 됨
 
 #### 싱글톤 패턴(Singletone)
 
 - private 키워드를 활용해 객체가 단 하나만 존재할 수 있는 클래스를 만드는 패턴
 - 언제사용하는지 보충 필요
 - 싱클톤 패턴 예시
+
 ```java
 class SingletonClass {
   private static SingletoneClass instance = new SingletonClass();
@@ -163,8 +165,8 @@ class SingletonClass {
   - 클래스 : 더이상 상속이 불가능해진다.  
   - 메소드 : 자식클래스에서 더이상 오버라이드할수 없음(재정의할수없음)
   - 변수 : 초기화한 뒤에 값이 변하지 않음.
-     - 클래스에서 초기환한겨우 fianal variable이고
-     - 생성자에서 초기화한경우는 blank fianl vriable이라고한다.
+     - 클래스에서 초기화 한 경우 fianal variable이고
+     - 생성자에서 초기화 한 경우는 blank fianl vriable이라고 한다.
      - 인스턴스 생성시 black final variable은 값을 입력할 수 있다.
      
 ```java

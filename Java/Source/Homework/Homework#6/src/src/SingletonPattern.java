@@ -11,8 +11,8 @@ package src;
  */
 
 public class SingletonPattern {
-    private static SingletonPattern instance = new SingletonPattern();
-
+    private final static SingletonPattern instance = new SingletonPattern();// final 까지 쓰면 제일좋음 // 안써도 무관하지만 더좋은방법
+                                                                            // private => instance 변수에 접근불가
     private SingletonPattern(){}
 
     public static SingletonPattern getInstance(){
@@ -30,4 +30,11 @@ class SingletonPatternTest {
 
         System.out.println(instanceOne == instanceTwo);
     }
+
+    //가장 많이 사용되는 창에서 사용됨
+    // 게임개발에서 게임의 스테이터스를 가지고있는 다저장해놓는 인스턴스를만들때(다른데서만들면안될때)
+    // 굉장히 실용적인 패턴 - 예좀 더찾아보자
 }
+/**
+ * 싱글톤 패턴 인스턴스 생성할때 final 붙여주면 수정불가라는 것 더 명확히 밝혀 줄 수 있음
+ */

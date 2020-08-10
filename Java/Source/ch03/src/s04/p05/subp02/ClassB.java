@@ -1,6 +1,7 @@
 package s04.p05.subp02;
-import s04.p05.subp01.ClassA;
 
+
+import s04.p05.subp01.ClassA;
 
 class ClassAA extends ClassA {
 

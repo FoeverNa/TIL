@@ -28,8 +28,6 @@ public class Vector3D {
     float z;
 
 
-    public Vector3D (){
-    };
 
     public Vector3D (float x, float y, float z){
         this.x = x;
@@ -44,70 +42,46 @@ public class Vector3D {
     }
 
     public Vector3D add(Vector3D v){
-        Vector3D vec = new Vector3D();
 
-        vec.x = this.x + v.x;
-        vec.y = this.y + v.y;
-        vec.z = this.z + v.z;
-
-         return vec;
+         return  new Vector3D(this.x + v.x,
+                              this.y + v.y,
+                              this.z + v.z);
     }
+
     public Vector3D add(float f){
-        Vector3D vec = new Vector3D();
-
-        vec.x = this.x + f;
-        vec.y = this.y + f;
-        vec.z = this.z + f;
-
-        return vec;
+        return  new Vector3D(this.x + f,
+                             this.y + f,
+                             this.z + f);
     }
 
     public Vector3D sub(Vector3D v){
 
-        Vector3D vec = new Vector3D();
-
-        vec.x = this.x - v.x;
-        vec.y = this.y - v.y;
-        vec.z = this.z - v.z;
-
-        return vec;
+        return  new Vector3D(this.x - v.x,
+                             this.y - v.y,
+                             this.z - v.z);
     }
 
     public Vector3D sub(float f){
 
-        Vector3D vec = new Vector3D();
-
-        vec.x = this.x - f;
-        vec.y = this.y - f;
-        vec.z = this.z - f;
-
-        return vec;
+        return  new Vector3D(this.x - f,
+                             this.y - f,
+                             this.z - f);
     }
 
     public float inner(Vector3D v){
 
-        float f;
-
-        f = (this.x * v.x) + (this.y * v.y) + (this.z * v.z);
-
-        return f;
+        return (this.x * v.x) + (this.y * v.y) + (this.z * v.z);
     }
+
 
     public Vector3D mult(float f){
-        Vector3D vec = new Vector3D();
-
-        vec.x = this.x * f;
-        vec.y = this.y * f;
-        vec.z = this.z * f;
-
-        return vec;
+        return  new Vector3D(this.x * f,
+                             this.y * f,
+                             this.z * f);
     }
-    public double mag(){
-        double d;
-
-        d =  Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y,2) + Math.pow(this.z,2));
-
-        return d;
+    public float mag(){
+        return (float)Math.sqrt((Math.pow(this.x,2) + Math.pow(this.y,2)
+                          + Math.pow(this.z,2)));
     }
 
     public float getX() {
@@ -149,3 +123,9 @@ class Vector3DTest {
         System.out.println(v2.mag());
     }
 }
+
+/**
+ * 기본생성자 생성하지 않고 주어진 파라미터 생성자 활용할 수 있었던것 기억하기
+ * 메서드안에 불필요한 변수생성 줄이고 return값에 수식넣기
+ * 객체를 생성하거나 혹은 기존 객체의 값 바꾸는 방법 무슨 방법을 사용하던 하나로 통일해서 일관성있게 작성
+ */

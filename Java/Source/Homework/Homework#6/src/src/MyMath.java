@@ -63,38 +63,25 @@ public class MyMath {
     }
     //abs()
     static public int abs(int i){
-        int abs = 0;
-        if(i>=0){
-            abs = i;
-        } else {
-            abs = -i;
-        }
-        return abs;
+        return i >0? i : -i;
     }
     static public double abs(double d){
-        double abs = 0;
-        if(d>=0){
-            abs = d;
-        } else {
-            abs = -d;
-        }
-        return abs;
+
+        return d>0? d: -d;
     }
     //floor
     static public double floor(double d){
-        double floorVal = 0;
 
-        floorVal = d  - ( d % 1);
 
-        return floorVal;
+        return  d>= 0 ? d-( d % 1) : d -  ( 1 + d % 1);
+
+
     }
     //ceil
     static public double ceil(double d){
-        double ceilVal = 0;
 
-        ceilVal = d  + ( 1 -(d % 1));
+        return d > 0 ? d  + ( 1 -(d % 1)) : d - (d % 1);
 
-        return ceilVal;
     }
 }
 
@@ -109,7 +96,12 @@ class MyMathTest {
         System.out.println(MyMath.max(7, 0, 6, 16, -4, 3.0, 9.0, 21.0));
         System.out.println(MyMath.abs(4));
         System.out.println(MyMath.abs(-2.3));
-        System.out.println(MyMath.floor(-2.12355232));
-        System.out.println(MyMath.ceil(8.12312245));
+        System.out.println(MyMath.floor(0));
+        System.out.println(MyMath.ceil(-3.12312245));
     }
 }
+/**
+ * 메서드 안에 불필요한 변수 생성하지 말기
+ * 간단한 조건식은 삼항 연산자로 구하기
+ * floor 와 ceil구할 때 입력값이 음수일 경우 생각 했어야 했음
+ */
