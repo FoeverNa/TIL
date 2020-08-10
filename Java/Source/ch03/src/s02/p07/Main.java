@@ -8,6 +8,7 @@ public class Main {
     static int instancecount;
     int instanceVar;
 
+
     // static initializer
     static {
         System.out.println("static block1");

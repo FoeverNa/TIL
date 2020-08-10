@@ -2,16 +2,16 @@
 
 - 문자열은 내부적으로 '클래스'로 구성되어 있다.
 - 내부에는 문자 배열로 된 데이터가 있다. char[]
-- 한번 만든 문자열은 변하지 않는다. (Immutable)// 이뮤테이트
+- 한번 만든 문자열은 변하지 않는다. (Immutable)// 이뮤터블
 - 문자열 편집은 String을 쓰지 않고 StringBuilder나 StringBuffer 등을 사용한다.
  
 
 ## 문자열 생성
 
 - String 변수명 = "값";을 통해 생성
-- 클래스이기에 new생성자 사용해서 생성할 수 있지만 권장하지 않음
-- String은 상수풀에 생성되고 중복된 문자를 다른 변수로 생성할때는 해당 값을 참조해서 사용
-- 
+- 클래스이기에 new 생성자 사용해서 생성할 수 있지만 권장하지 않음(이 경우는 상수풀이 아닌  힙메모리에 생성됨 )
+- String은 상수풀에 생성되고 중복된 문자를 다른 변수로 생성할 때 해당 값을 참조해서 사용
+
 
 
 ```
@@ -19,29 +19,40 @@
         String s2 = new String("문자열 생성 방법2"); // 클래스 생성자. 권장하지 않음
 
         String s3 = "abcde"; // String 생성하면 상수풀에 생성됨
-        String s4 = "abcde"; // 상수풀에 동일한 문자열이 있으면 그것을 참조하고 없으면 생성함
-        String s5 = new String("abcde"); // 흙빛이 되어버림.. 구지 생성한다고?// 힙메모리에 생성하는건가?
+        String s4 = "abcde"; // 상수풀에 동일한 문자열이 있으면 그것을 참조하고 없으면 상수풀에 새로 생성함
+        String s5 = new String("abcde"); // 흙빛이 되어버림.. 구지 생성한다고?// 힙메모리에 생성됨
 
         System.out.println(s3 == s4); //true // 문자열을 곧바로 생성할 경우 상수 풀에서 찾아 사용
                                             // String은 immuntable하기에 같은값을 참조해도 문제가 발생하지 않음
-        System.out.println(s3 == s5); //false // 문자열을 클래스로 생성할 경우 새로운 값을 생성
+        System.out.println(s3 == s5); //false // 문자열을 클래스로 생성할 경우 새로운 인스턴스를 생성하기에 참조값이 다름
 
         System.out.println(s3.equals(s4));//true // equals는 무슨 메서드였지? -> String 값비교 메서드.
-        System.out.println(s3.equals(s5));//true 
+        System.out.println(s3.equals(s5));//true // 참조 값이 아닌 실제 값을 비교해주는 메서드
 ```
 
 ## String 메서드
 
 - length() 스트링의 길이 출력
+
 - charAt(index) index에 위치한 char 출력
-- indexOf('char') char이 몇번 index에 위치하는가 출력
+
+- indexOf('char') 'char'이 몇번 index에 위치하는가 출력
+
 - equalsIgnoreCase("string") string과의 값비교 같으면 true(대소문자구분 x)
+
 - replace('i','t') char 'i'를 't'로 바꾸어서 출력(기존 값에는 영향x)
+
 - substring(a, b) index a~(b-1)번째까지 출력해줌 (b는 포함안됨)
-- trinm() 양옆의 공백 제거해주는 메소드
+
+- trim() 양옆의 공백 제거해주는 메소드
+
 - repeat(i) string을 i만큼 반복시켜주는 메서드
-- toCharArray() String을 char단위로 새로운 배열에 넣어줌. String배열을 불러오는것이 아닌 새로운 배열을 만드는 것.
-- equals(anObject) anObject와 비교한 결과 출력(boolean)    
+
+- toCharArray() String을 char단위로 새로운 배열에 넣어줌. 
+    - String의 원본배열을 불러오는것이 아닌 새로운 배열을 만드는 것.
+    - 원본 배열이 아니니 수정해도 String 값의 영향 X
+    
+- equals(anObject) anObject와 비교한 결과 출력(boolean) 
 
 ```
         String s = "This is a string.";
