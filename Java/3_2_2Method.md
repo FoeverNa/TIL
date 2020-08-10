@@ -340,7 +340,7 @@ public class ConstructorTest {
             -> 정보의 은닉/보호
  - 멤버 변수의 값을 제한 해야 할 때 유용
 
-```
+```java
 public class GetterSetter {
     int x,y;
     String z;

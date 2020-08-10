@@ -29,7 +29,7 @@
 
  ```java
  
- package s04.p05.subp01;
+ package s04.s02.p05.subp01;
  
  public class ClassA {
      public int x;
@@ -82,8 +82,8 @@
 
 - 코딩 실습2
 ```java
-package s04.p05.subp02;
-import s04.p05.subp01.ClassA;
+package s04.s02.p05.subp02;
+import s04.s02.p05.subp01.ClassA;
 
 
 class ClassAA extends ClassA {

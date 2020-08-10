@@ -1,3 +1,5 @@
+package hw07;
+
 import java.util.Arrays;
 
 /**

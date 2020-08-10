@@ -46,4 +46,4 @@
 [TIL](https://github.com/FoeverNa/java-TIL/blob/master/ch03/src/s02/Method.md)
 
 ## JavaDoc 주석
-[TIL](https://github.com/FoeverNa/java-TIL/blob/master/ch03/src/s03/p01/JavaDocs.md)
+[TIL](https://github.com/FoeverNa/java-TIL/blob/master/ch03/src/s03/s02.p01/JavaDocs.md)

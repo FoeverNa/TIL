@@ -1,14 +1,13 @@
 # 상속 (Inheritance)
 
- - 상속: 어떤 클래스의 모든 멤버 변수 및 메소드를 계승하여,
- - 새로운 클래스를 생성하는 것.
- 
+ - 상속: 어떤 클래스의 모든 멤버 변수 및 메소드를 계승하여, 새로운 클래스를 생성하는 것.
  - 상속 대상 : 조상 클래스, 부모 클래스, 상위 클래스, 슈퍼 클래스(슈퍼 =상위)
  - 상속 결과 : 자손 클래스, 자식 클래스, 하위 클래스, 서브 클래스
  - 상속 관계를 흔히 'IS-A' 관계 라고 부른다.
+ 
  ## 클래스의 상속
  
- ```
+ ```java
 class Person{
     String name;
 
@@ -66,18 +65,17 @@ public class Main {
 ```
 - "class Developer extends Person"와 같이 클래스명 뒤에 extends "상속받을 클래스명"으로 상속받을 수 있음
 - 클래스를 상속하면 모든 멤버 변수와 메소드를 상속받음(복사의 개념 X)
-- 이때 두클래스를 Devleoper 'Is -A' Person이라고 부를수 있고 이를 IS-A관계라고 함
-- 하나의 부모 클래스로 부터 여러 자식 클래스를 만들 수 있고 자식클래스는 자신의 것뿐아니라 부모의 변수와 메서들 사용 가능 
+- 이때 두 클래스의 관계를 Devleoper 'Is -A' Person이라고 부를수 있고 이를 IS-A관계라고 함
+- 하나의 부모 클래스로 부터 여러 자식 클래스를 만들 수 있고 자식클래스는 자신의 것 뿐아니라 부모의 변수와 메서드도 사용 가능 
 
-## 클래스이 포함 관계 Class Composition)
+## 클래스의 포함 관계  (Class Composition)
 (컴포지션은 구성이라는 뜻, 클래스를 조립해서 클래스를 만들어낸다는 의미)
 
 - 상속하고 유사하지만, 한 클래스가 다른 클래스의 객체를 포함하는 관계
- - 내부에 포함하고 있어 'HAS-A' 관계로 표현된다.
+- 한 클래스가 다른 클래스를 포함하고 있기에 'HAS-A' 관계로 표현된다.
 
-```
-
-// MainMachine 'HAS-A' String// String이 클래스기 때문에 우리가 클래스안에 String변수만들면 이미 컴포지션하고있던거임
+```java
+// MainMachine 'HAS-A' String// String이 클래스기 때문에 우리가 클래스안에 String 변수 만들면 이미 컴포지션하고 있던거임
 class MainMachine {
 
     String model;
@@ -90,6 +88,7 @@ class MainMachine {
 
 // Developer 'HAS-A' MainMachine
 // Developer 클래스는 MainMachine의 객체 하나를 보유한다.
+
 class Developer {
     String name;
     MainMachine mainMachine;
@@ -118,6 +117,7 @@ class Developer {
 
 // Developer 'HAS-A' MainMachine
 // Devleoper 클래스는 MAinMachine의 객체 하나를 보유한다.(Has)//MainMachine에 속성에도 접근가능
+
 public class Main {
     public static void main(String[] args) {
         MainMachine mac = new MainMachine("MacBook Pro");

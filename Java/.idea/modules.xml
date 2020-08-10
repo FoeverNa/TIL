@@ -22,8 +22,6 @@
       <module fileurl="file://$PROJECT_DIR$/Source/ch02/ch02_07/ch02_07.iml" filepath="$PROJECT_DIR$/Source/ch02/ch02_07/ch02_07.iml" />
       <module fileurl="file://$PROJECT_DIR$/Source/ch02/ch02_08/ch02_08.iml" filepath="$PROJECT_DIR$/Source/ch02/ch02_08/ch02_08.iml" />
       <module fileurl="file://$PROJECT_DIR$/Source/ch02/ch02_09/ch02_09.iml" filepath="$PROJECT_DIR$/Source/ch02/ch02_09/ch02_09.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Source/ch03/src/ch03.iml" filepath="$PROJECT_DIR$/Source/ch03/src/ch03.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Source/ch03/ch031.iml" filepath="$PROJECT_DIR$/Source/ch03/ch031.iml" />
     </modules>
   </component>
 </project>
