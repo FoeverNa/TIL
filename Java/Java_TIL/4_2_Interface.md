@@ -1,0 +1,202 @@
+# 인터페이스 (Interface)
+
+- 클래스가 사용되는 방식 / 접점만을 선언하는 클래스와 유사한 틀
+    - 클래스 사용의 권고사항을 제시하는 역할을 하는 특수형태 클래스
+
+- 아무런 구현이 되어 있지 않으며, 모든 메소드가 추상 메소드 이다
+
+## 인터페이스의 특징
+
+- class 가 아니고 interace 키워드를 사용한다
+    - 파일도 인터페이스로 생성 가능 하다
+    - public과 default 접근제어자 사용가능하다
+    
+- 멤버 변수는 항상 "public static final"이다.
+    - 인터페이스는 객체를 생성하지 않기 때문에 객체 멤버 변수가 없다
+    - "public static final" 키워드는 생략 가능 하다
+    
+- 멤버 메소드는 항상 "public abstract"이다.
+    - 오버라이딩을 위한 메서드이기 때문에 private 메서드는 의미가 없다
+    - "public abstract"는 생략 가능하다
+    
+- 인터페이스의 상속은 implements 키워드 사용한다
+
+- 클래스는 하나만 상속할 수 있으나, 인터페이스는 여러개를 구현 가능하다
+    - extends하고 하나의 클래스만 적을 수 있지만, 인터페이스는 implements하고  여러개 클래스를 적을 수 있음
+     
+
+```java
+
+interface IFoo{
+    public static final int MEMBER_VAR = 10; // (상수는 대문자와 '_'조합)
+                                            // public static final 생략 가능
+
+    public abstract void methodA(int param); // public abstract 생략가능
+    void methodB(int param); // public abstract
+}
+
+class Foo implements IFoo{
+
+    @Override
+    public void methodA(int param) {
+        System.out.println(param);
+    }
+
+    @Override
+    public void methodB(int param) {
+        System.out.println(param);
+    }
+}
+
+```
+- 인터페이스의 이름의 예시
+    - (1)interface Ifoo < class Foo
+        - 상속하는 자식에서 부모쪽으로 화살표 한다
+        
+    - (2)interface Printable <- class Bar
+    
+    - (1)과 같이 인터페이스명에 대문자 I를 붙여서 구분한다
+        - 혹은 (2)와 같이 형용사로 표현하기 좋은 이름은 그냥 제목으로 표현한다
+
+
+## 인터페이스 간의 상속
+
+- 인터페이스로 인터페이스를 상속할 경우, extends를 사용한다
+    - 인터페이스를 구현 할때만 implements를 사용한다
+    - 클래스 <- 클래스 상속과 달리 다중 상속 가능하다
+        - 인터페이스를 extends 키워드로 여러개 상속 가능하다
+    
+- 인터페이스를 상속한 인터페이스를 구현할 때는 상속받은 모든 부모 인터페이스의 메서드를 구현해야한다
+    
+```java
+  
+interface Walkable{
+    void walk();
+}
+
+interface Runnable{
+    void run();
+}
+
+interface Jumpable extends Walkable, Runnable{
+    void jump();// walk(), run()도 포함되어 있을 것
+}
+
+class Jumper implements Jumpable{
+
+    @Override
+    public void walk() {
+        System.out.println("walk");
+    }
+
+    @Override
+    public void run() {
+        System.out.println("run");
+    }
+
+    @Override
+    public void jump() {
+        System.out.println("jump");
+    }
+}
+```
+
+- Jumpable()에는 자신의 메서드인 jump(); 뿐아니라 상속받은 walk()와 run()도 포함되어 있다
+    - 그래서 jupable을 구현한 Jumper 클래스에서는 모든 메서드를 다 구현해야 한다.
+    
+
+## JDK 1.8 이후의 인터페이스
+
+- JDK 1.8 이후 인터페이스에서는 default 메소드를 구현할 수 있음
+
+- default 메서드는 인터페이스를 구현하는 모든 하위 클래스에서 필수로 구현하는 메서드로 메서드 중복 구현을 방지하는 역할을 한다.
+    - 메서드의 철학(정의)와는 맞지 않으나, 모든 자식 메서드가 동일하게 구현되어야 하는 메소드가 생긴 경우 쉽게 기능을 추가하기위해 만들어짐
+
+- default 메서드 특징
+    - default 메소드는 항상 public이다.
+        - default는 접근제어자의 default가 아니 메서드이름이다..?
+        - 인터페이스를 구현하는 모든 클래스에서 사용될 메서드이기 때문에 private은 의미없다
+
+
+
+```java
+interface IFooTwo {
+    void abstractMethod();
+    default void defaultMethod(){ // 디폴트 메소드 //오버라이드해도되고 안해도됨
+        System.out.println("Default method"); // 구현을 해주어야함
+    }
+}
+
+class FooTwo implements IFooTwo{
+
+    @Override
+    public void abstractMethod() {
+
+    }
+    @Override // Overriding not necessary
+    public void defaultMethod(){
+        System.out.println("Overriden default method");
+    }
+}
+
+
+class SuperFoo{
+   public void defaultMethod(){
+        System.out.println("Default method in Super class");
+    }
+}
+
+class FooThree extends SuperFoo implements IFooTwo{
+    @Override
+    public void abstractMethod() {
+        System.out.println("abstract method implemnets");
+    }
+}
+
+
+// 인터페이스의 static 메소드
+interface IBar {
+    static void staticMethod(){
+        System.out.println("static method"); //바로 구현 가능
+    }
+}
+
+class Bar implements IBar{
+
+}
+
+
+public class Interface {
+    public static void main(String[] args) {
+        FooTwo footwo = new FooTwo();
+        footwo.abstractMethod();
+        footwo.defaultMethod();// "Overriden default method"
+
+        FooThree foothree = new FooThree();
+        foothree.abstractMethod();
+        foothree.defaultMethod(); //Default method in Super class
+       
+        IBar.staticMethod(); // 인터페이스명으로 클래스 메서드 호출 가능
+       // Bar.staticMethod(); // 구현체인 자식 클래스로는 클래스 메소드 호출 불가능 //암기필요
+
+    }
+}
+```
+
+- 상속받은 클래스와 구현한 인터페이스의 모두 default method가 있다면 상속받은 부모클래스의 Default method가 실행된다
+ - 이때 인터페이스의 default method는 실행되지 않느다 = 부모와 인터페이스에 모두 메서드가 있는 경우 부모클래스에 있는 메소드를 실행한다.
+
+- 이유
+  - 클래스는 다중상속이 안되는데 인터페이스는 다중상속이 가능하다. 
+  - 인터페이스에서 다중상속이 가능한 이유는 여러 곳에서 메소드를 가져와서 겹쳐도 구현이 안되어 있기 때문에 문제 발생하지 않는다
+  - 그런데 default메서드가 생기면서 다중 상속에 문제가 발생해버렸다.
+  - default 메서드의 구현부가 상속받은 다른 메서드와 충돌할 수 있게 되어버린기 때문이다.
+  - 이러한 다중상속시 문제를 방지하기 위해 인터페이스 보다 일반 상속이 우선시 한다
+  - 일반 상속은 다중 상속이 안되니까 일반 상속을 우선시해도 후에 문제발생할 것이 없다.
+  
+ ### 참고
+ 
+ - 인터페이스의 스택틱 메서드가 있는경우
+    - 인터페이스 명으로 호출 가능 ex ) IBar.staticMethod();
+    - 구현한 클래스명으로 호출 불가능 ex) // Bar.staticMethod();
+        
