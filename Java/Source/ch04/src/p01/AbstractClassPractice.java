@@ -36,6 +36,7 @@ abstract class AbstractStack {
     public abstract int pop();
     public abstract int peek();
 }
+
 // 추상메서드를 통해 ArrayStack뿐아니라 다른 방식의 Stack을 만들 수 있게됨.
 class ArrayStack extends AbstractStack{
     private int[] array;
@@ -92,11 +93,15 @@ public class AbstractClassPractice {
             stack.push(i);
         } // 0~9
         System.out.println(stack.peek());// 9
-        System.out.println(stack.peek());// 9
+//        System.out.println(stack.peek());// 9
 
-        for(int i =0; i <20; i++){
-            System.out.println(stack.pop()); // 9~0 출력
-        } // 9~0, 반대로되겟지
+//        for(int i =0; i <20; i++){
+//            System.out.println(stack.pop()); // 9~0 출력
+//        } // 9~0, 반대로되겟지
+//
+//        for(int i =0; i<15; i++){
+//            System.out.println(stack.peek(i));
+//        }
     }
 }
 

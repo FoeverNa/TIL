@@ -39,6 +39,7 @@ public class AbstractClass {
         AbstractFoo afoo = (AbstractFoo) foo; // 부모클래스형으로 자식객체 받음
         afoo.abstractMethod(); // "implemented abstractMethod"
         // virtual method call
+        
         // 아무것도 구현하지 않앗어도 자식메서드를 받을 수 있음
 
         // 추상 클래스는 객체 생성은 불가하지만 구현된 자식 클래스의 객체는 받을 수 있다.

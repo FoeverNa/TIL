@@ -66,7 +66,7 @@ class IntArrayList implements List {
 
             newarray2[i+1] = array[i];
             array[i] = newarray2[i];
-        }
+        }// => 이건확실히 arraycopy썻어야됫네 오히려 배열이 햇갈렷음
 
         array[0] = value;
         length++;
@@ -91,7 +91,7 @@ class IntArrayList implements List {
 
                 newarray2[i+1] = array[i];
                 array[i] = newarray2[i];
-            }
+            } // 이것도 arraycopy가 나았네
 
             array[index] = value;
             length++;
@@ -118,7 +118,7 @@ class IntArrayList implements List {
     @Override
     public int get(int index) {
         if(index> length-1){
-            return -1;
+            return -1; // 예외처리배우면 어떻게 핸들할지배움, 원래는안됨
         } else {
             return array[index];
         }
@@ -126,7 +126,7 @@ class IntArrayList implements List {
     }
 
     @Override
-    public void length() {
+    public void length() { // void가 아닌 int가 좋았을것
         System.out.println(length);
 
     }
