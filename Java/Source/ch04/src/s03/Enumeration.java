@@ -37,9 +37,12 @@ enum Symbol {
 
     }
 }
+interface IFamily{
+    String FATHER = "아빠";
+}
 
 // 열거형 생성자를 이용한 enum 상수 초기화
-enum Family {
+enum Family implements IFamily {
     FATHER("아버지"), MOTHER("어머니"), SON("아들"), DAUGHTER("딸");
                                                             // 열거형 상수(객체)// new가 써있지않을 뿐이지 new로만들어지는애들
     private String koreanWord; // 멤버 변수(객체 속하는 변수)
@@ -60,6 +63,8 @@ enum Family {
 
     }
 }
+
+
 
 
     public class Enumeration {
@@ -115,6 +120,10 @@ enum Family {
             fam.setKoreanWord("버린 자식");
             System.out.println(fam.getKoreanWord()); //버린자식
             System.out.println(Family.SON.getKoreanWord()); // 버린자식 // 해당객체가 여러개 생성되는게 아닌 하나의 객체만생성되는것
+
+            System.out.println(Family.FATHER.FATHER); // FATHER0
+            System.out.println(Family.FATHER.FATHER.MOTHER); // MOTHER
+            System.out.println(Family.FATHER.DAUGHTER.getKoreanWord());// 딸
 
         }
     }

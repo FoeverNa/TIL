@@ -39,6 +39,7 @@ class HashMap<K,V>{ // 여러개의 타입 파라미터도 쓸 수 있다.
 }
 
 class GenericBar<T>{
+
     // 문법적으로 문제가 있는경우
     // static T classVar; // not possible
     // 객체 생성시 자료형을 넣는데 객체를 생성안하고 사용하는 static에 사용 불가
@@ -52,7 +53,7 @@ class GenericBar<T>{
     // 문법적으로 문제가 없을 것 같으나, 안정성 문제로 금지
 
 
-    // T memberVar = new T(); not possible
+//     T memberVar = new T(); //not possible
     // new키워드를 사용할 수는 없음 => 안정성 문제 때문에 불가능
     // 타입파라미터에 객체를 생성을 하는건 불가능 하다
     // T 가 알려져 있는 상황이다.
@@ -100,8 +101,10 @@ class IGIFooTwo<T> extends GFoo<T> implements IGFoo<T>{
 class GenericNoTypeLimit<T extends Object>{}
 
 // extneds를 이용해서 부모 클래스와 인터페이스도 제한할 수 있다.
-class GenericTypeLimitation<T extends Number & Cloneable>{//Number는 추상클래스를 상속하고 있는애들만 사용할 수 있음
-                                                          //요 추상클래스도 상속하고 있으며 요인터페이스도 구현해야한다
+class GenericTypeLimitation<T extends Number&Cloneable>{//Number는 추상클래스를 상속하고 있는애들만 사용할 수 있음
+                                                      //요 추상클래스도 상속하고 있으며 요인터페이스도 구현해야한다
+    T memberVar ;
+//    GenericTypeLimitation<> genericTypeLimitation = new GenericTypeLimitation<>();
 }
 
 //제너릭 메소드
@@ -109,6 +112,7 @@ class GenericMethod{
     public static <T> T staticMethod(T t){
         return t;
     }
+
     // 정적메소드는 사용가능하다
     // 제너릭 클래스에서 타입파라미터와 제네릭메서드의 파라미터는 별개다
     // 제너릭 클래스에서는 안됬자나... 이게 머가다른지 인식해야함
@@ -117,9 +121,9 @@ class GenericMethod{
     // 클래스 생성때 스태틱클래스가 생성되는게아니고(생성만되고) 런타임때 스태틱클래스가 생성되는 것임.\
     // T에 인트나롱 같은 프리미티브타입은 들어갈수가 없음.. = > 메인에서 설명해줌
 
-    public int method(int x){
-        return x;
-    }
+//    public int method(int x){
+//        return x;
+//    }
 
     public <T> T method(T x){
         return x;
@@ -139,6 +143,7 @@ class WildBar extends WildFoo{
 
 class WildGeneric<T>{
 
+
 }
 
 // 와일드카드?는 메소드의 입력 타입에 제네릭이 쓰일 경우
@@ -153,6 +158,7 @@ class WildCard{
     // WildFoo를 조상으로 두고 있는애 , WildFoo를 포함한다
     public void method3(WildGeneric<? super WildBar>  x){} // Object, WildFoo, WildFoo, WildBar
     // Super는 반대 WildBar를 자식으로하는 이상의것들
+    public void method4(WildGeneric<String> x){}
 
 }
 
@@ -193,6 +199,22 @@ public class Generics {
         GenericMethod.staticMethod(new String("abcd")); // 오버로딩된것처럼 해당 값들어오면 자료형이 결정됨
         GenericMethod.staticMethod(12341); // new 안해도되고 입력만 하면 자동으로 타입을 설정함
         // 이때는 묵시적이라 int입력이 가능했데..무슨말일까 => 설명해주신데
+
+        GenericMethod genericMethod = new GenericMethod();
+        System.out.println(genericMethod.method(23));
+        System.out.println(Integer.valueOf(23));
+
+
+//        WildCard wildCard = new WildCard();
+//        WildGeneric<String> wildGeneric = new WildGeneric<String>();
+//        wildCard.method1(wildGeneric); //<String>이기에 가능
+//        wildCard.method1(wildGeneric); //<?>이기에 가능
+//
+//
+
+
+
+
 
 
 

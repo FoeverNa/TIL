@@ -128,16 +128,23 @@ class FooThree extends SuperFoo implements IFooTwo{
 
 // 인터페이스의 static 메소드
 interface IBar {
+    static int x = 10;
     static void staticMethod(){
         System.out.println("static method"); //바로 구현 가능
     }
+    public abstract void method();
+
+
 }
 
 class Bar implements IBar{
 
-    static void staticMethod(){
-        System.out.println("Bar static method");
+//    int x = 20;
+
+    public void method(){
+        System.out.println(x);
     }
+
 
 }
 
@@ -164,8 +171,24 @@ public class Interface {
         // 일반상속은 다중상속이 안되니까 우선시해도 문제발생x
         
         IBar.staticMethod(); // 인터페이스명으로 클래스 메서드 호출 가능
-        Bar.staticMethod(); // 구현체인 자식 클래스로는 클래스 메소드 호출 불가능 //암기필요
-//
+//        Bar.staticMethod(); // 구현체인 자식 클래스로는 클래스 메소드 호출 불가능 //암기필요
+        System.out.println(IBar.x); // 인터페이스명으로 인터페이스 정적변수 접근가능
+        System.out.println(Bar.x); // 구현체 클래스로 인터페이스 클래스 정적변수 접근 가능
+
+        Bar bar = new Bar();
+//        System.out.println(bar.x); // 접근가능
+        // bar.staticMethod(); // 접근불가
+
+        System.out.println(bar.x);
+        bar.method();
+
+        IBar iBar= new Bar();
+
+//        System.out.println(iBar.x); // 안되는게 맞고 인터페이스의 스태틱 변수에 접근함
+        iBar.method();
+
+
+
     }
 }
 

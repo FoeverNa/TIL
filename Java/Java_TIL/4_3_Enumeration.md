@@ -61,8 +61,13 @@ public class Enumeration {
 - enum은 클래스와 유사하게 enum enum명으로 선언하다
 
 - 상수를 열거하여 선언할 수 있다. ex) STUDENT, MARKETING, DEVELOPER
+    - 상수를 열거하는 것이 객체를 선언하는 것과 같다.(new해서 객체를 생성하지 않는다)
+    - 생성자를 이용해 멤버변수를 초기화할때 상수옆에 arguments를 입력한다 ex) STUDENT(19)
+    - 열거형 상수는 객체인 동시에 정적 변수이다?
 
-- switch ~case문에서는 열거형 자료형을 생략할 수 있다.
+- switch ~case문에서는 열거형 자료형을 생략해야 한다 
+    - 사용시 에러 발생
+
 
 ## 클래스 내부에서 열거형 구현
 
@@ -82,6 +87,7 @@ System.out.println(Foo.Symbol.ONE); //ONE
 
 - 클래스내부에서 열거형을 선언하여 구현할 수 있다.
     - 접근은 클래스명.열거형명.상수로 접근한다
+    
     
 
 ### 열거형 내부에서 메소드 구현
@@ -116,7 +122,7 @@ enum Symbol {
         
 ```
 
-- 열거형 내부에서도 메서드를 생성 간으하다
+- 열거형 내부에서도 메서드를 생성 가능하다
     - 이때 열거형의 상수는 this를 통해 객체로 지칭될 수 있다. ex) this.equals(ONE)
     
 - 열거형의 상수는 객체로 .을 붙여서 메서드를 사용할 수 있다. exe)Symbol sym = Symbol.ONE; sym.nextSymbol();
@@ -156,15 +162,35 @@ enum Family {
             System.out.println(fam.getKoreanWord()); //버린자식
             System.out.println(Family.SON.getKoreanWord()); // 버린자식 // 해당객체가 여러개 생성되는게 아닌 하나의 객체만생성되는것
 
+            System.out.println(Family.FATHER.FATHER); // FATHER0
+            System.out.println(Family.FATHER.FATHER.MOTHER); // MOTHER
+            System.out.println(Family.FATHER.DAUGHTER.getKoreanWord());// 딸
+
         }
     }
 ```
-- 위에서 언급했듯이 열거형의 상수는 객체이기 때문에 열거형의 선언된 멤버 변수를 가지고 있다.
+- 열거형의 상수는 객체이기 때문에 열거형의 선언된 멤버 변수를 생성할 수 있다
+    - 열거형의 멤버 변수는 private이다
 
-- 그렇기 때문에 생성자를 통해 멤버 변수를 초기화 할 수 있다. 
+- 열거형의 생성자를 통해 멤버 변수를 초기화 할 수 있다. 
+    - 열거형의 생성자는 내부에서만 객체를 생성하기 때문에 private이다.
     - ex)  private Family(String koreanWord){ this.koreanWord = koreanWord }
-    - 이때 초기화는 객체가 존재하는 열거형 내에서 한다
+    - 이때 초기화는 객체가 존재하는 열거형 내에서 한다(PRIVATE)
         - FATHER("아버지"), MOTHER("어머니"), SON("아들"), DAUGHTER("딸");
-- 클래스와 같이 객체를 통해 멤법 변수에 접근 할 수 있다.
+        
+- 클래스와 같이 객체를 통해 멤버 변수에 접근 할 수 있다.
     - 멤버변수가 private인경우도 getter setter를 통해 멤버변수에 접근 한다.
         - fam.setKoreanWord("버린 자식");
+
+## Enum에 상수의 특징
+
+- Enum의 상수는 정적 변수에 객체가 담겨있는 형태이다
+    - Static Family FATHER = new Family(); 와 같은 형태
+    
+- 그래서 System.out.println(Family.FATHER.DAUGHTER.getKoreanWord()); // MOTHER 같은 문장이 가능함
+    - Family.FATHER으로 정적변수에 접근, 정적변수안에 객체로 다시 정적변수인 DAUGHTER에 접근
+    - 그리고 정적변수에 객체로 .geKoreaWord()에 접근할수 있었던 것이다
+
+
+
+    

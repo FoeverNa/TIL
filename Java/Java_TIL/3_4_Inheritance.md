@@ -135,6 +135,8 @@ public class Main {
 - Devleoper 클래스는 MainMachine의 객체 하나를 보유한다.(Has)//MainMachine에 속성에도 접근가능
 
 - 위와 같은 관계를 Developer 'HAS-A' MainMachine라고 한다.
+
+
  
 ## super 키워드
 
