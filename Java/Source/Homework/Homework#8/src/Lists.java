@@ -20,158 +20,118 @@ interface List {
     public void insert(int index, int value);
     public void remove(int index);
     public int get(int index);
-    public void length();
+    public int length();
 }
 
 class IntArrayList implements List {
 
     private int capacity;
-    protected int length;
-    private int[] array;
+    private int length;
+    private int[] integers;
 
     public IntArrayList (int capacity){
         this.capacity = capacity ;
         length = 0;
-        array = new int[capacity];
+        integers= new int[capacity];
     }
+
+    public void expandCapacity (int offset){
+            int[] newIntegers = new int[capacity*2];
+            System.arraycopy(integers, 0, newIntegers, offset, integers.length);
+            integers = newIntegers;
+            capacity *= 2 ;
+    }
+    public void expandCapacity (){
+
+        expandCapacity(0);
+    }
+
 
     @Override
     public void append(int value) {
 
         if(capacity == length){
-            int[] newarray = new int[capacity*2];
-            capacity *= 2 ;
-
-            System.arraycopy(array, 0, newarray, 0, array.length);
-             array = newarray;
+            expandCapacity();
         }
-             array[length] = value;
-             length++;
+             integers[length++] = value;
     }
 
     @Override
     public void prepend(int value) {
-        if (capacity == length + 1) {
-            int[] newarray = new int[capacity * 2];
-            capacity *= 2;
-
-            for (int i = 0; i < array.length; i++) {
-                newarray[i] = array[i];
-            }
-            array = newarray;
+        if (capacity == length ) {
+           expandCapacity(1);
+        } else{
+            if (length > 0 )
+            System.arraycopy(integers,0,integers,1,length);
         }
-
-        int[] newarray2 = new int[length+2];
-        for(int i = 0; i < length+1; i++){
-
-            newarray2[i+1] = array[i];
-            array[i] = newarray2[i];
-        }// => 이건확실히 arraycopy썻어야됫네 오히려 배열이 햇갈렷음
-
-        array[0] = value;
+        integers[0] = value;
         length++;
     }
 
     @Override
     public void insert(int index, int value) {
-        if(index>length) {
-            System.out.println("Out of range");
+
+        if (capacity == length ) {
+            expandCapacity();
         }
-        else{
-        if (capacity == length + 1) {
-            int[] newarray = new int[capacity * 2];
-            capacity *= 2;
-
-            System.arraycopy(array, 0, newarray, 0, array.length);
-            array = newarray;
+        if(index <=length && length > 0){
+            System.arraycopy(integers,index,integers,index+1,length-index);
         }
-
-            int[] newarray2 = new int[length+2];
-            for(int i = index ; i < length+1; i++){
-
-                newarray2[i+1] = array[i];
-                array[i] = newarray2[i];
-            } // 이것도 arraycopy가 나았네
-
-            array[index] = value;
+            integers[index] = value;
             length++;
         }
-    }
+
 
     @Override
     public void remove(int index) {
 
-        if(index>length) {
-            System.out.println("Out of range");
-        } else {
-            int[] newarray = new int[length];
-
-            for (int i = index; i < length - 1; i++) {
-                newarray[i] = array[i + 1];
-                array[i] = newarray[i];
-            }
+        if(length >0){
+            System.arraycopy(integers,index+1,integers,index,length-index-1);
 
             length--;
         }
-    }
+        }
+
 
     @Override
     public int get(int index) {
-        if(index> length-1){
-            return -1; // 예외처리배우면 어떻게 핸들할지배움, 원래는안됨
+        if(index> length){
+            return -1;
         } else {
-            return array[index];
+            return integers[index];
         }
-
     }
 
     @Override
-    public void length() { // void가 아닌 int가 좋았을것
-        System.out.println(length);
-
+    public int length() { // void가 아닌 int가 좋았을것
+        return length;
     }
 }
 
 class Main{
-    public static void main(String[] args) {
-        IntArrayList list = new IntArrayList(4);
+    public static void printList(IntArrayList list){
+        for(int i = 0 ; i < list.length(); i++){
+            System.out.printf("%d",list.get(i));
+        }
+        System.out.println();
+    }
 
-        for(int i=0; i < 20 ; i ++){
+    public static void main(String[] args) {
+        IntArrayList list = new IntArrayList(10);
+        for (int i = 0; i < 20; i++) {
             list.append(i);
         }
+        printList(list);
 
-        //get Test
+        list.remove(5);
+        printList(list);
 
-//        for(int i =0; i<15 ; i++){
-//            Syste1m.out.println(list.get(i));
-//        }
+        list.prepend(1);
+        list.prepend(2);
+        list.prepend(3);
+        printList(list);
 
-        // prepend Test
-//        list.prepend(55);
-//
-//        for(int i =0; i<21 ; i++){
-//            System.out.println(list.get(i));
-//        }
-
-        //insert Test
-//        list.insert(4,1231);
-//
-//        for(int i =0; i<21 ; i++){
-//            System.out.println(list.get(i));
-//        }
-
-        //remove Test
-//        list.remove(23);
-//
-        for(int i =0; i< 25; i++){
-            System.out.println(list.get(i));
-        }
-
-        //length Test
-//        list.length();
-
-        list.remove(29);
-
-
+        list.insert(5, 100);
+        printList(list);
     }
 }

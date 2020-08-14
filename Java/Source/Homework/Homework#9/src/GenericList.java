@@ -23,7 +23,7 @@ interface List<T> {
     int length();
 }
 
-class ArrayList<T extends Object> implements List<T>{
+class ArrayList<T> implements List<T>{
     private int capacity;
     private int length;
     private Object [] oList;
@@ -61,7 +61,7 @@ class ArrayList<T extends Object> implements List<T>{
             expandCapacity(1);
         }else{
             if(length>0){
-                System.arraycopy(oList,0,oList,1,length-1);
+                System.arraycopy(oList,0,oList,1,length);
             }
         }
         oList[0] = value;
@@ -73,32 +73,31 @@ class ArrayList<T extends Object> implements List<T>{
         if (capacity == oList.length){
             expandCapacity();
         }
-        if (index>0){
-            System.arraycopy(oList,index,oList,index+1,length-index+1);
+        if (index <= length && index>0){
+            System.arraycopy(oList,index,oList,index+1,length-index);
         }
-
         oList[index] = value;
         length++;
     }
 
     @Override
     public void remove(int index) {
-
-        System.arraycopy(oList,index+1,oList,index,length-index );
-
-        length--;
+        if( index < length && length >0 ) {
+            System.arraycopy(oList, index + 1, oList, index, length - index - 1);
+            length--;
+        }
     }
 
     @Override
     public T get(int index) {
-
-        return (T) oList[index];
+        if(index < length) {
+            @SuppressWarnings("unchecked")
+            T t= (T) oList[index];
+            return t;
+        } else {
+            return null;
+        }
     }
-    // 타입파라미터 T의 자료형으로 입력할 수 있는 것은 객체인데
-    // 모든 객체는 Object를 상속하고 있으니 바로 casting을 해도 괜찮지 않을까요?
-    // 열심히 고민해보고 썼는데 너무 성의가 없어보여서 사족을 달아봅니다...
-
-
 
     @Override
     public int length() {
@@ -109,11 +108,11 @@ class ArrayList<T extends Object> implements List<T>{
 
 
 public class GenericList {
-    public static void printList(ArrayList<Integer> list) {
-        for (int i = 0; i < list.length(); i++) {
-            System.out.printf("%d ", list.get(i));
+    public static void printList(ArrayList<Integer> list){
+        for(int i = 0 ; i < list.length() ; i++){
+            System.out.printf("%d",list.get(i));
         }
-        System.out.println("");
+        System.out.println();
     }
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<Integer>(10);
