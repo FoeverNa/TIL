@@ -30,13 +30,16 @@ interface IFoo{
 
 abstract class Bar{
    + static String name;
+    Foo foo;
    # int x;
    ~ int y;
    - void method(String string);
 }
+
 class Qoo{
     Foo foo;
 }
+
 class Foo{
     int x;
     void methodA();
@@ -74,8 +77,14 @@ end note
     - "-|>" 상속관계 // Foo -|> IFoo // foo가 Ifoo 상속한다
     - "-o" 어그리게이션(포함관계) // 
 
-Bar -o Foo (어그리게이션 관계)
-Qoo -* Foo ( 포함관계?? 이부분 이해안됫음)
+- Bar -o Foo (어그리게이션 관계)
+    - Aggregation : sub클래스가 독립적으로 존재할 수 있음, 
+        - ex) School - Student, Team - Player
+
+- Qoo -* Foo ( 포함관계?? 이부분 이해안됫음)
+    - Composition(포함관계) : sub클래스가 독립적으로 존재할 수 없음, Owner 클래스가 없으면 의미없음
+        - ex) Human - Leg,Arm and Hearts , Car - Parts...
+    
 
 - 제목 title"쓰고싶은제목" ex) title Class Diagram Title
 
@@ -87,9 +96,9 @@ Qoo -* Foo ( 포함관계?? 이부분 이해안됫음)
 
 - 화살표 방향을 설정할 수 있음 // Qoo -right* Foo > 화살표방향이 바뀜
  
--  실무에서는 설계자가 설계해준데로 하면됨. 그분은 전문적으로하는사람이라 따라가면됨
+-  실무에서는 설계자가 설계한데로 구현 하면됨. 그 분은 전문적으로하는사람이라 따라가면됨
 
-## IDEA에서 UML 자동 생성
+## IDEA 에서 UML 자동 생성
 
-- 패키지나 클래스를 우클릭하면 Diagram 클릭하면 자동으로 UML생성해줌
+- 패키지나 클래스를 우클릭하면 Diagram 클릭하면 자동으로 UML 생성해 줌
     - 함정은 IntelliJ ultimate 에서만 사용가능

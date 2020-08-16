@@ -33,7 +33,7 @@ public class WrapperClass {
 
     public static void main(String[] args) {
         Integer integer = new Integer(10); // 클래스니까 객체생성가능, 객체의 초기화값 입력하는방식
-        Integer integer1 = Integer.valueOf(10); // Integer 클래스에 valueof라는 스태틱메소드를 사용
+        Integer integer1 = Integer.valueOf(10); // Integer 클래스에 valueof 라는 스태틱메소드를 사용
                                                 // 위에랑 똑같음
 
         Character character = new Character(('d'));
@@ -42,16 +42,10 @@ public class WrapperClass {
         // Autoboxing
         Integer integer2 =4; //바로 입력가능
         System.out.println(add(4,2)); // 6
-                                // Integer를 바로 pirmitive타입으로 입력가능하도록 Autoboxing
+                                // pimitive를 바로 Integer 타입으로 입력가능하도록 Autoboxing
 
-        //왜 이딴걸 쓰나? => 이걸 사용하면 제네릭을 사용할 수 있다.
-        //제너릭
-        bypass(5); // autoboxing
-        // T: Wrapper class인 Integer로 결정됨
-        // 5 -> new Integer(5) (Autoboxing)로 제너릭에 입력이될수있게됨
-        // java 1.5 부터 지원하는 기능으로 primitive 타입 간단하게 입력할수있게 도와 줌
-        // 객체생성하는게 생략이 되있는게 Autoboxing
-
+        bypass(5); // autoboxing // 
+      
         // 문자열 <-> 기본자료형
         int x = Integer.parseInt("100"); // pare+자료형 정적 메소드
                                             // String에서 primitive 타입으로 변환해주는 메서드
@@ -77,28 +71,30 @@ public class WrapperClass {
     
 - 기본 자료형 값을 바로 입력하여 객체 생성
      - Integer integer2 =4; ( Auto Boxing)
+     
          
 ## 제너릭 타입 파라미터에 활용
 
-- 제너릭 타입 파라미터에는 참조형 자료만 올 수 있고 기본 자료형은 올 수 없지만 Wrapper클래스를 활용하여 기본 자료형을 입력할 수 있다
-    - class<>에 int 대신 Integer를 입력하면 기본자료형 값을 대입할 수 있다
+- 제너릭 타입 파라미터에는 참조형 자료만 올 수 있고 기본 자료형은 올 수 없지만 Wrapper 클래스를 활용하여 기본 자료형을 입력할 수 있다
+    - 메서드의 값을 입력하면 자료형을 자동으로 Autoboxing 해주어 해당 기본형의 객체를 생성해준다
+    - bypass(5)를 입력시 new Integer(5)로 Autoboxing을 해주어서 제너릭 메서드에서 사용할 수 있게 된다
+   
     
-## Autoboxing과 Unboxing
-
-- 기본형 값을 Wrapper 클래스의 객체로 자동으로 변환시켜주는 것을 Autoboxing이라고 한다
+## Autoboxing 기본형 값을 Wrapper 클래스의 객체로 자동으로 변환시켜주는 것을 Autoboxing 이라고 한다
     - Integer integer = 4; => 4를 자동으로 Integer 객체로 만들어서 integer 변수에 집어넣음
 
-- Wrapper 클래스의 객체를 자동으로 기본형 값으로 변환시켜주는 것을 Unboxing이라고 한다
-    - int m = new Integer(10); => Integer객체를 int로 자동 변환시켜서 4를 m에 집어넣음
+- Wrapper 클래스의 객체를 자동으로 기본형 값으로 변환시켜주는 것을 Unboxing 이라고 한다
+    - int m = new Integer(10); => Integer 객체를 int 로 자동 변환시켜서 4를 m에 집어넣음
+    
     
 ## 문자열 <-->기본자료형
 
 - 문자열로 입력된 값을 기본자료형으로 바꾸는 방법
-    - Wrapper클래스 parse+기본자료형()를 활용(제일 권장되는 방법)
+    - Wrapper 클래스 parse+기본자료형()를 활용(제일 권장되는 방법)
         - int x = Integer.parseInt("100");
     
-    - 기본자료형에 Wrapper클래스 객체를 넣어서 Unboxing하기.
+    - 기본자료형에 Wrapper 클래스 객체를 넣어서 Unboxing 하기
         - int y = new Integer("100");
         
-    - Wrapper클래스+valuof메서드 활용하기    
+    - Wrapper 클래스+ valueOf 메서드 활용하기    
         - int z = Integer.valueOf("200");
