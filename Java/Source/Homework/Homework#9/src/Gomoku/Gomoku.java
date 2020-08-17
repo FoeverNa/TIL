@@ -16,23 +16,32 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
 
 
     public void startGame() {
-        initialize(); // Player instance
-        while (true) {
-            if(count % 2 == 0){
-                inputStone(playerA);
-            } else{
-                inputStone(playerB);
-            }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Player1 이름 :");
+        playerA = new Player(scanner.nextLine());
+        System.out.println("Player2 이름 :");
+        playerB = new Player(scanner.nextLine());
 
-            if (isQuited) {
-                System.out.println(getWinner().getName()+"승리");
-            }else {
+        while(true){
+        initialize();
+            while (true) {
+                inputStone(whosTurn());
                 isFinished();
-                reset();
-            }
-
+             if(finished|isQuited){
+                 break;
+               }
+               }
+        if(isQuited){
+            break;
+        } else{
+            reset();
         }
-    }
+        }
+        System.out.println("승자 : " + getWinner().getName());
+        getScore();
+        }
+
+
     public Player whosTurn(){
 
         if (count % 2 == 0) {
@@ -44,7 +53,6 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     }
 
     public void inputStone(Player player) {
-        while (true) {
                  while (true) {
                     player.getKeyboardInput(); // pos instance
                     quitGame(player.pos);
@@ -61,22 +69,16 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
                         break;
                     }
                 }
-                if (isQuited) {
-                    break;
-                }
-                play(player, player.pos); // player pos
-                printStatus();
-
+                 if(!isQuited) {
+                     play(player, player.pos); // player pos
+                     printStatus();
+                 }
             }
-
-            }
-
 
 
 
     public void quitGame(Position pos){
         if(pos.x == 999 || pos.y == 999){
-            finished = true;
             isQuited = true;
         }
     }
@@ -146,7 +148,8 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
 
     @Override
     public void initialize() {
-        Scanner scanner = new Scanner(System.in);
+
+
         for(int i = 0 ; i < posA.length; i++){
            posA[i] = new Position(0,0);
            posB[i] = new Position(0,0);
@@ -157,10 +160,11 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
                 gomokuTable[i][j] =0;
             }
         }
-        System.out.println("Player1 이름 :");
-        playerA = new Player(scanner.nextLine());
-        System.out.println("Player2 이름 :");
-        playerB = new Player(scanner.nextLine());
+
+        finished = false;
+        nA =0;
+        nB =0;
+
     }
 
     @Override
@@ -246,23 +250,15 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
 
     @Override
     public void reset() {
-        System.out.println("현재스코어"+playerA.getNumWin()+" : "+playerB.getNumWin());
-
-        for(int i = 0 ; i < posA.length; i++){
-            posA[i] = new Position(0,0);
-            posB[i] = new Position(0,0);
-        }
-
-        for(int i=0; i < 15; i++){
-            for(int j=0; j<15; j++){
-                gomokuTable[i][j] =0;
-            }
-        }
-        finished = false;
-        nA =0;
-        nB =0;
-
+        getScore();
+        System.out.println("다음 게임을 시작합니다");
     }
+
+    public void getScore(){
+        System.out.println("현재스코어" + playerA.getName() + playerA.getNumWin() + " : " + playerB.getName() + playerB.getNumWin());
+    }
+
+
 
     @Override
     public Player getWinner() {
