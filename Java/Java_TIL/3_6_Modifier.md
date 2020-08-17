@@ -15,7 +15,7 @@
 
 ### 접근제어자
 
- - 접근 가능한 범위를 정해, 데이터 은닉/보호(Encapsulation)기능을 추가한다.
+ - 접근 가능한 범위를 정해, 데이터 은닉/보호(Enc     apsulation)기능을 추가한다.
    - 캡슐화가 필요 없으면 다 public하면 되겠지, 근데 편의성보다는 은닉하는게 더 좋은점이 많기에 사용됨
  - 접근제어자별 접근 범위(public > protected > default > private)
 
@@ -144,9 +144,10 @@ public class ClassB {
 #### 싱글톤 패턴(Singletone)
 
 - private 키워드를 활용해 객체가 단 하나만 존재할 수 있는 클래스를 만드는 패턴
-- 게임의 스테이터스 등 하나의 클래스에서 하나의 객체만을 사용해야하는 경우 사용하는 패턴
-- 싱클톤 패턴 예시
-
+    - 게임의 스테이터스 등 하나의 클래스에서 하나의 객체만을 사용해야하는 경우 사용하는 패턴
+    - 레시스트리 같은 설정 파일
+    - 하나의 프린터를 공유하는 사무실
+    - 공통된 오브젝트를 사용해야하는 
 ```java
 class SingletonClass {
   private static SingletoneClass instance = new SingletonClass();

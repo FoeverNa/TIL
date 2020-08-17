@@ -60,7 +60,7 @@ public class Exceptions {
             System.out.println(e.getMessage()); //Index 20 out of bounds for length 10
             // 객체 e에 메세지를 심어준것임. 그걸 message로보여줌
             //에러를 thorw해서 밑에서 catch를 해서 메세지로 출력해준상황
-//            e.printStackTrace();// 시뻘건 메세지도 출력해주는애
+            e.printStackTrace();// 시뻘건 메세지도 출력해주는애
             // 근데 순서는 맨마지막에 출력됨 // IDE => 버그래, 순서가꼬임
             // 콘솔에서 출려하면 이런에러 안뜬데, 에러자연스럽게 받아들이면됨
         }

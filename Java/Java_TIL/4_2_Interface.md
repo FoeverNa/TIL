@@ -137,6 +137,7 @@ class Jumper implements Jumpable{
         - default는 접근제어자의 default가 아니 메서드이름이다..?
         - 인터페이스를 구현하는 모든 클래스에서 사용될 메서드이기 때문에 private은 의미없다
     - default 메소드는 구현체에서는 반드시 구현할 필요는 없다.
+        - 자녀 클래스에서 구현하지 않은 default 메서드에 접근시 부모클래스의 default 메서드에 접근된다
 
 
 
