@@ -1,4 +1,4 @@
-#객체 지향 프로그래밍(Object Oriented Programming; OOP)
+# 객체 지향 프로그래밍(Object Oriented Programming; OOP)
 
 ## 객체 지향 프로그래밍이란?
 - 컴퓨터 프로그래밍 패러다임 중 하나(절대적인 것 아님)

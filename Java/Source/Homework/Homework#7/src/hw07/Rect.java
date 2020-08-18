@@ -38,8 +38,8 @@ class RectCore {
     }
 
     public String toString() {
-        // write codes here
-        return "RECTCORE";
+
+        return "RECTCORE("+this.pos+","+w+","+h+")";
     }
 }
 
@@ -54,58 +54,61 @@ public class Rect extends RectCore {
     // 위에 객체가져오기위해서 super()해야했음
 
     public float getArea() {
-        float area = this.w * this.h;
-        return area;
+
+        return this.w * this.h;
     }
 
     public Vector2D getCenterOfMass() {
 
-        float x1,y1;
-        x1= pos.x + (w /2);
-        y1 = pos.y +(h /2);
-        return new Vector2D(x1, y1);
+        return new Vector2D(pos.x + (w /2.0f), pos.y +(h /2.0f));
     }
-    // 질량 중심  : 물체가 있을때 각각의 위치마다 질량의 덴서티를 곱해서, 위치마다 ...ㅏㅈ덕
-    // 4점중에 평균지점을 찍으면됬데 공식은 맞은듯, // 적분을 해야하는 상황이 맞데..
-    // 특정상황에 맞춰서 어떤 공식을 사용해야하는지 알아야한다..그래야 실무함..ㅠㅠㅠ //
-    // 내가고민햇던거랑 마찬가지...그림그리는것조은데 그것을 가지고 구하루잇는 공식을 생각해봐봐... 수학자들이 다 해줄거야
 
     public Vector2D [] getAllPoints() {
-        Vector2D vec00 = new Vector2D(pos.x,pos.y);
-        Vector2D vec01 = new Vector2D(pos.x,(pos.y+h));
-        Vector2D vec10 = new Vector2D((pos.x+w),pos.y);
-        Vector2D vec11 = new Vector2D((pos.x+w),(pos.y+h));
 
-        return new Vector2D[]{vec00,vec01,vec10,vec11};
+        return new Vector2D[]{ pos,
+                               new Vector2D(pos.x,(pos.y+h)),
+                               new Vector2D((pos.x+w),pos.y),
+                               new Vector2D((pos.x+w),(pos.y+h))};
     }
 
 
     public void rot90(Vector2D pivot) {
-        Vector2D vec00 = new Vector2D(pivot.x+(pos.y-pivot.y),pivot.y-(pivot.x-pos.x));
-        Vector2D vec01 = new Vector2D(pivot.x+(pos.y-pivot.y)+h,pivot.y-(pivot.x-pos.x));
-        Vector2D vec10 = new Vector2D(pivot.x+(pos.y-pivot.y),pivot.y-(pivot.x-pos.x)+w);
-        Vector2D vec11 = new Vector2D(pivot.x+(pos.y-pivot.y)+h,pivot.y-(pivot.x-pos.x)+w);
-        Vector2D[] vec = new Vector2D[]{vec00,vec01,vec10,vec11};
-        rotRec = Arrays.toString(vec);
+        Vector2D[] oldPoints = getAllPoints();
+        Vector2D[] newPoints = new Vector2D[4];
+        for (int i = 0; i < oldPoints.length; i++) {
+            newPoints[i] = new Vector2D(
+                    -(oldPoints[i].y - pivot.y) + pivot.x,
+                    (oldPoints[i].x - pivot.x) + pivot.y);
+        }
+
+        float min_x = newPoints[0].x;
+        float min_y = newPoints[0].y;
+        float max_x = newPoints[0].x;
+        float max_y = newPoints[0].y;
+
+        for (Vector2D twoD : newPoints) {
+            min_x = Math.min(min_x, twoD.x);
+            min_y = Math.min(min_y, twoD.y);
+            max_x = Math.max(max_x, twoD.x);
+            max_y = Math.max(max_y, twoD.y);
+        }
+        pos = new Vector2D(min_x, min_y);
+        w = max_x - min_x;
+        h = max_y - min_y;
+    }
+
+        @Override
+        public String toString () {
+            String s = super.toString();
+            s += "\n Area: "+getArea();
+            s += "\n CoM: "+getCenterOfMass();
+            s += "\n";
+            return s;
+        }
+
 
     }
 
-    //피벗을 중심으로 90도를 돌리라는말....
-    //90도를 돈다는것은... 점들이 모두 90도로 돌거야
-    // 일반적인 상황으로 적용하는건 이번에도 실패..
-    //원점을 기준으로 x > -y가 되고 y -> x가 되는거래
-    // 그럼 피봇을 기준으로 동작을 하려면 원점을 이동시키고 90도이동시키고 다시 피벗으로 이동시키면됨
-    // 피벗 x,y를 빼주면 원점으로 옮겨간데(요백터빼기 더백터는 요백터리...몬솔)
-    //  그리고 4점에 min max를 통해 위치를 유추하고
-    // 다시 민민을 모아서 포지션 잡아주고 맥스에서 빼서 윗스 하이트를 계산해줌
-    // 좌표계 로테이션 따로 공부하기 -> 나올대마다 배우는 습관이 좋은 습관 => 개발자는 모든걸 알아야한데 으슈바라ㅓㅏㅣㄹ머지;ㄷ겆닥;ㅣ젇ㄱ
-
-    @Override
-    public String toString() {
-
-        return rotRec;
-    }
-}
 
 class RectTest {
     public static void main(String[] args) {
@@ -117,8 +120,34 @@ class RectTest {
         rect.rot90(new Vector2D(0.4f, 0.2f));
         System.out.println("Rotated rect: " + rect);
         // toString 메서드자체가 오버라이드 되면 객체명을 썼을 때 그 출력문을 출력하게 되어있데
+
     }
 }
+
+//
+// - 수학적 개념이 어려웠던 예제인데 실무에 가면 수학적 개념을 통한 문제해결 많이 하게 될테니 나올때마다 익숙해져야한다
+// - 메서드에서 로컬변수 만들지 않고 return 값에 바로 출력될 수 있게 하는것 연습하자
+// - 해당 상황에서만 할 수 있는 해답이 아닌 하나의 원리를 발견해서 여러상황에서 사용할 수 있는 코드를 만들자
+// - 자바 키워드 암기 뿐 만아니라 이런 문제를 해결할 수 있는 능력을 키우는데 중점 두자
+
+
+// 질량 중심  : 물체가 있을때 각각의 위치마다 질량의 덴서티를 곱해서, 위치마다
+// 4점중에 평균지점을 찍으면됬데 공식은 맞은듯, // 적분을 해야하는 상황이 맞데..
+// 특정상황에 맞춰서 어떤 공식을 사용해야하는지 알아야한다..그래야 실무함..ㅠㅠㅠ //
+// 내가고민햇던거랑 마찬가지...그림그리는것조은데 그것을 가지고 구하루잇는 공식을 생각해봐봐... 수학자들이 다 해줄거야
+
+
+
+//피벗을 중심으로 90도를 돌리라는말....
+//90도를 돈다는것은... 점들이 모두 90도로 돌거야
+// 일반적인 상황으로 적용하는건 이번에도 실패..
+//원점을 기준으로 x > -y가 되고 y -> x가 되는거래
+// 그럼 피봇을 기준으로 동작을 하려면 원점을 이동시키고 90도이동시키고 다시 피벗으로 이동시키면됨
+// 피벗 x,y를 빼주면 원점으로 옮겨간데(요백터빼기 더백터는 요백터리...몬솔)
+//  그리고 4점에 min max를 통해 위치를 유추하고
+// 다시 민민을 모아서 포지션 잡아주고 맥스에서 빼서 윗스 하이트를 계산해줌
+// 좌표계 로테이션 따로 공부하기 -> 나올대마다 배우는 습관이 좋은 습관 => 개발자는 모든걸 알아야한데 으슈바라ㅓㅏㅣㄹ머지;ㄷ겆닥;ㅣ젇ㄱ
+
 
 
 // 코딩을 위한 유용한 클래스를 만들기위해선 실제 이런 문제들을 직면하게됨...으슈발
