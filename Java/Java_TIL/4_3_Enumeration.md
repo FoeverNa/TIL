@@ -8,6 +8,11 @@
  - 열거형은 다른 클래스를 상속하지 못하지만, 인터페이스 구현은 가능 하다
  
  - 열거형 타입에는 열거형 상수와 null 값 할당 가능하다
+ 
+ - An enum is a special "class" that represents a group of constants
+    - Use enums when you have values that you know aren't going to change, like month days, days, colors, deck of cards, etc.
+     
+
 
 
 ```java
@@ -64,6 +69,8 @@ public class Enumeration {
     - 상수를 열거하는 것이 객체를 선언하는 것과 같다.(new해서 객체를 생성하지 않는다)
     - 생성자를 이용해 멤버변수를 초기화할때 상수옆에 arguments를 입력한다 ex) STUDENT(19)
     - 열거형 상수는 객체인 동시에 정적 변수이다?
+    
+- 변수가 아닌 상수 값들을 모아서 사용할 때 사용할 수 있다.
 
 - switch ~case문에서는 열거형 자료형을 생략해야 한다 
     - 사용시 에러 발생

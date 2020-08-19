@@ -1,8 +1,8 @@
 # 연산자 (Operators)
 ## 연산의 구성
 - 연산은 연산자, 피연산자, 연산식(expression)으로 구성됨
-- 피연산자의 수에 따라 단한 연산자 이항연산자 삼항연산자로 구분
-- 연산자사이에는 우선순위가 있어서 위치에 상관없이 우선순위에 따라 연산됨
+- 피연산자의 수에 따라 단한 연산자 이항연산자 삼항연산자로 구분할 수 있다
+- 연산자사이에는 우선순위가 있어서 연산자의 위치에 상관없이 우선순위에 따라 연산된다
 
 ```aidl
         int x = 10, y = 20, z;
@@ -16,10 +16,16 @@
 
 ## 정수와 실수의 사칙연산
 
-- 사칙연산자는 + - * / 와 나머지를 구하는 %(modulus) 연산자로 구성됨
+- 사칙연산자는 + - * / 와 나머지를 구하는 %(modulus) 연산자로 구성된다
+    - The modulus operator returns the remainder of the two numbers after division
+    
 - 정수의 나눗셈은 몫만 출력되고 실수는 나눗셈 값이 출력됨
-- %연산자로 정수 뿐만 아니라 실수의 나머지도 구할 수 있음
-- 정수와 실수의 사칙연산에서는 정수가 실수로 변환되어서 연산하게 됨
+    - 나머지를 나누어서 나오는 값은 실수 이기 때문에 실수를 표현할 수 없는 정수는 몫만 출력한다(로 이래했음)
+
+- %연산자로 정수 뿐만 아니라 '실수'의 나머지도 구할 수 있다
+    
+- 정수와 실수의 사칙연산에서는 정수가 실수로 변환되어서 연산하게 된다
+    - double 로 변환되어서 연산하게 된다
 
 ```aidl
         System.out.println("정수형 사칙 연산");
@@ -27,51 +33,48 @@
         System.out.println(5-20); // -15
         System.out.println(10 * 662); //6620
         System.out.println(150 / 8); //18, 정수의 나눗셈은 몫만 나옴, 사라지는 수는 &로 구함
-        System.out.println(150 & 8); // modulus,(모듈러스연산) 나머지 구하는 연산자
+        System.out.println(150 % 8); //6 // modulus,(모듈러스연산) 나머지 구하는 연산자
 
-        System.out.println("실수형 사칙 연산");
-        System.out.println(10.0 + 52.3);
-        System.out.println(10.5f + 12.3); //float이 double로 자동으로 변환되서 계산됨
-        System.out.println(10.4 - 50);//정수와 실수의 계산에서는 실수형으로 변환후 연산
-        System.out.println(10.2 * 4.2);// 42.839999
+        System.out.println("실수형 사칙 연산");// 
+        System.out.println(10.0 + 52.3); // 62.3
+        System.out.println(10.5f + 12.3);//22.8 //float이 double로 자동으로 변환되서 계산됨
+        System.out.println(10.4 - 50);//-39.6 // 정수와 실수의 계산에서는 실수형으로 변환후 연산
+        System.out.println(10.2 * 4.2);//42.839999
         System.out.println(150 / 8.0); //18.75, 정수/실수이기에 실수로 변환 되서 몫이 아닌 실수값이 나옴
-        System.out.println(5.2 / 1.2); // 몫이 아닌 실수값
-        System.out.println(5.2 % 1.2);// 실수도 modulus 연산으로 나머지 계산 가능
-                                        //0.4가 나와야되는데 소숫점 조금더나오는데 그건 부동소수점 오차
+        System.out.println(5.2 / 1.2); //4.333333333333334// 몫이 아닌 나머지 까지 나눈 실수값
+        System.out.println(5.2 % 1.2);// 0.40000000000000036 // 실수도 modulus 연산으로 나머지 계산 가능
+                                        //0.4가 나와야되는데 소숫점 조금 더 나오는데 그건 부동소수점 오차
         System.out.println("");
 ```
 
 ### 사칙연산시 주의 사항
 
-- 사칙 연산의 결과가 overflow되서 전혀 다른 값이 출력 될 수 있음
-- 실수의 사칙연산의 결과는 미세한 오차가 발생 할 수있음
-- 실수형 오차는 딥러닝 같이 여러번 연산을 반복하는 경우 큰 문제가 발생하지만, 그외에 경우에는 미미해서 크게 영향은없음
-- 하지만 실수의 연산 값을 정수형으로 활용하려고 형변환 할때는 데이터 소실의 문제가 발생할 수 있음
+- 사칙 연산의 결과가 overflow되서 전혀 다른 값이 출력 될 수 있다
+
+- 실수의 사칙연산의 결과는 미세한 오차가 발생 할 수 있다
+    - 실수형 오차는 딥러닝 같이 여러번 연산을 반복하는 경우 큰 문제가 발생하지만, 그외에 경우에는 미미해서 크게 영향은 없다
+    - 하지만 실수의 연산 값을 정수형으로 활용하려고 형변환 할때는 데이터 소실의 문제가 발생할 수 있기 때문에 유의해야 한다
+    
+- 계산식은 오류가 안나지만 값에 따라 Infinity, NAN이 뜨기도 한다
 
 
 ```aidl
         System.out.println("사칙연산 주의사항");
         //overflow가 있음
         System.out.println(Integer.MAX_VALUE /2 *3); //-1073741827,값이 overflow되버림
-        System.out.println(Integer.MAX_VALUE); //최대값
-        System.out.println(Integer.MAX_VALUE+1); // 최대값+1 = 최소값
-        System.out.println(Integer.MIN_VALUE); // 최소값
-        System.out.println(Integer.MIN_VALUE-1); //최소값 -1 = 최대값
+        System.out.println(Integer.MAX_VALUE); //2147483647 //최대값
+        System.out.println(Integer.MAX_VALUE+1); //-2147483648 // 최대값+1 = 최소값
+        System.out.println(Integer.MIN_VALUE); //-2147483648 // 최소값
+        System.out.println(Integer.MIN_VALUE-1); //2147483647 // 최소값 -1 = 최대값
 
         //참고 : 최대값 +1이 최소값이 되는 이유
 
-        int maxVal = 0b01111111111111111111111111111111; // 최대값 에서 +1을 하면 맨끝짜리부터 값이 올라가서 00000하다가 맨끝에서1이됨
-        int maxVal1= 0b10000000000000000000000000000000; // 에 +1을 해주면 최소값이됨 (최대 범위보다 +1많잖아 최소값이)
-                                                            
-        System.out.println(maxVal);
-        System.out.println(maxVal1);
-        int minVal = 0b10000000000000000000000000000001;// +1을 해준 결과
-        //맨앞자리가 0이면 양수 1이면 음수
-        // 원래는 1의 보수구할때는 역수를하고 +1을하면 음수가나옴//근데 maxval minval에서는 0을 표현해야되서 min이 1더많잖아 그래서 -1더해줘야함
-        
-        System.out.println(minVal);
-        //1's C 1의 보수 , 2진수의 음수를 만들기 위한 값
-        // 0과 1을 다 뒤짚어 주고 1을 더해주면 1's C이 된다.
+        int maxVal = 0b01111111111111111111111111111111; // 최대값에서 +1을 하면 맨끝짜리부터 값이 올라가서 00000하다가 맨끝에서1이됨
+        int maxVal1= 0b10000000000000000000000000000000; // = Integer.MIN_VALUE
+        // Integer.MAX_VALUE에 2의 보수를 구하면 0b10000000000000000000000000000001
+        // 근데 Integer에 표현범위는 양수가 하나 작음, 그래서 min Val이 하나 더 많아야되는데 음수니까 +1이 아니라 -1을 해줘야됨
+        // 그래서 -1을 하면 int minVal = 0b10000000000000000000000000000000;이 나오게 된다
+
 
         //실수의 오차발생
 
@@ -102,8 +105,8 @@
 
 ## 비교 연산자 (Comparison Operators)
 
-- 비교 연산자는 두개의 항을 비교할때 사용하는 연산자로 그 출력값은 boolean 타입(true / false)
-- '=='는 같다, '!=' 같지 않다(not) 외에 부등호가 사용됨
+- 비교 연산자는 두개의 항을 비교할때 사용하는 연산자로 그 출력값은 boolean 타입(true / false)이다
+- '=='는 같다, '!=' 같지 않다(not) 외에 부등호가 사용된다
 ```aidl
         System.out.println("비교 연산자");// 출력이 boolean
         System.out.println(10>20); // false
@@ -118,12 +121,14 @@
 
 ## 논리 연산자 (Logical Operators)
 
-- 논리연산자는 입력과 출력이 모두 boolean인 연산자
+- 논리연산자는 입력과 출력이 모두 boolean 인 연산자
 - a AND b : a, b 모두 참일때 만 참 &
 - a OR b : a 또는 b 둘 중 하나만 참이어 도 참 |
-- a XOR b : a 또는 b 둥 중 하나만 참이어 야 참.(둘다 참이면 거짓)// exclusive or,베타적 or 라고함 ^
-- NOT a : a가 참이면 거짓, 거짓이면 참 ! (단항연산자)
-- 논리 연산자를 2개 사용하는 것을 short-circuit이라하고 더 빠르게 연산하게 된다. ex) &&, ||
+- a XOR b : a 또는 b 둘 중 하나만 참이어 야 참.(둘다 참이면 거짓)// exclusive or,베타적 or 라고한다 ^
+- NOT a : a가 참이면 거짓, 거짓이면 참 ! (단항 연산자)
+- 논리 연산자를 2개 사용하는 것을 short-circuit 이라 하고 더 빠르게 연산하게 된다. ex) &&, ||
+    - 앞에 수식이 조건을 만족하면 뒤에 수식은 평가 하지 않는다
+
 ```aidl
         System.out.println(10 <20 & 40 >= 2);// true // 양쪽이 모두 ture이기에 true
         System.out.println(40 < 2 | 1> 0); //true // 1>0이 참이기에 참
@@ -139,8 +144,10 @@
 
 ## 증감 연산자 (Increment and Decrement Operators)
 
-- 증감 연산자는 단항 연산자로 값을 증가시키거나 감소시킴
+- 증감 연산자는 단항 연산자로 값을 증가시키거나 감소시킨다
+
 - 증감 연산자가 값의 앞에 붙으면 증감 먼저 반영하고 Expression 평가함
+
 - 반대로 증감 연산자가 값의 뒤에 붙으면 Expression 평가하고 증갑을 반영함
 
 ```
@@ -195,12 +202,16 @@
 - ^ 2개의 비트를 비교해 하나라도 0이면 0을 도출
 
 ```aidl
-        System.out.printf("b%32s\n", Integer.toBinaryString(1252));
-        System.out.printf("b%32s\n", Integer.toBinaryString(15234));
-        System.out.printf("b%32s\n", Integer.toBinaryString(1252 & 15234)); //하나라도 0이면 0, 둘다 1이면 1
-        System.out.printf("b%32s\n", Integer.toBinaryString(1252 | 15234)); //하나라도 1이면 1 둘다0이면 0
-        System.out.printf("b%32s\n", Integer.toBinaryString(1252 ^ 15234)); //XOR
-        System.out.printf("b%32s\n", Integer.toBinaryString(~1252)); //not은 !아닌 ~
+        System.out.printf("b%32s\n", Integer.toBinaryString(1252)); //b                     10011100100
+        System.out.printf("b%32s\n", Integer.toBinaryString(15234));//b                  11101110000010
+        System.out.printf("b%32s\n", Integer.toBinaryString(1252 & 15234));//b                 10000000
+                                                                            //AND, 하나라도 0이면 0, 둘다 1이면 1
+        System.out.printf("b%32s\n", Integer.toBinaryString(1252 | 15234));//b           11111111100110
+                                                                            //OR, 하나라도 1이면 1 둘다0이면 0
+        System.out.printf("b%32s\n", Integer.toBinaryString(1252 ^ 15234));//b           11111101100110
+                                                                           //XOR, 둘중 하나만 1일때 1, 나머지 0
+        System.out.printf("b%32s\n", Integer.toBinaryString(~1252)); //b11111111111111111111101100011011
+                                                                   //not은 !아닌 ~, 단항연산자, 1=>0, 0=>1 도출
 ```
 
 
@@ -208,8 +219,13 @@
     
 - 정수형 2진수 연산에 사용
 - <<, >>, >>>, 으로 좌측 피연산자의 각 비트를 연산자 방향대로 우측 피연사자만큼 이동시킴
-- 이동시킬 때 생기는 빈자리는 0으로 채움
-- >>>
+    - <<을 1번하면 2를 곱하는 효과, >>(>>>)을 1번하면 2를 나누는 효과가 있다
+    - << 2 하면 2칸을 이동 시킨다
+    - 이동시킬 때 생기는 빈자리는 0으로 채우게 된다
+- '-1'의 경우 >>을 하면 2를 나누는데 -0.5가된다. 그런데 2진수는 정수이기 때문에 -0.5를 반올림해서 다시 -1이 된다.
+    - 그래서 >>을 하면 값이 변화가 없게 되기 때문에 >>>란 기호를 사용해야 원하는 결과를 출력할 수 있다.
+        - -0.5를 내림 하지 않고 반올림 하는것은 자바의 규칙.. 
+        - -1외에 다른 수는 >>을 사용하면 된다
 
 ```aidl
         System.out.printf("b%32s\n", Integer.toBinaryString(8)); //1000
@@ -233,8 +249,10 @@
                                                                        // <<에는 <<<없지만 >>에는 >>>이 있다.
 ```
 
+
 #### 참고 비트연산자와 대입연산자
-- 논리비트연산자와 이동 비트 연산자도 대입연산자와 함께 사용이 가능함
+
+- 논리비트연산자와 이동 비트 연산자도 대입연산자와 함께 사용이 가능하다
 
 ```aidl
         int intVal = 4123;

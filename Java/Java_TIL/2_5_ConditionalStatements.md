@@ -6,11 +6,11 @@
 
 ### if ~ else
 
-- 조건식이 참일 때 수행문을 실행하고 아닐 때 else뒤에 수행문을 실행하는 조건문
+- 조건식이 참일 때 수행문을 실행하고 아닐 때 else 구문을 실행하는 조건문
 
 ```
 String snum = "510225-2055132";
-        char c = snum.charAt(7);
+        char c = snum.charAt(7); //2
         System.out.println(c);
 
 
@@ -105,7 +105,7 @@ score = 90;
 - 다른 조건문과는 다르게 조건식이 아닌 조건 값을 평가함.
 - case (값) 하고 (값)과 조건 값과 같으면 : 이후에 수행문이 실행됨
 - 수행문 다음에 break;를 사용해 조건문을 빠져나오지 않으면 아래의 case의 수행문이 모두 수행되니 주의
-- 위와 같은 상황을 fall-through라고하고 일부러 case를 붙여 fall- through하기도 함
+- 위와 같은 상황을 fall-through라고하고 일부러 case를 붙여서 사용해  fall- through하기도 한다
 
 
 ```
