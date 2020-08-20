@@ -76,14 +76,15 @@ end note
 - 위에 클래스들 써넣고 아래에 관계를 표현함
     - "-|>" 상속관계 // Foo -|> IFoo // foo가 Ifoo 상속한다
     - "-o" 어그리게이션(포함관계) // 
+   
 
 - Bar -o Foo (어그리게이션 관계)
     - Aggregation : sub클래스가 독립적으로 존재할 수 있음, 
-        - ex) School - Student, Team - Player
+        - ex) School - Student, Team - Player, Creep - Tortoise
 
 - Qoo -* Foo ( 포함관계?? 이부분 이해안됫음)
     - Composition(포함관계) : sub클래스가 독립적으로 존재할 수 없음, Owner 클래스가 없으면 의미없음
-        - ex) Human - Leg,Arm and Hearts , Car - Parts...
+        - ex) Human - Leg,Arm and Hearts , Car - Parts..., Zoo - Loby, Bathroom
     
 
 - 제목 title"쓰고싶은제목" ex) title Class Diagram Title
@@ -94,7 +95,7 @@ end note
     - end note
     - 위치에는 top bottom left right 들어갈수 있음
 
-- 화살표 방향을 설정할 수 있음 // Qoo -right* Foo > 화살표방향이 바뀜
+- 클래스 위치를 설정할 수 있음 // Qoo -right* Foo >  Qoo가 Foo의 왼쪽에 있다가 오른쪽으로 이동함
  
 -  실무에서는 설계자가 설계한데로 구현 하면됨. 그 분은 전문적으로하는사람이라 따라가면됨
 

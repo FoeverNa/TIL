@@ -4,25 +4,41 @@
 - 내부에는 문자 배열로 된 데이터가 있다. char[]
 - 한번 만든 문자열은 변하지 않는다. (Immutable)// 이뮤터블
 - 문자열 편집은 String을 쓰지 않고 StringBuilder나 StringBuffer 등을 사용한다.
- 
+
+
+```java
+public class StringTest {
+    public static void main(String[] args) {
+        String s = "안녕하세요";
+        String s1 = s;
+        s += " 슈가에 아유미에요";
+        
+        System.out.println(s); // 안녕하세요 슈가에 아유미에요
+        System.out.println(s1); // 안녕하세요
+    }
+}
+```
+- Stirng s에 string을 더해서 s를 추력하면 더한 값이 추력되지만 s를 참조하고 있던 s1은 변함이 없음
+    - String이 immutable 하다느 증거
+
 
 ## 문자열 생성
 
 - String 변수명 = "값";을 통해 생성
 - 클래스이기에 new 생성자 사용해서 생성할 수 있지만 권장하지 않음(힙메모리중 young메모리에 생성됨 )
-- String은 STring 풀 에 생성되고 중복된 문자를 다른 변수로 생성할 때 해당 값을 참조해서 사용
+- String은 String 풀 에 생성되고 중복된 문자를 다른 변수로 생성할 때 해당 값을 참조해서 사용
 
 - 힙메모리에는 Young memory(nursery?)와 Old memonry가 있음
     - 비교적 최신에 들어온것은 young memory에 생성되고 그후 오래 생성되어있으면 old memory로 이동됨
     - String은 값을 생성시 old memory에 string풀에 생성됨// 
-    - 그 후 다른 값 입력시 string 풀에서 찾아서 사용하고 없면 새로생성함
+    - 그 후 다른 값 입력시 string 풀에서 찾아서 사용하고 없면 새로 생성함
     - new 로 객체생성시 youngmemory에 생성됨 => 권장하지 않는이유..의미가없음
     
     아래의 상수풀로되어있는것 => String 풀로 치환되어야함
 
 
 
-```
+```java
         String s1 = "문자열 생성 방법"; // 보통의 생성 방법, String 변수명 = "값";
         String s2 = new String("문자열 생성 방법2"); // 클래스 생성자. 권장하지 않음
 
@@ -62,7 +78,7 @@
     
 - equals(anObject) anObject와 비교한 결과 출력(boolean) 
 
-```
+```java
         String s = "This is a string.";
         System.out.println(s.length()); //16 //length 같이 이름만들어도 기능이 예상되는게 잘지은 이름이다.
                                         //이름을 짓기 어려운 기능은 메서드로 만들지 않는 것이 좋다.

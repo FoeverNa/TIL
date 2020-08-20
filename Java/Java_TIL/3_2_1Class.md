@@ -3,7 +3,7 @@
 ## 클래스와 객체
 
 - 클래스 - 객체를 생성하기 위한 설계도 (Class)
-- 객체 - 클래스를 구체화하여 값으로 생성된 것(Object, instance)
+- 객체(인스턴스) - 클래스를 구체화하여 값으로 생성된 것(Object, instance)
 - 클래스를 객체로 만드는 과정 - Instanciation 라고 함
 
 ## 클래스의 구성
@@ -44,39 +44,53 @@ public class Main {
         carThree.speed = 5;
         System.out.println(carThree.speed);//5 
         System.out.println(carOne.speed);//5 carThree가 가르키는 carOne의 값이 바뀐 것이 었음!
-        //carThee와 carOne은 다른 변수이지만 같은 값을 가르키고 있다.
+        //carThree와 carOne은 다른 변수이지만 같은 값을 가르키고 있다.
         // String은 immutable이기에 참조형 객체이어도 이런 문제가 없다.(수정이 불가하기 때문에)
         // 그러나 보통 class는 mutabl이기 떄문에 신경써서 사용해야 함;
 }
 ```
 - new 키워드를 통해 인스턴스를 생성할 수 있음 ex)Car carOne = new Car();
+    
     - Car클래스를 데이터타입으로 하는 carOne 변수에 인스턴스를 생성해서 대입하겠다.
     
 - 인스턴스를 대입한 변수명 뒤에 '.'을 붙여 해당 인스턴스에 속성과 메서드에 접근할 수 있다.
+    
     - ex) carOne.speed, carOne 인스턴스에 speed 변수에 접근
     
 - 같은 클래스라도 new 클래스로 생성한 만큼의 독립된 인스턴스(객체)가 생성됨
-   - 위의 예시에서 carOne과 carTwo는 같은 클래스(정의)를 공유하는 독립된 객체
-
+   
+- 위의 예시에서 carOne과 carTwo는 같은 클래스(정의)를 공유하는 독립된 객체
+   
 - 변수에 새로운 객체를 생성하지 않고 기존에 생성된 객체를 대입한다면 같은 객체를 참조하게 된다.
+    
     - 위의 예시에서 carThree와 carOne이 같은 객체를 가르키고 어느한쪽을 수정하면 다른한쪽도 수정되는 모습을 확인 가능
+    
+      - 그렇기 때문에 사용할 때 주의를 기울여야 한다
+    
+    - 하지만 String은 mutable하기 때문에 값이 수정되지 않아 이런 문제가 발생하지 않는다.
+    
+      
 
 ## 클래스와 객체의 메모리 구조
 
+
+
 ### 클래스와 객체에서 고려해야할 3가지 메모리 영역
+
+
 
  1. 클래스 영역 ( Class area, method area, code area, static area)
    - field 정보, method 정보, type 정보, constant pool
-   
+
  2. 스택 영역(Stack area)
    - method 호출 시 선언된 로컬 변수(파라미터 로컬 변수 포함) (임시로 있다가 사라짐)
 
  3. 힙 영역 (Heap area)
    - new 키워드로 생성된 객체(객체의 속성(멤버 변수))
    - garbage collection(GC)이 동작하는 영역 
-    : 더이상 사용하지 않는 메모리를 알아서 제거하는 JVM의 기능
- 
-```
+        - 더이상 사용하지 않는 메모리를 알아서 제거하는 JVM의 기능
+
+```java
         // 메모리 구조 예시
         
     public class MemoryStructure {// 클래스 영역
@@ -114,7 +128,7 @@ public class Main {
 - 로컬 파라미터 변수 (local parameter variable) (arguments)
                
 ### 변수의 생성     
-                    
+
 ```java
 // 클래스에서 변수 생성
 
