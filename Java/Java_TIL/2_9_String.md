@@ -1,9 +1,14 @@
 # 문자열 (String)
 
 - 문자열은 내부적으로 '클래스'로 구성되어 있다.
+
 - 내부에는 문자 배열로 된 데이터가 있다. char[]
+
 - 한번 만든 문자열은 변하지 않는다. (Immutable)// 이뮤터블
+
 - 문자열 편집은 String을 쓰지 않고 StringBuilder나 StringBuffer 등을 사용한다.
+
+  
 
 
 ```java
