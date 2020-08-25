@@ -1,17 +1,17 @@
 # 열거형 (Enumeration)
 
  - enum 키워드로 표현한다
- 
+
  - 내부적인 구현은 enum ==> java.lang.Enum 클래스를 상속하는 자녀 클래스이다.
     - 그렇기 때문에 enum은 다른 클래스를 상속하지 못한다
- 
- - 열거형은 다른 클래스를 상속하지 못하지만, 인터페이스 구현은 가능 하다
- 
- - 열거형 타입에는 열거형 상수와 null 값 할당 가능하다
- 
+
+     - 열거형은 다른 클래스를 상속하지 못하지만, 인터페이스 구현은 가능 하다
+    
+ - 열거형 타입에는 열거형 상수와 null 값을 할당 가능하다
+
  - An enum is a special "class" that represents a group of constants
-    - Use enums when you have values that you know aren't going to change, like month days, days, colors, deck of cards, etc.
-     
+    - Use enums when you have values that you know aren't going to change, like month days, colors, deck of cards, etc.
+    
 
 
 
@@ -21,7 +21,6 @@
 enum Job { // 각 상수는 0부터 숫자를 가지지만, 심볼로만 사용하고 숫자는 사용하지 않음
     STUDENT, MARKETING, DEVELOPER, CHIEF_EXECUTIONAL_OFFICER; // 열거형 상수
 }
-
 
 
 public class Enumeration {
@@ -57,23 +56,35 @@ public class Enumeration {
                         break;
                     default:
                         System.out.println("Who are You?");
-                }
+                } // you will be a great one
         
-                    System.out.println(Foo.Symbol.ONE);// 심볼그자체로 사용된다..
+                    System.out.println(Foo.Symbol.ONE);// ONE
+            										// 심볼그자체로 사용된다..
 }
 }
 ```
 - enum은 클래스와 유사하게 enum enum명으로 선언하다
 
+- 서로 관련 있는 상수들을 모아 심볼릭한 명칭의 집합으로 정의한 것이다(추가)
+
 - 상수를 열거하여 선언할 수 있다. ex) STUDENT, MARKETING, DEVELOPER
     - 상수를 열거하는 것이 객체를 선언하는 것과 같다.(new해서 객체를 생성하지 않는다)
+    
     - 생성자를 이용해 멤버변수를 초기화할때 상수옆에 arguments를 입력한다 ex) STUDENT(19)
-    - 열거형 상수는 객체인 동시에 정적 변수이다?
+    
+    - 열거형 상수는 정적 변수로 enum에 객체를 담고 있다.
+    
+      
     
 - 변수가 아닌 상수 값들을 모아서 사용할 때 사용할 수 있다.
 
+    
+
 - switch ~case문에서는 열거형 자료형을 생략해야 한다 
-    - 사용시 에러 발생
+  
+    - 사용시 에러 발생 한다 ex) Job job(X) , job(O)
+    
+      
 
 
 ## 클래스 내부에서 열거형 구현
@@ -93,7 +104,7 @@ System.out.println(Foo.Symbol.ONE); //ONE
 ```
 
 - 클래스내부에서 열거형을 선언하여 구현할 수 있다.
-    - 접근은 클래스명.열거형명.상수로 접근한다
+    - Foo(클래스명).Symbol(enum명).ONE(상수)로 접근이 가능하다
     
     
 
@@ -117,9 +128,8 @@ enum Symbol {
 }
   public class Enumeration {
         public static void main(String[] args) {
-                 
             
-        Symbol sym = Symbol.ONE;
+        Symbol sym = Symbol.ONE; //ONE
         Symbol nextSym = sym.nextSymbol(); // sym 은 객체임 그래서 메소드 사용가능한것
         System.out.println(nextSym); // Two
         nextSym = nextSym.nextSymbol();
@@ -130,9 +140,14 @@ enum Symbol {
 ```
 
 - 열거형 내부에서도 메서드를 생성 가능하다
+    
     - 이때 열거형의 상수는 this를 통해 객체로 지칭될 수 있다. ex) this.equals(ONE)
     
-- 열거형의 상수는 객체로 .을 붙여서 메서드를 사용할 수 있다. exe)Symbol sym = Symbol.ONE; sym.nextSymbol();
+- 열거형의 상수는 객체를 담고 상수로 .을 붙여서 메서드를 사용할 수 있다. exe)Symbol sym = Symbol.ONE; sym.nextSymbol();
+
+    - 객체를 담고 있는 변수를 사용하는 것과 같은데 뭔가 객체 생성의 과정이 없으니 해깔려 보인다..
+
+        
 
 
 ## 열거형 생성자를 이용한 enum 상수 초기화
@@ -176,28 +191,75 @@ enum Family {
         }
     }
 ```
-- 열거형의 상수는 객체이기 때문에 열거형의 선언된 멤버 변수를 생성할 수 있다
-    - 열거형의 멤버 변수는 private이다
-
+- 열거형의 상수는 객체이기 때문에 열거형의 선언된 멤버 변수를 속성으로 갖는다.
+    
+- 열거형의 멤버 변수는 private이다
+    
+      
+    
 - 열거형의 생성자를 통해 멤버 변수를 초기화 할 수 있다. 
     - 열거형의 생성자는 내부에서만 객체를 생성하기 때문에 private이다.
-    - ex)  private Family(String koreanWord){ this.koreanWord = koreanWord }
-    - 이때 초기화는 객체가 존재하는 열거형 내에서 한다(PRIVATE)
+        - ex)  private Family(String koreanWord){ this.koreanWord = koreanWord }
+    
+    - 이때 초기화는 객체가 존재하는 열거형 내에서 한다
+        
+        - Enum은 상수 선언시 객체를 생성하고 초기화 하는 것이기 때문이다
+            
         - FATHER("아버지"), MOTHER("어머니"), SON("아들"), DAUGHTER("딸");
         
+            
+    
 - 클래스와 같이 객체를 통해 멤버 변수에 접근 할 수 있다.
     - 멤버변수가 private인경우도 getter setter를 통해 멤버변수에 접근 한다.
+        
         - fam.setKoreanWord("버린 자식");
+        
+          
 
 ## Enum에 상수의 특징
 
 - Enum의 상수는 정적 변수에 객체가 담겨있는 형태이다
+    
     - Static Family FATHER = new Family(); 와 같은 형태
     
-- 그래서 System.out.println(Family.FATHER.DAUGHTER.getKoreanWord()); // MOTHER 같은 문장이 가능함
+      
+    
+- 그래서 System.out.println(Family.FATHER.DAUGHTER.getKoreanWord()); // MOTHER 같은 문장이 가능하다
     - Family.FATHER으로 정적변수에 접근, 정적변수안에 객체로 다시 정적변수인 DAUGHTER에 접근
     - 그리고 정적변수에 객체로 .geKoreaWord()에 접근할수 있었던 것이다
 
 
 
-    
+## values(), ordinal() 그리고 valueOf() 메서드 :
+
+ 
+
+- 이 메소드들은 **java.lang.Enum** 내부에 존재한다.
+- values() 메소드는 enum안에 존재하는 모든 값들은 반환한다.
+- enum안에서 순서는 중요하다. ordinal() 메소드를 사용하여 배열 인덱스처럼 각 enum 상수 인덱스를 찾을 수 있다.
+- valueOf() 메소드는 존재한다면 특정 enum 상수의 스트링 값을 반환한다.
+
+```java
+enum Color { 
+    RED, GREEN, BLUE; 
+} 
+  
+public class Test 
+{ 
+    public static void main(String[] args) 
+    {
+        for (Color col : Color.values()) { 
+            System.out.println(col + " at index " + col.ordinal()); 
+        } 
+  
+        System.out.println(Color.valueOf("RED")); 
+    } 
+} 
+```
+
+```java
+RED at index 0
+GREEN at index 1
+BLUE at index 2
+RED
+```
