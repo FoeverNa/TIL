@@ -13,28 +13,16 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     public Gomoku(){
 
     }
-    public void startGame(){
 
-        initialize();
-
-
-        play();
-        printStatus();
-        isFinished();
-
-        reset();
-
-        getWinner();
-
-    }
 
     @Override
     public void initialize() {
         Scanner sc = new Scanner(System.in);
-        player_One = new Player(sc.nextLine());
-        player_Two = new Player(sc.nextLine());
+        System.out.println("Plyaer1에 이름 입력 :");
+        player_One = new Player(sc.next());
+        System.out.println("Plyaer2에 이름 입력 :");
+        player_Two = new Player(sc.next());
         sc.close();
-
     }
 
     public Player whosTurn(){
@@ -43,6 +31,11 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
         } else{
             return player_Two;
         }
+    }
+
+    public void putStone(Player player){
+        player.getKeyboardInput();
+
     }
 
     @Override

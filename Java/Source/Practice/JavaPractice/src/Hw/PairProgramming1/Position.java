@@ -2,5 +2,11 @@ package Hw.PairProgramming1;
 
 public class Position {
 
-    public int turn;
+    public int x,y;
+
+    public Position(int x, int y){
+        this.x = x;
+        this.y = y;
+
+    }
 }

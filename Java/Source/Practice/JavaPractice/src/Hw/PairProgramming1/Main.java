@@ -33,14 +33,19 @@ public class Main {
         gomoku.initialize();
 
         Player player = gomoku.whosTurn();
+//        player.getKeyboardInput();
+//        System.out.println(player.pos.x);
+//
+////        gomoku.play();
+//        gomoku.printStatus();
+//        gomoku.isFinished();
+//
+//        gomoku.reset();
+//
+//        gomoku.getWinner();
 
-        gomoku.play();
-        gomoku.printStatus();
-        gomoku.isFinished();
 
-        gomoku.reset();
 
-        gomoku.getWinner();
 
     }
 }
