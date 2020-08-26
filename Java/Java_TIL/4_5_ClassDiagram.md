@@ -1,15 +1,16 @@
-# 클래스 다이어그램
+# 클래스 다이어그램(Class Diagram)
 
 - 다이어그램으로 클래스를 표현해서 클래스간의 관계와 내용명세를 묘사한 것
 
-- 시간에 따라변하지 않는 정적인 시스템 구조를 표현 한다
-    - 동적인 시스템에 대한 표현은 우리는 배우지 않는다
+- 시간에 따라 변하지 않는 정적인 시스템 구조를 표현 한다
+    - 동적인 시스템에 대한 표현하는 방법은 있지만 우리는 배우지 않는
 
 ## 클래스 다이어그램의 목적
 
-- 문제 해결을 위한 도메인 구조를 표현하기 위함
-    - 오목이라는 게임을 구현하기 위해 인터페이스와 클래스들을 만들고 그 안에 메소드들이 있다면
-	- 그 설계를 어떻게 할 것 인지 미리 그려 보고 그 다음에 구현해 보고 다시 설계를 업데이트하는 구현을 진행한다
+- 문제 해결을 위한 도메인 구조를 나타내어 보이지 않는 도메인 안의 개념과 같은 추상적인 개념을을 기술하기 위해서 사용 한다
+    - 
+- 소프트웨어 설게 혹은 완성된 소프트웨어 구현 설명을 목적으로 사용할 수 있다
+    - 오목이라는 게임을 구현하기 위해 인터페이스와 클래스들을 만들고 그 안에 메소드들이 있다면 그 설계를 어떻게 할 것 인지 미리 그려 보고 그 다음에 구현해 보고 다시 설계를 업데이트하는 구현을 진행한다
 
 ## Unified Modeling Language(UML)
 
@@ -19,6 +20,115 @@
     - 클래스 이름, 파라미터, 리턴 타입 등을 표현 한다
 
 ### UML 작성하기
+
+- @startuml과 @enduml 사이에 다이그램 내용을 입력한다
+
+    ```puml
+    @startuml
+    @enduml
+    ```
+
+    
+
+- 접근제어자는 기호를 활용해 나타낸다
+
+    ```puml
+    abstract class Bar{
+       + static String name;
+       # int x;
+       ~ int y;
+       - void method(String string);
+    }
+    ```
+
+    - '+' public
+    - '#' protected
+    - '~' default
+    - '-' private
+
+    
+
+    - 제목은 title 키워드를 활용한다  title +" "
+
+      ```puml
+      title Class Diagram Title
+      ```
+
+      
+
+    - 메모는 note ~ end note 사이에 적는다
+
+      - 메모의 위치를 지정해주기 위해  note옆에 적어 준다
+        - 메모의 위치는 top, bottom, left, right으로 지정해 준다
+
+      ```puml
+      note bottom of Bar
+       void method() {
+       return string;
+       }
+      end note
+      
+      note bottom of Foo
+      Foo는 Bar가 Aggregation 한다.
+      Foo는 Qoo가 Composition 한다
+      end note
+      ```
+
+      
+
+    #### 클래스간의 관계
+
+    ```puml
+    abstract class Bar{
+       + static String name;
+        Foo foo;
+       # int x;
+       ~ int y;
+       - void method(String string);
+    }
+    
+    class Qoo{
+        Foo foo;
+    }
+    
+    class Foo{
+        int x;
+        void methodA();
+    }
+    ```
+
+- 클래스들의 관계는 작성한 클래스 아래쪽에  화살표로 표현한다.
+
+  ```puml
+  Foo -left|> IFoo
+  Bar -o Foo
+  Qoo -right* Foo
+  ```
+
+  - "-|>" 상속관계 // Foo -|> IFoo // foo가 Ifoo 상속한다
+  - "-o" 어그리게이션
+  - " -* " 컴포지션 
+
+- Bar -o Foo (어그리게이션 관계)
+
+  - Aggregation : sub클래스가 독립적으로 존재할 수 있다.
+    - ex) School - Student, Team - Player, Creep - Tortoise
+
+- Qoo -* Foo 
+
+  - Composition(포함관계) : sub클래스가 독립적으로 존재할 수 없음, Owner 클래스가 없으면 의미없음
+    - ex) Human - Leg,Arm and Hearts , Car - Parts..., Zoo - Loby, Bathroom
+
+
+- 클래스 위치를 설정할 수 있다 
+
+
+    - 위에 관계를 표시해주는 화살표에 left,right등을 써넣어 클래스 위치를 설정할 수 있다
+
+
+​    
+
+#### 전체 코드 및 결과
 
 ```puml
 @startuml
@@ -65,41 +175,22 @@ end note
 
 @enduml
 ```
-- 문법은 우리가 쓰는 것과 비슷하다
 
-- 접근제어자
-    - '+' 퍼블릭
-    - '#' 프로텍티드
-    - '~' default
-    - '-' private
-    
-- 위에 클래스들 써넣고 아래에 관계를 표현함
-    - "-|>" 상속관계 // Foo -|> IFoo // foo가 Ifoo 상속한다
-    - "-o" 어그리게이션(포함관계) // 
-   
 
-- Bar -o Foo (어그리게이션 관계)
-    - Aggregation : sub클래스가 독립적으로 존재할 수 있음, 
-        - ex) School - Student, Team - Player, Creep - Tortoise
 
-- Qoo -* Foo ( 포함관계?? 이부분 이해안됫음)
-    - Composition(포함관계) : sub클래스가 독립적으로 존재할 수 없음, Owner 클래스가 없으면 의미없음
-        - ex) Human - Leg,Arm and Hearts , Car - Parts..., Zoo - Loby, Bathroom
-    
+![image-20200826110137091](C:\Users\foevn\AppData\Roaming\Typora\typora-user-images\image-20200826110137091.png)
 
-- 제목 title"쓰고싶은제목" ex) title Class Diagram Title
 
-- 메모 시작 note+위치 // 끝 end note
-    - note left of Foo
-    - "하고 싶은 말"
-    - end note
-    - 위치에는 top bottom left right 들어갈수 있음
 
-- 클래스 위치를 설정할 수 있음 // Qoo -right* Foo >  Qoo가 Foo의 왼쪽에 있다가 오른쪽으로 이동함
- 
--  실무에서는 설계자가 설계한데로 구현 하면됨. 그 분은 전문적으로하는사람이라 따라가면됨
+#### Aggregation vs Composition
+
+- Aggregation과 Composition의 공통점은, 둘 모두 멤버 변수로 클래스 객체를 사용한다는 점이고. 다른점은, Aggregation의 경우 외부에서 객체가 생성된 후에 참조를 전달받고, Composition의 경우 내부에서 객체가 생성된다는 점이다
+
+- A가 B를 Composition하는 관계가 성립하려면, A 객체 내부에서 B 객체가 생성(new 키워드 사용)되고, A 객체가 사라질 때 B 객체도 같이 사라져야 한다. 
+
+  
 
 ## IDEA 에서 UML 자동 생성
 
-- 패키지나 클래스를 우클릭하면 Diagram 클릭하면 자동으로 UML 생성해 줌
+- 패키지나 클래스를 우클릭하면 Diagram 클릭하면 자동으로 UML 생성할 수 있다
     - 함정은 IntelliJ ultimate 에서만 사용가능
