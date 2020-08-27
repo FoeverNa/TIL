@@ -28,24 +28,7 @@ public class Main {
     public static void main(String[] args) {
 
         Gomoku gomoku = new Gomoku();
-
-
-        gomoku.initialize();
-
-        Player player = gomoku.whosTurn();
-//        player.getKeyboardInput();
-//        System.out.println(player.pos.x);
-//
-////        gomoku.play();
-//        gomoku.printStatus();
-//        gomoku.isFinished();
-//
-//        gomoku.reset();
-//
-//        gomoku.getWinner();
-
-
-
+        gomoku.startGame();
 
     }
 }

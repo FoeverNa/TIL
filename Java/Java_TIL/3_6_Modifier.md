@@ -63,11 +63,7 @@
  
          //private은 특성상 내부 구현을 위해서만 사용됨
      }
-     
- 
  }
- 
- 
  class ClassTest { // 같은 패키지인 경우우
      public static void main(String[] args) {
          ClassA obj = new ClassA();
@@ -110,18 +106,6 @@ class ClassAA extends ClassA {
         methodB();
 //        methodC(); 접근불가
 //        methodD(); // 내부이기에 접근 가능
-
-        //private은 특성상 내부 구현을 위해서만 사용됨
-
-        //protect나 prviate은 어떤걸 써도 상관이 없는 경우가 많다.
-        //개발철학에 따라서 달리지는 경우라 이때는 이걸써야한다는 정해진것은 없음
-        //protected에 변수를 상속받아서 쓰면 private이됨// 자식의 자식은 건들수가 없음
-        // 아리송한것은 어쩔수없음 어떤미친넘이 이걸 private으로놧냐하면서 현업자도 싸움..ㅋㅋㅋ
-        // 다만 어떤 접근제어자를 어떻게 접근할 수있는지 알아서 다른사람에 코드에 접근할수 있으면 됨
-
-        //클래스에서는 public
-        //default는 이미 사용하고 있음
-        //protected  private는 전제가 말이안됨 // 이해못햇는데 한번천천히 따져보자
     }
 }
 

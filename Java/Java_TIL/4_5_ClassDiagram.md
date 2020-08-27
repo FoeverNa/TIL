@@ -192,7 +192,7 @@ end note
 ## IDEA 에서 UML 자동 생성
 
 - 패키지나 클래스를 우클릭하면 Diagram 클릭하면 자동으로 UML 생성할 수 있다
-    
+  
     - 함정은 IntelliJ ultimate 에서만 사용가능
     
     - 

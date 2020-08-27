@@ -12,10 +12,15 @@ public class Player implements Inputtable {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void getKeyboardInput() {
-        Scanner sc = new Scanner(System.in);
-        String s = sc.next();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("돌을 놓을 좌표를 입력하세요(x,y)");
+        String s = scan.nextLine();
         if(s=="q"||s=="Q"){
 
         }else{
@@ -25,6 +30,5 @@ public class Player implements Inputtable {
         pos = new Position(j,k);
         }
 
-        sc.close();
     }
 }
