@@ -8,7 +8,7 @@
 
 - 조건식이 참일 때 수행문을 실행하고 아닐 때 else 구문을 실행하는 조건문
 
-```
+```java
 String snum = "510225-2055132";
         char c = snum.charAt(7); //2
         System.out.println(c);
@@ -43,7 +43,7 @@ String snum = "510225-2055132";
 - if문이 true면 수행문을 실행하고 false면 else if 문의 조건을 따지는 여러 if문이 연결된 형태의 조건문
 
 
-```
+```java
 int score = 2;
         char grade;
 
@@ -66,7 +66,7 @@ int score = 2;
 - if문안에 if문이 포함되어 있는 형태 
 - if문의 true일 때 수행문안에 포함된 if문의 조건식을 평가하여 수행함
 
-```
+```java
 score = 90;
         boolean isLate = true;
         // late인 경우에는 하나 낮은 그레이드를 주기로 하였다.
@@ -108,7 +108,7 @@ score = 90;
 - 위와 같은 상황을 fall-through라고하고 일부러 case를 붙여서 사용해  fall- through하기도 한다
 
 
-```
+```java
         switch(grade) {
             case 'A':
                 System.out.println("휼륭합니다!"); // fall - through//라고 주석해주어야함

@@ -19,16 +19,26 @@ public class Player implements Inputtable {
     @Override
     public void getKeyboardInput() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("돌을 놓을 좌표를 입력하세요(x,y)");
+        while(true){
+        System.out.println("player "+ name+" 차례입니다(x,y)");
         String s = scan.nextLine();
-        if(s=="q"||s=="Q"){
+        if(s.equals("q")||s.equals("Q")){
 
         }else{
-        int i = s.indexOf(",");
-        int j = Integer.parseInt(s.substring(0,i));
-        int k = Integer.parseInt(s.substring(i+1));
-        pos = new Position(j,k);
-        }
 
+
+            int i = s.indexOf(",");
+            int x = Integer.parseInt(s.substring(0,i));
+            int y = Integer.parseInt(s.substring(i+1));
+
+            if(x>=Gomoku.table_Width || x<0 || y>=Gomoku.table_Width || y<0){
+                System.out.println("범위를 벗어났습니다 좌표를 다시 입력해주세요("+Gomoku.table_Width+"X"+Gomoku.table_Width+")");
+                continue;
+            }else{
+                pos = new Position(x,y);
+                break;
+            }
+        }
+        }
     }
 }

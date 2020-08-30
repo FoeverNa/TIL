@@ -82,7 +82,7 @@ public class Exceptions {
 ```
 
 - try {}안에 예외가 발생할 수 있는 코드를 작성
-    
+  
     ```java
            try {
             }
@@ -298,11 +298,11 @@ class UncheckedExceptionThrow{
 ```
 
 - Unchecked Exception 의 경우에는 throws 키워드를 사용하지 않아도 위임이 된다
-    
+  
     - checked Exception 과 예외가 있더라도 컴파일과 실행까지 되기 때문에 예외처리를 어디에서 하던 상관이 없다
     
 - 예외 처리할 곳에서
-    
+  
     - catch 에서 에외 클래스와 처리할 방식을 입력해주면 된다
     
       
