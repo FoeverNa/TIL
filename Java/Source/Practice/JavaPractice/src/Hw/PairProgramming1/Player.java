@@ -8,6 +8,18 @@ public class Player implements Inputtable {
     public Position pos;
     public int turn;
 
+    public int getNumWin() {
+        return numWin;
+    }
+
+    public void setNumWin(int numWin) {
+        this.numWin = numWin;
+    }
+
+    public void numCount(){
+        numWin++;
+    }
+
     public Player(String name){
         this.name = name;
     }
@@ -23,9 +35,9 @@ public class Player implements Inputtable {
         System.out.println("player "+ name+" 차례입니다(x,y)");
         String s = scan.nextLine();
         if(s.equals("q")||s.equals("Q")){
-
+            pos = new Position(999,999);
+            break;
         }else{
-
 
             int i = s.indexOf(",");
             int x = Integer.parseInt(s.substring(0,i));

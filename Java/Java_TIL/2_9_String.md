@@ -1,5 +1,7 @@
 # 문자열 (String)
 
+
+
 - 문자열은 내부적으로 '클래스'로 구성되어 있다.
 
 - 내부에는 문자 배열로 된 데이터가 있다. char[]
@@ -10,6 +12,8 @@
 
   
 
+## String의 immutable 특성
+
 
 ```java
 public class StringTest {
@@ -19,12 +23,15 @@ public class StringTest {
         s += " 슈가에 아유미에요";
         
         System.out.println(s); // 안녕하세요 슈가에 아유미에요
-        System.out.println(s1); // 안녕하세요
+        System.out.println(s1); // 안녕하세요 // 원래 String s는 변하지 않는다//immutable
     }
 }
 ```
-- Stirng s에 string을 더해서 s를 추력하면 더한 값이 추력되지만 s를 참조하고 있던 s1은 변함이 없음
-    - String이 immutable 하다느 증거
+- String 변수에 + String을 더 해주면 새로운 String 값이 출력되지만, 원래 있던 String 변수의 값이 변한 것이 아닌 새로운 String 리터럴이 생성되서 입력되는 것이다.
+    - String s에 + String 값을 더해주면 s는 s+String값의 결과를 출력하지만 original s를 담은 s1의 값은 변하지 않는다.
+    - 보통의 참조 변수는 s의 값을 변하면 s를 참조하는 s1의 값도 변하지만 String은 변하지 않는 특성을 가졌다.
+
+
 
 
 ## 문자열 생성
@@ -39,25 +46,25 @@ public class StringTest {
     - 그 후 다른 값 입력시 string 풀에서 찾아서 사용하고 없면 새로 생성함
     - new 로 객체생성시 youngmemory에 생성됨 => 권장하지 않는이유..의미가없음
     
-    아래의 상수풀로되어있는것 => String 풀로 치환되어야함
-
-
+    
 
 ```java
         String s1 = "문자열 생성 방법"; // 보통의 생성 방법, String 변수명 = "값";
         String s2 = new String("문자열 생성 방법2"); // 클래스 생성자. 권장하지 않음
 
-        String s3 = "abcde"; // String 생성하면 상수풀에 생성됨
-        String s4 = "abcde"; // 상수풀에 동일한 문자열이 있으면 그것을 참조하고 없으면 상수풀에 새로 생성함
+        String s3 = "abcde"; // String 생성하면 String풀에 생성됨
+        String s4 = "abcde"; // String풀에 동일한 문자열이 있으면 그것을 참조하고 없으면 String풀에 새로 생성함
         String s5 = new String("abcde"); // 흙빛이 되어버림.. 구지 생성한다고?// 힙메모리에 생성됨
 
-        System.out.println(s3 == s4); //true // 문자열을 곧바로 생성할 경우 상수 풀에서 찾아 사용
+        System.out.println(s3 == s4); //true // 문자열을 곧바로 생성할 경우 String풀에서 찾아 사용
                                             // String은 immuntable하기에 같은값을 참조해도 문제가 발생하지 않음
         System.out.println(s3 == s5); //false // 문자열을 클래스로 생성할 경우 새로운 인스턴스를 생성하기에 참조값이 다름
 
         System.out.println(s3.equals(s4));//true // equals는 무슨 메서드였지? -> String 값비교 메서드.
         System.out.println(s3.equals(s5));//true // 참조 값이 아닌 실제 값을 비교해주는 메서드
 ```
+
+
 
 ## String 메서드
 
@@ -82,6 +89,8 @@ public class StringTest {
     - 원본 배열이 아니니 수정해도 String 값의 영향 X
     
 - equals(anObject) anObject와 비교한 결과 출력(boolean) 
+
+    
 
 ```java
         String s = "This is a string.";

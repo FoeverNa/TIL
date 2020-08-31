@@ -79,7 +79,7 @@ public class Main {
   - 따로 자식클래스에 변수와 메소드를 작성해주지 않아도 자식클래스 객체를 통해 접근할 수 있다.
     - 자식객체를 만드는 순간 상속을 위한 부모객체도 생성되기 때문에 해당 변수와 메서드를 사용할 수 있게 되는 것이다
 
-  
+  ![djk](C:\Users\foevn\Documents\dev\devlog\Images\djk.png)
 
 - 이 때 두 클래스의 관계를 Devleoper 'Is -A' Person이라고 부를수 있고 이를 IS-A관계라고 함
 
