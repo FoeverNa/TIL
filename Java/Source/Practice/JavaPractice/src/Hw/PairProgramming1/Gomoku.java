@@ -12,6 +12,8 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     public int[][] table;
     public boolean isCorret = false;
     public int score = 0;
+    int black33=0;
+    int white33=0;
 
     public Gomoku() {
 
@@ -120,8 +122,7 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     public void check3x3(Position pos) {
         int sum = 0;
         int sum_Blank = 0;
-        int black33=0;
-        int white33=0;
+
 
         //가로
         //왼쪽 끝
@@ -138,8 +139,6 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             }else if(sum_Blank ==0 && sum == 30 ){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
             sum_Blank=0;
         }else if (pos.y==12){ //오른쪽 끝
@@ -155,8 +154,6 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             }else if(sum_Blank ==0 && sum == 30 ){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
             sum_Blank=0;
         } else if(pos.y>2 && pos.y<12){ //중간
@@ -170,10 +167,11 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             } else if( sum==30){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
         }
+        is33();
+
+
 
         //세로
         //위쪽 끝
@@ -190,8 +188,6 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             }else if(sum_Blank ==0 && sum == 30 ){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
             sum_Blank=0;
         }else if (pos.x==12){ //오른쪽 끝
@@ -207,8 +203,6 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             }else if(sum_Blank ==0 && sum == 30 ){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
             sum_Blank=0;
         } else if(pos.x>2 && pos.x<12){ //중간
@@ -222,20 +216,15 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             } else if( sum==30){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
         }
-        if (black33==2){
-            System.out.println("black 33");
-        }
-        if (white33==2){
-            System.out.println("white 33");
-        }
+        is33();
 
         //왼대각
         //왼쪽 위 끝
-        if (pos.x==2){
+        if (pos.x==2 && pos.y> 1 && pos.y<11
+            || pos.x >2 && pos.x <10 && pos.y==2){
+
             sum+=table[pos.x][pos.y];
             for(int i =1 ; i<=3 ; i++){
                 sum += table[pos.x+i][pos.y+i];
@@ -248,11 +237,10 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             }else if(sum_Blank ==0 && sum == 30 ){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
             sum_Blank=0;
-        }else if (pos.x==12){ //오른쪽아래 끝
+        }else if (pos.x>3 && pos.x<12 && pos.y==12
+                  || pos.x ==12 && pos.y>3 && pos.y<13){ //오른쪽아래 끝
             sum+=table[pos.x][pos.y];
             for(int i =1 ; i<=2 ; i++){
                 sum_Blank += table[pos.x+i][pos.y+i];
@@ -265,11 +253,9 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             }else if(sum_Blank ==0 && sum == 30 ){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
             sum_Blank=0;
-        } else if(pos.x>2 && pos.x<12){ //중간
+        } else if(pos.x>2&&pos.x<12 && pos.y>2 && pos.y<12){ //중간
             sum+=table[pos.x][pos.y];
             for(int i =1 ; i<=3 ; i++){
                 sum += table[pos.x+i][pos.y+i];
@@ -280,21 +266,72 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             } else if( sum==30){
                 white33++;
             }
-            System.out.println("sum"+sum);
-            System.out.println("sum_balck"+sum_Blank);
             sum=0;
         }
+        is33();
+
+
+        //오른대각대각
+        if (pos.x==2 && pos.y> 3 && pos.y<13
+            || pos.x>2&& pos.x<11 && pos.y ==12){
+
+            sum+=table[pos.x][pos.y];
+            for(int i =1 ; i<=3 ; i++){
+                sum += table[pos.x+i][pos.y-i];
+            }
+            for(int i =1 ; i<=2 ; i++){
+                sum_Blank += table[pos.x-i][pos.y+i];
+            }
+            if(sum_Blank ==0 && sum == 3 ){
+                black33++;
+            }else if(sum_Blank ==0 && sum == 30 ){
+                white33++;
+            }
+            sum=0;
+            sum_Blank=0;
+        }else if (pos.x>3 && pos.x<12 && pos.y==2
+                || pos.x ==12 && pos.y>1 && pos.y<11){ //오른쪽아래 끝
+            sum+=table[pos.x][pos.y];
+            for(int i =1 ; i<=2 ; i++){
+                sum_Blank += table[pos.x+i][pos.y-i];
+            }
+            for(int i =1 ; i<=3 ; i++){
+                sum += table[pos.x-i][pos.y+i];
+            }
+            if(sum_Blank ==0 && sum == 3 ){
+                black33++;
+            }else if(sum_Blank ==0 && sum == 30 ){
+                white33++;
+            }
+            sum=0;
+            sum_Blank=0;
+        } else if(pos.x>2&&pos.x<12 && pos.y>2 && pos.y<12){
+            sum+=table[pos.x][pos.y];
+            for(int i =1 ; i<=3 ; i++){
+                sum += table[pos.x-i][pos.y+i];
+                sum += table[pos.x+i][pos.y-i];
+            }
+            if(sum==3){
+                black33++;
+            } else if( sum==30){
+                white33++;
+            }
+            sum=0;
+        }
+        is33();
+    }
+
+    public void is33(){
         if (black33==2){
-            System.out.println("black 33");
+            player_Two.numCount();
+            System.out.println("3X3으로 X가 패배했습니다");
+            isCorret=true;
         }
         if (white33==2){
-            System.out.println("white 33");
+            player_One.numCount();
+            System.out.println("3X3으로 O가 패배했습니다");
+            isCorret=true;
         }
-
-
-
-
-
     }
 
 
