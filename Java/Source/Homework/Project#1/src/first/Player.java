@@ -1,0 +1,4 @@
+package first;
+
+interface Player {
+}
