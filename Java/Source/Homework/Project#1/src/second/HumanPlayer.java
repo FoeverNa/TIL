@@ -7,7 +7,7 @@ public class HumanPlayer extends Player {
     void play() {
         Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.printf("Please Input %s's move (x,)", name);
+            System.out.printf("Please Input %s's move (x,y)", name);
 
             int x = scanner.nextInt() -1;
             int y = scanner.nextInt() -1;

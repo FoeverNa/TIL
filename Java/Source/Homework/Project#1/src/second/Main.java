@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Player playerOne = new AiPlayer();
+        Player playerOne = new HumanPlayer();
         Player playerTwo = new AiPlayer();
 
         playerOne.setName("Jack");
