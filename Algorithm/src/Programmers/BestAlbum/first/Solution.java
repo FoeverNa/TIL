@@ -1,49 +1,48 @@
 package Programmers.BestAlbum.first;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
         int[] answer = {};
 
         ArrayList<String> gens = new ArrayList<>();
+        HashMap<String, Integer> hashMap= new HashMap<>();
 
-        gens.add(genres[0]);
 
-//        System.out.println(gens.get(1));
 
         for(int i = 0; i < genres.length; i++){
-            boolean flag = true;
 
-            for (int j =0; j < gens.size(); j++ ){
-                if (genres[i].equals(gens.get(j))) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag){
-                gens.add(genres[i]);
+            if (!hashMap.containsKey(genres[i])) {
+                hashMap.put(genres[i],plays[i]);
+            } else{
+                int sum  = hashMap.get(genres[i]) + plays[i];
+                hashMap.remove(genres[i]);
+                hashMap.put(genres[i],sum);
             }
         }
 
-        int [] gSum = new int[gens.size()];
-
-        for(int i = 0; i < plays.length; i++){
-            for(int j = 0; j< gens.size(); j++){
-                if(genres[i].equals(gens.get(j))){
-                    gSum[j] += plays[i];
-                    break;
-                }
-            }
+        Iterator<String> it = hashMap.keySet().iterator();
+        while(it.hasNext()){
+            String key = it.next();
+            int i = hashMap.get(key);
+            System.out.println(i);
         }
 
-         
 
 
-
-
-
-
+//        int [] gSum = new int[gens.size()];
+//
+//        for(int i = 0; i < plays.length; i++){
+//            for(int j = 0; j< gens.size(); j++){
+//                if(genres[i].equals(gens.get(j))){
+//                    gSum[j] += plays[i];
+//                    break;
+//                }
+//            }
+//        }
 
         return answer;
 
@@ -60,11 +59,6 @@ class Test {
 
         sol.solution(genres,plays);
 
-//        int[] arr = new Solution().solution(genres,plays);
-//
-//        for (int i=0; i<arr.length; i++ ){
-//            System.out.printf("%d, ",arr[i]);
-//
         }
     }
 
