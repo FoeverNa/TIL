@@ -24,7 +24,7 @@
 ### 제너릭 클래스의 생성
 
 - 제너릭 클래스는 클래스명 뒤에 <>을 붙여 안에 타입파라미터를 넣어준다 
-    
+  
     ```java
     class GenericFoo<T> { // T: 타입 파라미터
     }
@@ -165,23 +165,24 @@
     ```
 
     - 부모 클래스와 인터페이스 명에도 타입 파라미터를 표시해주어야 한다
-        
+      
     - 상속받은 클래스는 제너릭 클래스가 되고 각각 상속이나 구현하는 타입 파라미터를 표시해준다
 
         - 자식 클래스에서 타입 파라미터를 추가할 수도 있다.
-          - GIGfoo<K>는 자녀 제네릭 클래스에 타입파라미터
-
+          
+- GIGfoo<K>는 자녀 제네릭 클래스에 타입파라미터
+          
         - 타입 파라미터를 표시할 때는 각각의 파라미터를 독립적인 타입 파라미터로 설정 할수 있다
-            
+          
         - 혹은 각각의 파라미터를 하나의 타입 파라미터로 통합 시킬 수 도 있다
-            
+          
             ```java
             class IGIFooTwo<T> extends GFoo<T> implements IGFoo<T>{
             }
             ```
             
-            - 부모 클래스/ 인터페이스들의 파라미터를 통합하여 동일한 타입 파라미터로 넘겨줄 수 있다
-
+    - 부모 클래스/ 인터페이스들의 파라미터를 통합하여 동일한 타입 파라미터로 넘겨줄 수 있다
+        
           
 
 ### 제너릭 타입 제한
@@ -234,7 +235,7 @@ class GenericTypeLimitation<T extends Number & Cloneable >{
 
 ## 제너릭 메소드
 - 제너릭 메서드는 클래스에 타입파라미터를 사용한 것이 아닌 메서드에 타입파라미터를 선언한 것이다
-    
+  
     ```java
       public <T> T method(T x){
             return x;
@@ -259,7 +260,7 @@ class GenericTypeLimitation<T extends Number & Cloneable >{
          
 
 - 제네릭 메소드는 타입파라미터 자료형을 따로 정하지 않고 오버로딩 된 것 처럼 Arguments에 입력하면 자동으로 해당 자료형을 설정한다
-    
+  
     ```java
     public class Generics {
         public static void main(String[] args) {
@@ -296,8 +297,8 @@ class GenericTypeLimitation<T extends Number & Cloneable >{
         public void method1_eq(WildGeneric<? extends Object> x){} 
     ```
 
-    - 와이드카드는 입력받을 클래스명뒤에 타입파라미터 자리에 ? 입력하여 표현할수 있다
-         
+    - 와일드드카드는 입력받을 클래스명뒤에 타입파라미터 자리에 ? 입력하여 표현할수 있다
+      
     - <?>는 <? extends Object>와 같은 뜻이다 = 모든 클래스를 타입파라미터로 할 수 있음
 
       
@@ -319,7 +320,7 @@ class GenericTypeLimitation<T extends Number & Cloneable >{
     ```
 
     - extends WildFoo 는 WildFoo를 조상으로 두고있는 클래스로 제한하는 것을 뜻한다 (WildFoo 포함)
-        
+      
         - WildFoo, WildBar만 WildGeneric의 자료형이 될 수 있다
         
           

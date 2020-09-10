@@ -301,11 +301,11 @@ class Solution {
 
 - 1번 :  값을 비교해서 우선순위에 따라 출력하기 위해 PriorityQueue를 사용하기로하고 편의를 위해 Integer가아닌 String타입으로 생성해줍니다
   - PritoiryQueue는 기존 Queue와 다르게 선입선출이 아닌 우선순위가 있는 값이 먼저 출력됩니다
-  - 생성자에 o1, o2를 입력하면 Comparator 메서드를 바로 람다식형태로 입력할 수 있게 ->{}형식으로 자동입력된다
-    - 람다식은 아직 배우지 않았지만 {}안에 구현내용을 적어주면 메서드 처럼 바로 실행이 되는 것 같다
+  - 생성자에 o1, o2를 입력하면 Comparator 메서드를 바로 람다식형태로 입력할 수 있게 ->{}형식으로 자동입력됩니다
+    - 이는 {}안에 람다식으로 Comparator인터페이스의 compare 메서드의 구현부를 구현하는 것입니다
 - 2번 : 람다식을 통해 o1과 o2를 붙였을 때와 o2와 o1을 붙였을 때의 값을 비교해서 더 큰것이 앞으로 가게 해줍니다.
-  - 이렇게 하면 두값 중 붙였을때 더큰 값이 앞으로가게 되어 먼저 출력될 수 있게 합니다.
-  - 이 부분은 보충 설명이 필요한 부분입니다= > 물리적으로 앞으로가게하는건지 우선순위를 앞으로 가게하는건지 이해못함
+  - compare()메서드에서는 o1과 o2를 비교하여 같으면 0, o2가크면 1, o1이 크면 -1을 return 하여 내림차순으로 정렬하는 메서드입니다.
+    - pq 배열을 정렬하는 것이아닌 poll()메서드를 사용할때 출력될 우선순위를 설정하는 것입니다.
 - 3번 : 입력 받은 numbers배열의 값을 하나씩 가져와 pq.에 offer(=add)합니다.
 - 4번: String 값을 이어 붙이기 위해서 StringBuilder builder를 생성하고 while문을 통해 pq.poll을 하여 builder에 appdend해줍니다
   - 여기서 poll되는 순서는 Comparator에 의해 우선순위가 큰값 즉 값을 앞으로 붙여넣었을때 가장 큰값이 먼저 poll되게 됩니다
@@ -317,9 +317,91 @@ class Solution {
 
 ### 느낀점
 
-- 이건 2번문제 다 해결하고 하자
+- Priority Queue, 람다식등 사용해보지 않은 것들이 등장해서 어렵긴 했지만 예제를 통해서 배우는 기회가 되서 좋았다
+- Comparator를 람다식으로 구현한 부분에서 return값이 왜 0, 1, -1이 되는지 잘모르겠어서 한참 찾았는데 compare 메서드를 구현하고 있는 것이고 compare메서드의 작동원리나는 것을 배웠다
+- 번호를 코드옆이아니라 위에 적어주는게 가독성이 조금이라도 더 좋아 진다는 것을 알고 이제부터 그렇게 하려고 합니다
 
 
+
+## 문제4
+
+```java
+/**
+ *문제 설명
+ * n개의 노드가 있는 그래프가 있습니다. 각 노드는 1부터 n까지 번호가 적혀있습니다. 1번 노드에서 가장 멀리 떨어진 노드의 갯수를 구하려고 합니다.
+ * 가장 멀리 떨어진 노드란 최단경로로 이동했을 때 간선의 개수가 가장 많은 노드들을 의미합니다.
+ *
+ * 노드의 개수 n, 간선에 대한 정보가 담긴 2차원 배열 vertex가 매개변수로 주어질 때,
+ * 1번 노드로부터 가장 멀리 떨어진 노드가 몇 개인지를 return 하도록 solution 함수를 작성해주세요.
+ *
+ * 제한사항
+ * 노드의 개수 n은 2 이상 20,000 이하입니다.
+ * 간선은 양방향이며 총 1개 이상 50,000개 이하의 간선이 있습니다.
+ * vertex 배열 각 행 [a, b]는 a번 노드와 b번 노드 사이에 간선이 있다는 의미입니다.
+ */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
+class Node implements Comparable<Node> {
+    int index;
+    int dist;
+    public Node(int index, int dist) {
+        this.index = index;
+        this.dist = dist;
+    }
+    @Override
+    public int compareTo(Node o) {
+        return Integer.compare(dist, o.dist);
+    }
+}
+class Solution {
+    public int solution(int n, int[][] edge) {
+        int [] dists = new int[n + 1];
+        Arrays.fill(dists, Integer.MAX_VALUE);
+        List<List<Integer>> adj_lists = new ArrayList<>();
+        for (int i = 0; i < n + 1; i++) {
+            List<Integer> adj_list = new ArrayList<>();
+            for (int[] e: edge) {
+                if (e[0] == i) {
+                    adj_list.add(e[1]);
+                } else if (e[1] == i) {
+                    adj_list.add(e[0]);
+                }
+            }
+            adj_lists.add(adj_list);
+        }
+        PriorityQueue<Node> heap = new PriorityQueue<>();
+        dists[1] = 0;
+        heap.add(new Node(1, dists[1]));
+        while (!heap.isEmpty()) {
+            Node node = heap.remove();
+            for (int indVisit: adj_lists.get(node.index)) {
+                if (node.dist + 1 < dists[indVisit]) {
+                    dists[indVisit] = node.dist + 1;
+                    heap.add(new Node(indVisit, dists[indVisit]));
+                }
+            }
+        }
+        int max = 0;
+        int answer = 0;
+        dists[0] = 0;
+        for (int el: dists) {
+            if (el == max) {
+                answer++;
+            }
+            if (el > max) {
+                max = el;
+                answer = 1;
+            }
+        }
+        return answer;
+    }
+}
+```
+
+문제4는 현재 저에게는 난이도가 높아서 문제와 풀이만 남겨놓고 후일을 기약하겠습니다
 
 
 
