@@ -3,6 +3,8 @@ package third;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
+
+
     @Override
      public void play() {
         Scanner scanner = new Scanner(System.in);
@@ -20,4 +22,5 @@ public class HumanPlayer extends Player {
         }
         }
     }
+
 }

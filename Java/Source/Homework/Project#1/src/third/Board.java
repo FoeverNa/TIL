@@ -26,7 +26,6 @@ public class Board implements Initializable {
                 board[i][j] = BLANK;
             }
         }
-
     }
 
     public boolean isPossible(Point move) {
@@ -36,7 +35,6 @@ public class Board implements Initializable {
             return false;
         } else  return board[move.getX()][move.getY()] == BLANK;
     }
-
 
     public void setMark(Point move, char mark) {
         if (isPossible(move)) {
@@ -65,7 +63,6 @@ public class Board implements Initializable {
         } else{
             return winStatus.NOT_FINISHED;
         }
-
     }
 
     private boolean isMarkWin(char mark){

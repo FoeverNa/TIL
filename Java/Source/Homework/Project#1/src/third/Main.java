@@ -10,7 +10,8 @@ public class Main {
         Player player_Two = new AiPlayer();
 
         player_One.setName("Jack");
-        player_One.setName("Jill");
+        player_Two.setName("Jill");
+
 
         TicTacToe ticTacToe = new TicTacToe(player_One, player_Two);
 
