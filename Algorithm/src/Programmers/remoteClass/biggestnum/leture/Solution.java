@@ -51,9 +51,9 @@ class Solution {
         for (int number : numbers){
             pq.offer(String.valueOf(number));
         }
-        for(String str : pq){
-            System.out.println(str);
-        }
+//        for(String str : pq){
+//            System.out.println(str);
+//        }
 
 
         assert pq.peek() != null; // assert는 null인지 확인해줌
