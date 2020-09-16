@@ -4,12 +4,20 @@
 
 - 문자열은 내부적으로 '클래스'로 구성되어 있다.
 
+  - 특정한 문자열은 객체가 된다
+
 - 내부에는 문자 배열로 된 데이터가 있다. char[]
 
 - 한번 만든 문자열은 변하지 않는다. (Immutable)// 이뮤터블
 
+  - 재사용이 가능한 장점때문에 이뮤터블하다
+  - 같은 문자열이면 객체를 생성하지 않고 해당 객체를 참조 한다
+
 - 문자열 편집은 String을 쓰지 않고 StringBuilder나 StringBuffer 등을 사용한다.
 
+  - 둘다 String을 편집하게 할 수 있는 클래스
+  - 기본적으로 Builder를 사용하고 멀티 스레드일때 Buffer을 사용한다
+  
   
 
 ## String의 immutable 특성
@@ -45,6 +53,7 @@ public class StringTest {
     - String은 값을 생성시 old memory에 string풀에 생성됨// 
     - 그 후 다른 값 입력시 string 풀에서 찾아서 사용하고 없면 새로 생성함
     - new 로 객체생성시 youngmemory에 생성됨 => 권장하지 않는이유..의미가없음
+      - 같은 문자열 객체가 있더라도 새객체가 생성된다 
     
     
 
@@ -90,6 +99,26 @@ public class StringTest {
     
 - equals(anObject) anObject와 비교한 결과 출력(boolean) 
 
+  - ==을 하면 같은 객체가 맞는지 비교하는 방법
+  - 같은 내용이 다른객체에 있더라도 비교하고 싶다면 equals를 사용
+  
+  
+  
+- | 메소드             | 메소드 선언                                             | 설명                                               |
+| ------------------ | ------------------------------------------------------- | -------------------------------------------------- |
+  | length()           | `public int length()`                                   | 문자열의 길이를 출력                               |
+  | charAt()           | `public char charAt(int index)`                         | index번째에 위치한 문자 출력                       |
+  | indexOf()          | `public int indexOf(char ch)`                           | ch가 위치한 index 출력. 없을 시 -1                 |
+  | equals()           | `public boolean equals(Object anObject`                 | anObject와 비교한 결과 출력                        |
+  | equalsIgnoreCase() | `public boolean equalsIgnoreCase(String anotherString)` | 대소문자 구분없이 anotherString과 비교 결과 출력   |
+  | replace()          | `public String replace(char oldChar, char newChar)`     | oldChar를 찾아 newChar로 변경된 문자열 출력        |
+  | substring()        | `public String substring(int beginIndex, int endIndex)` | 문자열을 beginIndex부터 endIndex-1까지 잘라서 출력 |
+  | trim()             | `public String trim()`                                  | 문자열 좌우 공백을 없앤 결과를 출력                |
+  | matches()          | `public boolean matches(String regex)`                  | 문자열을 정규표현식 regex 확인 결과 출력           |
+  | split()            | `public String[] split(String regex)`                   | 문자열을 정규표현식 형태로 나눈 후 배열로 출력     |
+  
+  
+  
     
 
 ```java

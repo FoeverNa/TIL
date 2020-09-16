@@ -70,6 +70,9 @@ public class Enumeration {
 - 상수를 열거하여 선언할 수 있다. ex) STUDENT, MARKETING, DEVELOPER
     - 상수를 열거하는 것이 객체를 선언하는 것과 같다.(new해서 객체를 생성하지 않는다)
     
+      - 클래스를 사용시 해당하는 선언한 모든 변수의 객체를 생성한다
+      - ex)Job.STUDENT 접근시 enum안에 모든 변수의 객채를 생성한다
+    
     - 생성자를 이용해 멤버변수를 초기화할때 상수옆에 arguments를 입력한다 ex) STUDENT(19)
     
     - 열거형 상수는 정적 변수로 enum에 객체를 담고 있다.
@@ -140,7 +143,7 @@ enum Symbol {
 ```
 
 - 열거형 내부에서도 메서드를 생성 가능하다
-    
+  
     - 이때 열거형의 상수는 this를 통해 객체로 지칭될 수 있다. ex) this.equals(ONE)
     
 - 열거형의 상수는 객체를 담고 상수로 .을 붙여서 메서드를 사용할 수 있다. exe)Symbol sym = Symbol.ONE; sym.nextSymbol();
@@ -192,26 +195,27 @@ enum Family {
     }
 ```
 - 열거형의 상수는 객체이기 때문에 열거형의 선언된 멤버 변수를 속성으로 갖는다.
-    
+  
 - 열거형의 멤버 변수는 private이다
-    
-      
-    
+  
+  ​    
+  
 - 열거형의 생성자를 통해 멤버 변수를 초기화 할 수 있다. 
     - 열거형의 생성자는 내부에서만 객체를 생성하기 때문에 private이다.
-        - ex)  private Family(String koreanWord){ this.koreanWord = koreanWord }
-    
-    - 이때 초기화는 객체가 존재하는 열거형 내에서 한다
         
+    - ex)  private Family(String koreanWord){ this.koreanWord = koreanWord }
+        
+    - 이때 초기화는 객체가 존재하는 열거형 내에서 한다
+      
         - Enum은 상수 선언시 객체를 생성하고 초기화 하는 것이기 때문이다
-            
+          
         - FATHER("아버지"), MOTHER("어머니"), SON("아들"), DAUGHTER("딸");
         
             
     
 - 클래스와 같이 객체를 통해 멤버 변수에 접근 할 수 있다.
     - 멤버변수가 private인경우도 getter setter를 통해 멤버변수에 접근 한다.
-        
+      
         - fam.setKoreanWord("버린 자식");
         
           
@@ -219,7 +223,7 @@ enum Family {
 ## Enum에 상수의 특징
 
 - Enum의 상수는 정적 변수에 객체가 담겨있는 형태이다
-    
+  
     - Static Family FATHER = new Family(); 와 같은 형태
     
       

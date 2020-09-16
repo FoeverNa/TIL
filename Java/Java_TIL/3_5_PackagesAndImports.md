@@ -1,5 +1,7 @@
 # 패키지와 임포트 (Packages and Imports)
 
+
+
 ## 패키지 (Packages)
 
 - Java에서 소스코드를 관리하는 방식
@@ -7,12 +9,11 @@
 - 물리적으로 디렉토리로 구분된 파일을 .으로 계층적으로 구분
 
 - 패키지이름 규칙 package 소속.프로젝트.용도 (상위계층 하위계층 최하위계층) 
-    
+  
     - ex) package com.google.dev.utils
     
-- 관례적으로 회사소속이면 도메인을 거꾸로적음. come.google.dev(개발용).utils(유틸모음)
-        
-    - ex2) package com.fastcampus.catcare.service (catcare 프로젝트에 sevice단을 구현하는중)
+- 관례적으로 회사소속이면 도메인을 거꾸로적음. come.google.dev(개발용).utils(유틸모음)    
+  - ex2) package com.fastcampus.catcare.service (catcare 프로젝트에 sevice단을 구현하는중)
     
         
 
