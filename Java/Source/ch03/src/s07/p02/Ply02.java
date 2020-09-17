@@ -10,7 +10,6 @@ package s07.p02;
 class Foo {
     static public String y = "Super Class";
     public String x = "Super";
-
     public void methodA(){
         System.out.println("Super Method");
     }
@@ -19,6 +18,7 @@ class Foo {
 class Bar extends Foo {
     static String y = "Sub Class";
     public String x = "Sub";
+
 
     @Override
     public void methodA() {
@@ -32,6 +32,8 @@ public class Ply02 {
     public static void main(String[] args) {
         Bar bar = new Bar();
         Foo foo = (Foo)bar;
+
+        
 
         System.out.println(bar.x); //Sub
         bar.methodA(); // Sub Method

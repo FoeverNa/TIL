@@ -9,6 +9,7 @@ abstract class Bar{
    + static String name;
    # int x;
    ~ int y;
+   Foo foo;
    - void method(String string);
 }
 class Qoo{
@@ -19,9 +20,9 @@ class Foo{
     void methodA();
 }
 
-Foo -left|> IFoo
+Foo -Left|> IFoo
 Bar -o Foo
-Qoo -right* Foo
+Qoo -Right* Foo
 
 title Class Diagram Title
 

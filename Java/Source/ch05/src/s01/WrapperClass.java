@@ -55,6 +55,7 @@ public class WrapperClass {
         int y = new Integer("100"); // 오버로딩이 되어있어서 String을 바로 입력받을 수 있다.
                                         // deprecated : 언젠가는 안쓰일문법이니 알아두라우
         int z = Integer.valueOf("200");
+        System.out.println(z);
         // x가 가장 권장되는 방식
 
         //언박싱

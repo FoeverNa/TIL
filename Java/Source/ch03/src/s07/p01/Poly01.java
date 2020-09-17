@@ -11,7 +11,6 @@ class Foo {
 
 class Bar extends Foo{
     public void methodB(){}
-
     @Override
     public void methodA() {
         super.methodA();

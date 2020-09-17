@@ -10,6 +10,7 @@ class Person {
     public void writeCode() {
         System.out.println("아무 코드나 일단 적어 보았다.");
     }
+    
 }
 
 class Student extends Person{
@@ -26,6 +27,7 @@ class Student extends Person{
 
         return "Hello";
         }
+
 
 }
 class Developer extends Person{

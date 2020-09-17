@@ -196,7 +196,7 @@ public class Generics {
         // 제너릭메서드는 자료형이 안정해져있기때문에 동작이 정의가 되어있지 않음
         // 그래서 런타임때 결정이되어 그때컴파일이 일어나는것이 동적 바인딩.
 
-        GenericMethod.staticMethod(new String("abcd")); // 오버로딩된것처럼 해당 값들어오면 자료형이 결정됨
+        GenericMethod.staticMethod(new String("abcdeeeee")); // 오버로딩된것처럼 해당 값들어오면 자료형이 결정됨
         GenericMethod.staticMethod(12341); // new 안해도되고 입력만 하면 자동으로 타입을 설정함
         // 이때는 묵시적이라 int입력이 가능했데..무슨말일까 => 설명해주신데
 

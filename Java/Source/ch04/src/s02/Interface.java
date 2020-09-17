@@ -23,6 +23,8 @@ interface IFoo{
 
     public abstract void methodA(int param); // public abstract 생략가능
     void methodB(int param); // public abstract
+
+
 }
 
 class Foo implements IFoo{
@@ -36,7 +38,10 @@ class Foo implements IFoo{
     public void methodB(int param) {
         System.out.println(param);
     }
-}
+
+
+    }
+
 
 // 인터페이스 이름 convention
 // interface IFoo <- class Foo // 상속하는 자식에서 부모쪽으로 화살표

@@ -11,8 +11,11 @@ package s04.p04;
 class Foo{
     String x = "Foo";
 
+
     public Foo(String x) {
         this.x = x;
+
+
     }
 }
 
