@@ -14,7 +14,7 @@
 
     - 이를 통해 객체의 타입을 컴파일 시점에서 검사할 수 있어 불필요한 에러를 방지 할 수 있다
     - 타입이 정해져있기 때문에 타입 변환을 할 필요가 없어서 프로그램 성능이 향상되는 효과를 얻을 수 있다
-
+  - Object를 사용하면 형변환이 필요하다?
     
 
     
@@ -120,31 +120,34 @@
       
 
 - 문법적으로는 문제가 없지만 안정성 문제로 제한이 되는 경우 
-  - 안정성 문제 : 타입 파라미터가 어떤 것으로 구현되 있을지 모르는 상황에서 안정성에 문제가 생길 수 있는 상황
-
-      - Java에서는 이런식으로 구현하지 말라고 막혀있음
-
-        
-
+  
+- 문법적으로 문제가 없다는 것은 다른 클래스나 자료형으로는 가능한 일이지만 제너릭클래스로만 안되는 경우를 뜻한다?
+    
+- 안정성 문제 : 타입 파라미터가 어떤 것으로 구현되 있을지 모르는 상황에서 안정성에 문제가 생길 수 있는 상황
+  
+    - Java에서는 이런식으로 구현하지 말라고 막혀있음
+  
+      
+  
   - 타입파라미터 형으로 객체를 생성할 수는 없다.
-
-      ```java
+  
+    ```java
       T memberVar = new T(); // not possible 
-      ```
-
-      
-
+    ```
+  
+    
+  
   - instacneof의 비교 대상이 될 수 없다
-
+  
       ```java
-      ex) Object obj = new Object();
+    ex) Object obj = new Object();
       if(obj instanceof T) //not possible
-      ```
-
-      - 됬으면 참 편했을텐데..
-
+    ```
+  
+    - 됬으면 참 편했을텐데..
+  
       
-
+  
       
 
 ### 제네릭 타입의 상속
@@ -188,9 +191,6 @@
 
 ### 제너릭 타입 제한
 ```java
-
-
-
 // extneds를 이용해서 부모 클래스와 인터페이스도 제한할 수 있다.
 {//Number는 추상클래스를 상속하고 있는애들만 사용할 수 있음
                                                           //요 추상클래스도 상속하고 있으며 요인터페이스도 구현해야한다
@@ -245,14 +245,17 @@ class GenericTypeLimitation<T extends Number & Cloneable >{
     
     - 접근제어자 뒤에 타입파라미터 작성해서 반환과 파라미터 다 활용할 수 있다.
     
+      - 반환과 입력파라미터 둘 중 하나에 만 활용해도 된다
+      
       
     
 - 제너릭 메서드의 타입파라미터는 클래스 타입파라미터와 별개이다
 
     ```java
-        public static <T> T staticMethod(T t){
-            return t;
+    class foo<G>{
+        public<P> void test(P p){
         }
+    }
     ```
 
     - 제너릭 클래스와는 다르게 제너릭 메서드에서는 타입 파라미터를 자료형으로 선언할 수 있다
@@ -317,7 +320,7 @@ class GenericTypeLimitation<T extends Number & Cloneable >{
     class WildGeneric<T>{
     
     }
-     public void method3(WildGeneric<? super WildBar>  x){} 
+    public void method2(WildGeneric<? extends WildFoo>  x){} 
     ```
 
     - extends WildFoo 는 WildFoo를 조상으로 두고있는 클래스로 제한하는 것을 뜻한다 (WildFoo 포함)
@@ -339,7 +342,8 @@ class GenericTypeLimitation<T extends Number & Cloneable >{
     class WildGeneric<T>{
     
     }
-    public void method2(WildGeneric<? extends WildFoo>  x){} 
+     public void method3(WildGeneric<? super WildBar>  x){} 
+    
     ```
 
     -  super WildBar는 반대로 WildBAR를 자식으로 하는 부모클래스들을 뜻함 (WildBar 포함)

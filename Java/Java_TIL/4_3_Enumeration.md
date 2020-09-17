@@ -9,6 +9,13 @@
     
  - 열거형 타입에는 열거형 상수와 null 값을 할당 가능하다
 
+     - 열거형 타입의 변수에 null값을 넣을 수 있다는 말이었음..
+
+     - ```java
+        Color color1 = Color.RED;
+        Color color2 = null;
+        ```
+
  - An enum is a special "class" that represents a group of constants
     - Use enums when you have values that you know aren't going to change, like month days, colors, deck of cards, etc.
     
@@ -71,7 +78,22 @@ public class Enumeration {
     - 상수를 열거하는 것이 객체를 선언하는 것과 같다.(new해서 객체를 생성하지 않는다)
     
       - 클래스를 사용시 해당하는 선언한 모든 변수의 객체를 생성한다
+    
       - ex)Job.STUDENT 접근시 enum안에 모든 변수의 객채를 생성한다
+    
+        ```java
+        public class EnumTest {
+            public static void main(String[] args) {
+                System.out.println(Color.BLUE);
+        ///결과
+        object created
+        object created
+        object created
+        static created
+        BLUE
+        ```
+    
+        
     
     - 생성자를 이용해 멤버변수를 초기화할때 상수옆에 arguments를 입력한다 ex) STUDENT(19)
     
@@ -109,7 +131,14 @@ System.out.println(Foo.Symbol.ONE); //ONE
 - 클래스내부에서 열거형을 선언하여 구현할 수 있다.
     - Foo(클래스명).Symbol(enum명).ONE(상수)로 접근이 가능하다
     
-    
+- TicTacToe 예제에 Board.WinnerStatus 구현했던것 떠올려봐.
+
+- ```java
+    public class Board implements Initializable {
+        enum WinnerStatus {
+            NOT_FINISHED, TIE, PLAYER_ONE, PLAYER_TWO;
+        }
+    ```
 
 ### 열거형 내부에서 메소드 구현
 
@@ -202,9 +231,9 @@ enum Family {
   
 - 열거형의 생성자를 통해 멤버 변수를 초기화 할 수 있다. 
     - 열거형의 생성자는 내부에서만 객체를 생성하기 때문에 private이다.
-        
+      
     - ex)  private Family(String koreanWord){ this.koreanWord = koreanWord }
-        
+      
     - 이때 초기화는 객체가 존재하는 열거형 내에서 한다
       
         - Enum은 상수 선언시 객체를 생성하고 초기화 하는 것이기 때문이다

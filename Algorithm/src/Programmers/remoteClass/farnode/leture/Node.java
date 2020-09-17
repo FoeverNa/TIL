@@ -1,4 +1,4 @@
-package Programmers.remoteClass.leture;
+package Programmers.remoteClass.farnode.leture;
 
 import java.util.ArrayList;
 import java.util.Arrays;

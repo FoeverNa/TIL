@@ -95,6 +95,21 @@
       - 하지만 Wrapper class가  Autoboxing을 해주어 new Integer(5)로 객체를 생성하여  제너릭 메서드에서 사용할 수 있게 된다
    
 
+### Wrapper 타입의 값 비교
+
+- Wrapper 타입은 객체이므로, ==를 이용하여 값을 비교할 수 없다.
+
+  - equals()메서드를 사용해서 비교한다
+
+  ```
+  Integer intOne = new Integer(100);
+  Integer intTwo = new Integer(100);
+  
+  System.out.println(intOne == intTwo); // false
+  System.out.println(intOne.equals(intTwo)) // true
+  System.out.println(intOne == 100) // true (Unboxing)
+  ```
+
 
 
 ### 문자열  <-->  기본자료형
