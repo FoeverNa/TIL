@@ -8,8 +8,10 @@ class LocalInnerClass{
         final int y1 = 2;
         int y2 = 2;
         class LocalInner{
+
             // static final int z = 4; // static 일수가 없음 => 클래스영역에 생겨야함
             static final int z = 4; // Possible
+
             void methodA(){
                 System.out.println(x);
                 System.out.println(y1); //JDK1.7
@@ -19,7 +21,7 @@ class LocalInnerClass{
             }
         }
 
-        LocalInner inner = new LocalInner(); // Heap area
+        LocalInner inner = new LocalInner(); // Heap 영역에 객체가 생성이됨
         inner.methodA();
 
         return (Object)inner;
@@ -47,7 +49,7 @@ class LocalInnerClass{
         int y = 2;
         class LocalInner{
             void methodA(){
-                System.out.println("ㅁ");
+                System.out.println("a");
             }
         }
 

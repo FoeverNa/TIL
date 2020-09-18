@@ -4,12 +4,15 @@ interface IFoo{
     void run();
     void walk();
 }
-class Foo{
-    void run(){
-
+class Foo implements IFoo{
+    @Override
+    public void run() {
+        System.out.println("Normally run");
     }
-    void walk(){
 
+    @Override
+    public void walk() {
+        System.out.println("Normally Walk");
     }
 }
 
@@ -21,6 +24,11 @@ class AnonymousInnerClass{
     }
 
     public static void main(String[] args) {
+       //1.
+        Foo foo = new Foo();
+        useIFoo(foo); // Using Polymorphism
+
+        // 2.
         class InnerClass implements IFoo{
 
             @Override
@@ -40,6 +48,7 @@ class AnonymousInnerClass{
 
         //이제 익명의내부클래스 이용할거야
 
+        // 3.
         useIFoo(new IFoo() {// 인터페이스는 객체생성안되서 new못하는데 갑자기 된다?
                                 // Ifoo를 impelments 한 클래스를 구현하는것임
             @Override
