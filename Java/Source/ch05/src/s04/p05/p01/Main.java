@@ -1,4 +1,4 @@
-package s04.p05;
+package s04.p05.p01;
 
 interface IFoo{
     void run();
