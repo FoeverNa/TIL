@@ -62,15 +62,22 @@ public class Main {
 
         // 방법 3. 람다식을 이용하는 방식
 
-        // 익명내부클래스, 상속하려는 곳에 인터페이스든
-// 추상클래스든 객체생성하면 익명클래스생성
-        Arrays.sort(strings, (o1, o2) -> o1.substring(3).compareTo(o2.substring(3)));
+               Arrays.sort(strings, (o1, o2) -> o1.substring(3).compareTo(o2.substring(3)));
         System.out.println(Arrays.toString(strings));
 
 
         // 동작을 했으면 하는 부분만 심플하게 작성할 수 있다
         //클래스를 구현하는게 귀찮으니까 익명 내부클래스를 사용할 수있다
         // 익명내부클래스도 귀찬으니가 람다를 사용할 수 있다. => 줄어드는 양상을 보자고
+
+        //방법 4.
+
+        Comparator<String> comp = (o1, o2) -> {
+            return o1.substring(3).compareTo(o2.substring(3));
+        };
+        Arrays.sort(strings, comp);
+        System.out.println(Arrays.toString(strings)+"44");
+
 
 
         // 방법 Hanso. Comparable을 이용하는 방법
