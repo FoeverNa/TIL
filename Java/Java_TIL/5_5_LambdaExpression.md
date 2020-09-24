@@ -229,7 +229,7 @@ public class Main {
   - this만 다르기 때문에 this만 알면 된다
 - 익명의 내부 클래스와 달리 외부 클래스를 참조 한다
     - 람다식은 내부클래스를 따로 생성하지 않기 때문이다
-  
+    
   ```java
   // 람다식과 익명클래스 객체가 동일한 것은 아니다 라는 것의 증명 // 그 외에는 완전히 똑같이 동작함
   
@@ -290,7 +290,6 @@ public class Main {
   
   - 여러 표준 함수형 인터페이스를 연계해서 사용하는 경우를 이해해야한다
   
-    
 - Consumer, Supplier, Function, Operation, Predicate 계열이 있다.
 
 | 계열      | 입력 | 출력      | 메소드                          | 설명                                       |
@@ -486,7 +485,6 @@ public class Main {
         IntToDoubleFunction funcFive;
         
         // IntToIntFunction은 없다 = > Function은 형태를 변환시키는 것이기 때문에 동일한 자료형은없다
-
     }
 }
 
