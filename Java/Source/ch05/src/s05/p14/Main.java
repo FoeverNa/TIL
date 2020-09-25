@@ -1,4 +1,4 @@
-package s04.p05.p14;
+package s05.p14;
 
 import java.util.Arrays;
 import java.util.function.Function;

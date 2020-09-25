@@ -1,4 +1,4 @@
-package s04.p05.p06;
+package s05.p06;
 
 //표준 함수형 인터페이스
 

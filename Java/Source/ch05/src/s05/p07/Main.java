@@ -1,4 +1,4 @@
-package s04.p05.p07;
+package s05.p07;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.IntSupplier;

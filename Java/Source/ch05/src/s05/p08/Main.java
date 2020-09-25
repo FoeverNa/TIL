@@ -1,4 +1,4 @@
-package s04.p05.p08;
+package s05.p08;
 
 import java.util.function.*;
 

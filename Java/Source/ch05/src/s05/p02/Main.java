@@ -1,4 +1,4 @@
-package s04.p05.p02;
+package s05.p02;
 
 
 import java.util.Arrays;

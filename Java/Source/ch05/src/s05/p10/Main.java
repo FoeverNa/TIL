@@ -1,4 +1,4 @@
-package s04.p05.p10;
+package s05.p10;
 
 import java.util.function.BiPredicate;
 import java.util.function.IntPredicate;

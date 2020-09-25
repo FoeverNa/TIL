@@ -1,4 +1,4 @@
-package s04.p05.p03;
+package s05.p03;
 
 // 람다식 사용 조건
 

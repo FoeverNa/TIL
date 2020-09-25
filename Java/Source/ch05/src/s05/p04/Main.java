@@ -1,4 +1,4 @@
-package s04.p05.p04;
+package s05.p04;
 
 // 람다식 다양한 표현 형식
 

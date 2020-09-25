@@ -1,4 +1,4 @@
-package s04.p05.p13;
+package s05.p13;
 
 import java.util.function.BinaryOperator;
 
@@ -14,7 +14,7 @@ public class Main {
         System.out.println(minBy.apply("abc", "cd")); // cd
         System.out.println(maxBy.apply("abc", "cd")); // abc
 
-        System.out.println(maxBy.apply("abc", "cde")); // cde
+        System.out.println(minBy.apply("abc", "cde")); // cde
         //0일 경우에는  왜 난 cde가 출력되는지 알아보기...
 
 

@@ -1,4 +1,4 @@
-package s04.p05.p09;
+package s05.p09;
 
 import java.util.function.BinaryOperator;
 import java.util.function.IntBinaryOperator;

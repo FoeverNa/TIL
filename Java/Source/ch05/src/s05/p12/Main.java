@@ -1,4 +1,4 @@
-package s04.p05.p12;
+package s05.p12;
 
 import java.util.function.DoublePredicate;
 import java.util.function.Predicate;
