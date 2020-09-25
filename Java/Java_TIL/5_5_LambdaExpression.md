@@ -33,7 +33,7 @@
 - 기본 정렬 방식을 이용한 정렬0
 
   ```java
-  String [] strings = {"f.ast", "campus", "java", "backend", "school"};
+  String [] strings = {"fast", "campus", "java", "backend", "school"};
   System.out.println(Arrays.toString(strings));// 입력 한 순 정렬
   Arrays.sort(strings);
   System.out.println(Arrays.toString(strings)); //사전 순 정렬
@@ -107,7 +107,7 @@
   
       @Override
       public int compareTo(Hansol o) {
-          return value.substring(1).compareTo(o.value.substring(1));
+          return this.value.substring(1).compareTo(o.value.substring(1));
       }
       @Override
       public String toString(){
@@ -130,6 +130,7 @@
 - 오버라이드와 같은 어노테이션으로 추상 메소드가 단 하나 존재하는지 검사(람다식을 사용할 수 있는지 검사)
 
   - 메서드가 2개가 되면 어노테이션에  빨갛게 에러가 뜬다
+  - 람다식은 해당 인터페이스를 구현한 클래스의 객체를 만들어서 해당 클래스의 유일한 메서드를 바로 구현하는 것이라고 정리해보자
   
 - default 메서드는 FunctionalInterface에서도 사용가능하다
 
@@ -141,7 +142,7 @@
   interface Runner<T>{
       T run(); // 단하나의 abstrac mehod를 가지고있음
   
-  //    T runTwo(); //abstrac method를 2개 이상 작성하면 람다식에 에러가 생김
+  //    T runTwo(); //abstrac method를 2개 이상 작성하면 어노테이션에 빨간불들어옴 -> 문법에러는 아닌데 해당 어노테이션에 맞지 않다고
   
       default void mehtod(){} // default method 구현되어있더라도 lambda와 상관없다
   }
@@ -283,7 +284,7 @@ public class Main {
 
 - 자주 사용되는 함수형 인터페이스를 정의해 둔 API
   - 람다식은 정형화 될 수 밖에 없고 그것을 표준형으로 만들어 놓음 
-    - 사용자정의 함수형 인터페이스다는 표준 함수형 인터페이스를 이용하는 것이 편리하다
+    - 사용자정의 함수형 인터페이스 보다는 표준 함수형 인터페이스를 이용하는 것이 편리하다
       - 일단 인터페이스를 만들 필요가 없다..
 - 람다식을 이용한 함수형 인터페이스를 어떻게 사용할 것인가에 관한 내용
   - 하나의 추상메서드와 디폴드메서드를 어떻게 연계해서 사용할 것인가를 이해해야 한다
@@ -311,7 +312,7 @@ public class Main {
 #### Consumer 계열
 
 - 파라미터 입력을 받아서 그것을 소비하는 Functional Interface이다
-  - 소비한다는 것은 새로운 출력을 내놓지 않고 함수내에서 처리하고 끝나기때문에 소비라고 하는 것이 그냥 함수에서 입력값을 처리한다는 점에서 다른 메서드랑 크게 다를게 없다
+  - 소비한다는 것은 새로운 출력을 내놓지 않고 함수내에서 처리하고 끝나기때문에 소비라고 하는 것이지 입력 파라미터만 있고 출력값이 void인 메서드와 다를게 없다
 - accept 메소드를 사용하는데 리턴이 void인 것이 특징
 
 | 인터페이스             | 메소드                                                       |
@@ -481,10 +482,11 @@ public class Main {
         //ToIntBiFunction<String,String> // Int출력을 하는 두개의 입력을 받는것
         // P Type은 Int, Long, Double 이 있다
 
-        // PToQFunction : P -> Q로 매핑하는 함수
+        // PToQFunction : P -> Q로 매핑하는 함수 //기본형에서 기본형으로 매핑해주는 Function
         IntToDoubleFunction funcFive;
         
         // IntToIntFunction은 없다 = > Function은 형태를 변환시키는 것이기 때문에 동일한 자료형은없다
+        //기본형 자료만 없는 것이고 그냥 Function은 같은형으로 매핑이 가능하다
     }
 }
 
@@ -496,7 +498,6 @@ public class Main {
 
 - 입력받은 타입과 동일한 타입의 출력을 하는 함수형 인터페이스
 - Function 계열과 달리 입출력 타입이 다를 수 없다.
-  - 그래서 Function에서는 입출력타입이 같을 수 가 없었구나?
 
 | 인터페이스             | 메소드                                              |
 | ---------------------- | --------------------------------------------------- |
@@ -590,7 +591,7 @@ public class Main {
 
 - 두 개 이상의 함수형 인터페이스를 연결하기 위해 사용 (인터페이스 엮어서 사용하기)
 
-  - `A.andThen(B)`: A를 먼저 실행하고 B를 실행 Function, Operator 계열 지원
+  - `A.andThen(B)`: A를 먼저 실행하고 B를 실행 Consumer, Function, Operator 계열 지원
     - Consumer, Function, Operator 계열에 default 메서드로 구현되어 있음
 
   - `A.compose(B)`: B를 먼저 실행하고 A를 실행. Function, Operator 계열 지원
@@ -609,6 +610,7 @@ public class Main {
           c2.accept("String");
           //c0String
           //c1String
+          //하나의 매개변수를 공유한다
   
           // Function 계열은 입력 => 출력 => 입력 => 출력 타입이 연쇄가 되어야 한다.
   
@@ -618,10 +620,13 @@ public class Main {
           //입력이 Inter인 아이가 와야됨.. 왜나면 fun1의 출력이 Inter이기때문에// 출력은 상관이 없음
           //func3는 String입력받고 Long을 출력하는 애가 되야함... 와웅...
           System.out.println(func3.apply("Four"));//4
+         	// 입력값을 공유하지않고 메서드가 맞물리는 형태
   
           //andThen과 거꾸로 실행되는 것..천천히봐보자
           Function<String, Long> func4 = func2.compose(func1);
           System.out.println(func4.apply("Four"));//4
+          //매개변수에 있는게 먼저실행된다.
+          // 예제에서는 순서를 위해 func1과 func2의 자리르 바꿔주었다
   
   
           BinaryOperator<String> op0 = (s1, s2) -> s1 + s2;
@@ -638,8 +643,7 @@ public class Main {
           //= > 이번 과제하면서 이해를 해보길 바란데...이런걸 사용해야하나보다
   
           Function<String, String> op3 = op1.compose(fnc0);
-          // 이부분확인해야함함 입력 인자 맞추려고 한거같긴한데 확인하기
-          
+          //예제에서는 BinaryOperator를 거꾸로하는건 실패해서 그냥 operator를 function으로 compose함
           // 포인트는 Operator가 andThen이나 compose사용할 수 있지만 funtion으로 치환해야한다는 것
       }
   }
@@ -675,6 +679,7 @@ public class Main {
           System.out.println(p1.test(0.9)); //false
           System.out.println(p2.test(0.9)); //false => true and false = false
           System.out.println("");
+          //하나의 매개변수를 공유한다
   
           System.out.println(p0.test(0.6)); //true
           System.out.println(p1.test(0.6)); //true
@@ -696,7 +701,7 @@ public class Main {
   
           // isEqual
   
-          Predicate<String> eq = Predicate.isEqual("String");
+          Predicate<String> eq = Predicate.isEqual("String");// isEqaul를 하는 객체를 생성
           // eq와 입력된 값이 같은지 확인해주는 메서드
           System.out.println(eq.test("String")); // true
           System.out.println(eq.test("String!")); // false
@@ -730,8 +735,8 @@ public class Main {
           System.out.println(minBy.apply("abc", "cd")); // cd
           System.out.println(maxBy.apply("abc", "cd")); // abc
   
-          System.out.println(maxBy.apply("abc", "cde")); // cde
-          //0일 경우에는  왜 난 cde가 출력되는지 알아보기... ?????????
+          System.out.println(minBy.apply("abc", "cde")); // abc
+  
       }
   }
   ```
@@ -740,8 +745,8 @@ public class Main {
 
 ### 람다식에 메소드/생성자 사용 /
 
-- 이미 구현된 메소드가 있는 경우, 다양한 방식으로 람다식을 대체 가능
-  - 구현된 메서드를 재사용 하고자 할 때 사용하는 방법
+- 이미 구현된 메소드가 있는 경우, 다양한 방식으로 람다식을 대체 가능하다
+  - 구현된 메서드를 람다식으로 구현하지 않고 재사용 하고자 할 때 사용하는 방법
   - 중요하다!
 
 #### ClassName::instanceMethod
