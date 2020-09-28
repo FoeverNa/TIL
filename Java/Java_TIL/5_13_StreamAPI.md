@@ -328,7 +328,7 @@ Function 인터페이스를 이용해 요소의 값을 변환한다.
 
 Predicate 계열을 이용해 스트림 요소들이 특정 조건에 만족하는지 조사하는 메소드
 
-- `boolean allMatch(Predicate<? super T> predicate)` : 스트림의 모든 요소가 Predicate를 만족하면 true를 반환
+- `boolean allMatch(Predicate<? super T> predicate)` : 스트림의 모든 요소가 Predicate를 만족하면 true를 반환 
 
 - `boolean anyMatch(Predicate<? super T> predicate)` : 스트림의 요소 중 하나라도 Predicate를 만족하면 true를 반환
 
@@ -336,13 +336,13 @@ Predicate 계열을 이용해 스트림 요소들이 특정 조건에 만족하�
 
   ```java
   Stream<String> st0 = Stream.of("abc", "cde","efg");
-  System.out.println(st0.allMatch(s -> s.equals("abc")));
+  System.out.println(st0.allMatch(s -> s.equals("abc")));// false
   
   st0 = Stream.of("abc", "cde","efg");
-  System.out.println(st0.anyMatch(s -> s.equals("abc")));
+  System.out.println(st0.anyMatch(s -> s.equals("abc")));// true
   
   st0 = Stream.of("abc", "cde","efg");
-  System.out.println(st0.noneMatch(s -> s.equals("abc")));
+  System.out.println(st0.noneMatch(s -> s.equals("abc")));//false
   ```
 
 
@@ -353,11 +353,11 @@ Predicate 계열을 이용해 스트림 요소들이 특정 조건에 만족하�
 
   - 기본형 스트림의 통계(Int, Long, Double) : count(), sum(), average(), min(), max()
 
-  - T 타입 스트림의 통계 : count(), min(), max() (min, max의 경우 `Comparator` 필요)
+  - T 타입 스트림의 통계 : count(), min(), max() (min, max의 경우 `Comparator` 필요 => 객체를 비교하는 것이기 때문에)
 
     
 
-- reduce() 메소드 -> 사용자 정의 집게 메소드
+- reduce() 메소드 -> 사용자 정의 집게 메소드 // optional은 수업에서 다루지 않음
 
   - `Optional<T> reduce(BinaryOperator<T> accumulator)` : accumulator를 수행하고 `Optional<T>` 타입 반환
 
@@ -366,18 +366,17 @@ Predicate 계열을 이용해 스트림 요소들이 특정 조건에 만족하�
   - `<U> U reduce(U identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner)` : combiner를 이용해 병렬 스트림 결합
 
     ```java
-    System.out.println(IntStream.range(0, 10).reduce(0,(value1, value2) -> value1 + value2)); //sum());
+    System.out.println(IntStream.range(0, 10).reduce(0,(value1, value2) -> value1 + value2)); //45 
     // 처음부터 누적해서 연산을 해나가는 것. accumulator
     // identity -> 맨처음 누적값과 첫번째값을 연산하기 위함
     // 0+0, 0+1, 1+2, 3+3 ....
     // sum() 이 reduce를 이용해서 구현이 되어 있다다
     
-    //        System.out.println(IntStream.range(0, 10).reduce(Integer.MAX_VALUE, (value1,value2) -> value1 < value2));
-            //- > 구현해야함
+    System.out.println(IntStream.range(0, 10).
+                       reduce(Integer.MAX_VALUE, (value1,value2) -> value1 < value2 ? value1 : value2)); // 10
+    
     
     ```
-
-    
 
 - `java.util.Optional<T>`
 
@@ -407,7 +406,7 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
 
 - `void forEach(Comsumer<? super T> action)` : 스트림의 각 요소를 action으로 소비
   
-  - void를 출력한다.
+  - Consumer 이기 때문에 void를 출력한다.
   
     
 
@@ -425,7 +424,9 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
 
 - 필요한 요소를 수집하여 새로운 Collection으로 구성하여 반환하는 메소드
   
-- Stream API는 JCF -> Stream -> 처리 -> 결과(출력, 값, Colletion) 해준다
+- Stream API는 JCF -> Stream -> 중간 처리 -> 결과(출력, 값, Colletion) 해준다
+  
+  - 출력, 값, Colletion 중 하나는 선택을 해서 결과를 반환해야 한다
   
 - collect() 메소드
 
@@ -439,83 +440,115 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
   - `<R, A> R collect(Supplier<R> supplier, BiConsumer<R, ? super T> accumulator, BiConsumer<R, R> combiner)` : supplier를 통해 공급된 컨테이너 R에 accumulator를 이용해 T값을 저장. 병렬처리 스트림에 사용될 경우 combiner를 이용해 스레드별 컨테이너 R을 통합
 
     ```java
-    String[] array = {"Java", "Is", "Fun", "Isn't", "It", "?"};
-    List<String> list = Arrays.stream(array)
-            .filter(s -> s.length() >= 3)
-            .collect(Collectors.toList()); // ArrayList
-            // .collect(Collectors.toCollection(LinkedList::new))
-    System.out.println(list.getClass().getName() + ":" + list);
+       //toList() 메소드를 쓸 경우, ArrayList로 Collect하는 Collector 반환
+            String[] array = {"Collection", "Framework", "is", "so", "cool"};
+            Stream<String> stream3 = Arrays.stream(array);
+            List<String> collected = stream3.filter(s -> s.length() >= 3)
+                    .collect(Collectors.toList());
+            System.out.println(collected); //[Colletion, Framework, cool]
+            //filter된 결과가List로 collet된 모습
     
+             //toSet() 메소드를 쓸 경우, HashSet으로 Collect하는 Colletor를 반환
+            Stream<String> stream4 = Arrays.stream(array);
+            Set<String> collected2 = stream4.filter(s -> s.length() >= 3)
+                    .collect(Collectors.toSet());
+            System.out.println(collected2); //[Colletion, cool, Framework]
+            // set이라 정렬되지 않은 결과값
     
-    Set<String> set = Arrays.stream(array)
-            .filter(s -> s.length() >= 3)
-            .collect(Collectors.toSet()); // HashSet
-            // .collect(Collectors.toCollection(HashSet::new))
-    System.out.println(set.getClass().getName() + ":" + set);
+            Stream<String> stream5 = Arrays.stream(array);
+            List<String> collected3 = stream5.filter(s -> s.length() >= 3)
+                    .collect(Collectors.toCollection(LinkedList::new));
+            System.out.println(collected3);
+    		// 이렇게 Collet 하고싶은 것을 지정해서 생성할 수 있음
     
-    Map<String, Integer> map = Arrays.stream(array)
-            .filter(s -> s.length() >= 3)
-            .collect(Collectors.toMap(s -> s, String::length)); // HashMap
-            // .collect(Collectors.toCollection(s -> s, String::length, (oldVal, newVal) -> newVal, TreeMap::new))
-    System.out.println(map.getClass().getName() + map);
+            Stream<String> stream6 = Arrays.stream(array);
+            Set<String> collected5 = stream6.filter(s -> s.length() >= 3)
+                    .collect(Collectors.toCollection(HashSet::new));
+            System.out.println(collected5); // Set으로 생성하면 HashSet이지만 이렇게 지정할수도있다
+    
+            //Map<K, V> Map.Entry<K, V>  // Map은 key value쌍이여야 됨
+            Stream<String> stream7 = Arrays.stream(array);
+            Map<String, Integer> collected6 = stream7.filter(s -> s.length() >= 3)
+                    .collect(Collectors.toMap(s -> s, String::length));// toMap()안에 key value어떻게 할지 람다식으로 작성해야한다
+            System.out.println(collected6);
+            // String이 key이고 Integer가 벨류인 상황
     ```
 
   
 
-- Collectors의 정적 메소드를 이용한 그룹화와 분리
+- Collectors의 정적 메소드를 이용한 그룹화와 분리 => 내용보충하기
 
-  - ```
-    public static <T, K> Collector<T, ?, Map<K, List<T>>> groupingBy(Function<? super T, ? extends K> classifier)
-    ```
+  - partitioningBy(Predicate)
+    - retun은 Map<Boolean,List<T>> // true List, false List로 분류된다 
+  -  goupingBy(Funtion)
+  - groupinBy는 Map<R , List<T> >가 되어 R타입별로 입력갑이 List로 분류된다
+      - String.length면 legth가 1인것끼리 묶여서 List로 묶인 것들이 맵으로 만들어지는것
 
-     
+  ```java
+       String [] array2 = {"Python", "is", "awful", "lame", "not", "good"};
+          Map<Integer, List<String>> map = Arrays.stream(array2)
+                .collect(Collectors.groupingBy(String::length)); //claasfier가 구분자
+                  //기본은 List고 List말고 다른걸로 담을수도 있음
+          System.out.println(map);//{2=[is], 3=[not], 4=[lame, good], 5=[awful], 6=[Python]}
+          //기준은 여러개 해보는것 해보기
 
-    : classifier를 key값으로, 해당하는 값의 목록을 List인 value로 가지는 Map으로 스트림을 수집하는 Collector를 반환
+          Map<Boolean, List<String>> map2 = Arrays.stream(array2)
+                .collect(Collectors.partitioningBy(s -> s.length() <4 ));
+          System.out.println(map2); //{false=[Python, awful, lame, good], true=[is, not]}
 
-    - `public static <T, K, A, D> Collector<T, ?, Map<K, D>> groupingBy(Function<? super T, ? extends K> classifier, Collector<? super T, A, D> downstream)` : List 대신 downstream collector로 수집
-
-  - ```
-    public static <T> Collector<T, ?, Map<Boolean, List<T>>> partitioningBy(Predicate<? super T> predicate)
-    ```
-
-     
-
-    : predicate 결과를 key로, 해당하는 값의 목록을 List value로 가지는 Map으로 스트림을 수집하는 Collector를 반환
-
-    - `public static <T, A, D> Collector<T, ?, Map<Boolean, D>> partitioningBy(Predicate<? super T> predicate, Collector<? super T, A, D> downstream))` : List 대신 downstream collector로 수집
-
-  ```
-  String[] array = {"Java", "Is", "Fun", "Isn't", "It", "?"};
+         
+```
   
-  Map<Character, List<String>> map1 = Arrays.stream(array)
-          .collect(Collectors.groupingBy(s -> s.charAt(0)));
-  System.out.println(map1);
-  
-  Map<Boolean, List<String>> map2 = Arrays.stream(array)
-          .collect(Collectors.partitioningBy(s -> s.length() >= 3));
-  System.out.println(map2);
-  ```
-
 - 집계를 위한 Collector
 
   - Downstream collector로 집계를 위한 Collector를 사용할 경우 유용하다.
   - `counting()`, `summingP()`, `averagingP()`, `maxBy()`, `minBy()`, `reducing()`
 
-  ```
-  String[] array = {"Java", "Is", "Fun", "Isn't", "It", "?"};
+  ```java
+   // 그룹화 + DownStream collector
+          // 최종 처리 메소드에서 있던 count, min()... 등과 유사한
+          // Collector중에도 counting(), minBy(), maxBy() ... 등이 있다.
   
-  Map<Character, Long> map = Arrays.stream(array)
-          .collect(Collectors.groupingBy(s -> s.charAt(0),
-                                         Collectors.counting()));
-  System.out.println(map);
+          Map<Integer, Long> map3 = Arrays.stream(array2)// 출력값이 Long
+                  .collect(Collectors.groupingBy(String::length,Collectors.counting()));
+                                  //List로 저장하는게 아니라 다른방법으로 처리하겠다
+          System.out.println(map3); //{2=1, 3=1, 4=2, 5=1, 6=1} // 각 length별로 counting한 값
+          //Collecotr에오 counting이 있는데 일반적으로는 count();를 사용한다
+          System.out.println("");
   ```
 
 
 
-### 병렬 스트림
+### 병렬 스트림 => 내용보충
+
+- 보통의 프로그램이 한줄씩 실행된다면 다중 스레드 상황에서는 동시에 여러줄이 실행될 수 있고 이 실행되는 덩어리를 스레드라고한다
+  - 순차처리와는 다른 개념으로 순수 함수를 통해 동시에 어려 코드를 처리하여 처리속도를 높이는것
 
 - 병렬 스트림의 생성
   - stream() 대신 parallelStream()으로 변경
   - stream 생성 후 parallel()으로 병렬화
-- combiner를 이용해 병렬 스트림으로 생성된 컬렉션을 결합
+  
+  ```java
+  Stream<String> parStream = Arrays.stream(array2).parallel();// stream  생숭 후 parallet()으로 병렬화
+  System.out.println(parStream.map(String::length)
+          .count());//6
+  
+  List<String> list4 = List.of("atwe","bff","cqqqw","dtwer");
+  // parallelStream을 사용하면 연산 수서가 달라질 수 있다.
+  Stream<String> stream8 = list4.parallelStream(); //stream()대신 prallelStream()으로 변경
+  // System.out.println(stream8.isParallel());//parallel인지 검사도 가능하다
+  
+  stream8.map(String::length)
+      .peek(s -> System.out.println("A:"+s))
+      .filter(value -> value > 3)
+      .peek(s -> System.out.println("B:"+s))
+      .forEach(System.out::println);
+  //List의 0번재부터 peek A -> peek B -> foreach순으로 실행되야하지만 위의 예제의 경우 순서가 뒤죽박죽으로 실행이됨
+  //=> 병렬처리가 됬다는 증거
+  ```
+  
+  
+  
+- ombiner를 이용해 병렬 스트림으로 생성된 컬렉션을 결합
+  
   - `BiConsumer<T, K> combiner` : T 객체에 K 객체를 결합
