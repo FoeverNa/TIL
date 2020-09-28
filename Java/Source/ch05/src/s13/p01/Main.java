@@ -1,9 +1,7 @@
 package s13.p01;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -150,6 +148,8 @@ public class Main {
             //최종 처리 메소드가 있어야만 중간 메소드가 작동을 한다
         System.out.println("");
 
+
+
         // 최종처리 메소드 - 스트림의 끝 -> 스트림을 반환하지 않음(
             // (void일 수도 있고, 무언가 리턴 할 수 도 있다)
 
@@ -180,17 +180,111 @@ public class Main {
         // 0+0, 0+1, 1+2, 3+3 ....
         // sum() 이 reduce를 이용해서 구현이 되어 있다다
 
-//        System.out.println(IntStream.range(0, 10).reduce(Integer.MAX_VALUE, (value1,value2) -> value1 < value2));
+        System.out.println(IntStream.range(0, 10).
+                reduce(Integer.MAX_VALUE, (value1,value2) -> value1 < value2 ? value1 : value2));
         //- > 구현해야함
 
             //반복 - 소비
         //forEach() -> Consumer 계열의 람다식 입력받아, 각 요소를 소비(하는 것으로 끝남)
-        //forEach()는 void 출력
-        //예는 위에서 찾아봐
+
 
 
             // 수집 - Colletion으로 반환하는 collet() 메소드
-        //Stream API는 JCF -> Stream -> 처리 -> 결과(출력, 값, Colletion)
+        //Stream API는 JCF -> Stream -> 중간처리 -> 결과(출력, 값, Colletion)
+            //toList() 메소드를 쓸 경우, ArrayList로 Collect하는 Collector 반환
+        String[] array = {"Collection", "Framework", "is", "so", "cool"};
+        Stream<String> stream3 = Arrays.stream(array);
+        List<String> collected = stream3.filter(s -> s.length() >= 3)
+                .collect(Collectors.toList());
+        System.out.println(collected); //[Colletion, Framework, cool]
+        //filter된 결과가List로 collet된 모습
+
+
+
+            //toSet() 메소드를 쓸 경우, HashSet으로 Collect하는 Colletor를 반환
+        Stream<String> stream4 = Arrays.stream(array);
+        Set<String> collected2 = stream4.filter(s -> s.length() >= 3)
+                .collect(Collectors.toSet());
+        System.out.println(collected2); //[Colletion, cool, Framework]
+        // set이라 정렬되지 못한모습
+
+        Stream<String> stream5 = Arrays.stream(array);
+        List<String> collected3 = stream5.filter(s -> s.length() >= 3)
+                .collect(Collectors.toCollection(LinkedList::new));
+        System.out.println(collected3); // 이렇게 이름지정해서 생성할 수 있음
+
+        Stream<String> stream6 = Arrays.stream(array);
+        Set<String> collected5 = stream6.filter(s -> s.length() >= 3)
+                .collect(Collectors.toCollection(HashSet::new));
+        System.out.println(collected5); // Set으로 생성하면 HashSet이지만 이렇게 지정할수도있다
+
+        //Map<K, V> Map.Entry<K, V>
+        Stream<String> stream7 = Arrays.stream(array);
+        Map<String, Integer> collected6 = stream7.filter(s -> s.length() >= 3)
+                .collect(Collectors.toMap(s -> s, String::length));// toMap()안에 key value어떻게 할지 람다식으로 작성해야한다
+        System.out.println(collected6); // Map은 key value쌍이여야 됨
+        // 누가 key이지?
+
+
+            // 그룹화/분리 - groupingBy, partitioningBy
+        //partitioningBy(Predicate), goupingBy(Funtion) //설명다시듣기
+        //retun은 Map<Boolean,List<T>> // true List, false List로 분류된다
+        //groupinBy는 Map<R , List<T> >가 되어 R타입별로 입력갑이 List로 분류된다
+        //String.length면 legth가 1인것끼리 묶여서 List로 묶인 것들이 맵으로 만들어지는것
+
+        String [] array2 = {"Python", "is", "awful", "lame", "not", "good"};
+        Map<Integer, List<String>> map = Arrays.stream(array2)
+                .collect(Collectors.groupingBy(String::length)); //claasfier가 구분자
+                //기본은 List고 List말고 다른걸로 담을수도 있음
+        System.out.println(map);//{2=[is], 3=[not], 4=[lame, good], 5=[awful], 6=[Python]}
+        //기준은 여러개 해보는것 해보기
+
+        Map<Boolean, List<String>> map2 = Arrays.stream(array2)
+                .collect(Collectors.partitioningBy(s -> s.length() <4 ));
+        System.out.println(map2); //{false=[Python, awful, lame, good], true=[is, not]}
+
+        // 그룹화 + DownStream collector
+        // 최종 처리 메소드에서 있던 count, min()... 등과 유사한
+        // Collector중에도 counting(), minBy(), maxBy() ... 등이 있다.
+
+        Map<Integer, Long> map3 = Arrays.stream(array2)// 출력값이 Long
+                .collect(Collectors.groupingBy(String::length,Collectors.counting()));
+                                //List로 저장하는게 아니라 다른방법으로 처리하겠다
+        System.out.println(map3); //{2=1, 3=1, 4=2, 5=1, 6=1}
+        //Collecotr에오 counting이 있는데 일반적으로는 count();를 사용한다
+        System.out.println("");
+
+
+        // 병렬 스트림
+
+        Stream<String> parStream = Arrays.stream(array2).parallel();
+        System.out.println(parStream.map(String::length)
+                .count());//6
+
+        List<String> list4 = List.of("atwe","bff","cqqqw","dtwer");
+        // parallelStream을 사용하면 연산 수서가 달라질 수 있다.
+        Stream<String> stream8 = list4.parallelStream(); //바로 만드는경우
+//        System.out.println(stream8.isParallel());//검사도 가능하다
+
+        stream8.map(String::length)
+                .peek(s -> System.out.println("A:"+s))
+                .filter(value -> value > 3)
+                .peek(s -> System.out.println("B:"+s))
+                .forEach(System.out::println);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
