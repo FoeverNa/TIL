@@ -173,7 +173,7 @@
 
 - `Stream<T> distict()` : 스트림 요소의 중복을 제거한 스트림을 반환
 
-- `Stream<T> filter(Predicate<? super T> predicate)` : Predicate에서 true에 해당하는 요소만으로 구성된 스트림을 반환
+- `Stream<T> filter(Predicate<? super T> predicate)` : Predicate에서 true에 해당하는 요소만으로 구성된 **스트림을 반환**
 
   ```java
   System.out.println("");
@@ -247,13 +247,15 @@ Function 인터페이스를 이용해 요소의 값을 변환한다.
 - map 계열
 
   - `<R> Stream<R> map(Function<? super T, ? extends R> mapper)` : 기존 스트림의 T 타입 요소를 R 타입으로 변환하여 새로운 스트림 반환
-  - `PStream mapToP(ToPFunction<? super T> mapper)` : R이 기본형 타입으로 제한된 map()
+  - `PStream mapToP(ToPFunction<? super T> mapper)` : R이 기본형 타입으로 제한된 map() -> Function이 아닌 Operator계열만 사용이 가능하다
 
 - flatMap 계열
 
   - `<R> Stream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)` : 스트림의 T 타입 요소가 n개의 R 타입 요소로 매핑된 새로운 스트림을 반환
+    - 2차원 배열의 하나하나 요소들들이나 String배열의 하나하나 char을 하나의 스트림으로 만들어서 새로운 스트림을 반환한다
+    - String 값 하나를 char[]로 본다면 String의 배열 또한 2차원 배열이 된다
   - `PStream flatMapToP(Function<? super T, ? extends PStream> mapper)` : R이 기본형 타입으로 제한된 flatMap()
-
+  
   ```java
          // 매핑(Mapping) -> 입력요소 1 : 1 출력요소
           // Function 계열의 인터페이스를 사용하여 스트림의 각 요소를 매핑 => 안에있는애들을 다 매핑해버림
@@ -274,7 +276,7 @@ Function 인터페이스를 이용해 요소의 값을 변환한다.
             // flatMap 계열 매핑 -> 입력 1 : n 출력 (하나의 입력을 받고 여러개의 결과값을 스트림 형태로 출력 한다)
           List<String> list2 = Arrays.asList("java", "backend", "best", "course");
           list2.stream().flatMap(s -> {
-              return Arrays.stream(s.split("")); // 하나의 STring받고 한글자씩 쪼개서 String Stream으로 출력
+              return Arrays.stream(s.split("")); // 하나의 String받고 한글자씩 쪼개서 String Stream으로 출력
               // s,split : "java" -> {"j", "a", "v", "a"}
           }).forEach(System.out::println);
           System.out.println("");
@@ -470,19 +472,21 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
             Stream<String> stream7 = Arrays.stream(array);
             Map<String, Integer> collected6 = stream7.filter(s -> s.length() >= 3)
                     .collect(Collectors.toMap(s -> s, String::length));// toMap()안에 key value어떻게 할지 람다식으로 작성해야한다
+    															//key, value 별도의 람다식으루 작성해야 한다
             System.out.println(collected6);
             // String이 key이고 Integer가 벨류인 상황
     ```
 
   
 
-- Collectors의 정적 메소드를 이용한 그룹화와 분리 => 내용보충하기
+- Collectors의 정적 메소드를 이용한 그룹화와 분리 
 
-  - partitioningBy(Predicate)
-    - retun은 Map<Boolean,List<T>> // true List, false List로 분류된다 
-  -  goupingBy(Funtion)
-  - groupinBy는 Map<R , List<T> >가 되어 R타입별로 입력갑이 List로 분류된다
-      - String.length면 legth가 1인것끼리 묶여서 List로 묶인 것들이 맵으로 만들어지는것
+  - 스트림을 그룹화하거나 분리하여 Colletion으로 반환하는 방식
+    - 분리 = partitioningBy(Predicate)
+      - partitioningBy는 Map<boolean , List<T> >가 되어 boolean을 key로 입력갑이 List로 분류된다
+    - 그룹화 = goupingBy(Fucntion)
+      - groupinBy는 Map<R , List<T> >가 되어 R타입별로 입력갑이 List로 분류된다
+          - Function식에 따라 그룹별로 분리하여 Colletion으로 반환한다
 
   ```java
        String [] array2 = {"Python", "is", "awful", "lame", "not", "good"};
@@ -491,21 +495,19 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
                   //기본은 List고 List말고 다른걸로 담을수도 있음
           System.out.println(map);//{2=[is], 3=[not], 4=[lame, good], 5=[awful], 6=[Python]}
           //기준은 여러개 해보는것 해보기
-
+  
           Map<Boolean, List<String>> map2 = Arrays.stream(array2)
                 .collect(Collectors.partitioningBy(s -> s.length() <4 ));
           System.out.println(map2); //{false=[Python, awful, lame, good], true=[is, not]}
+  ```
 
-         
-```
   
-- 집계를 위한 Collector
 
-  - Downstream collector로 집계를 위한 Collector를 사용할 경우 유용하다.
-  - `counting()`, `summingP()`, `averagingP()`, `maxBy()`, `minBy()`, `reducing()`
-
-  ```java
-   // 그룹화 + DownStream collector
+  - 그룹화 + DownStream collector 
+  - 그룹화해서 List에 담길 요소들을 DownStream Collecotr를 통해 처리하는 방법
+    - `counting()`, `summingP()`, `averagingP()`, `maxBy()`, `minBy()`, `reducing()` 을 사용할 수 있다
+```java
+          // 그룹화 + DownStream collector
           // 최종 처리 메소드에서 있던 count, min()... 등과 유사한
           // Collector중에도 counting(), minBy(), maxBy() ... 등이 있다.
   
@@ -515,26 +517,31 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
           System.out.println(map3); //{2=1, 3=1, 4=2, 5=1, 6=1} // 각 length별로 counting한 값
           //Collecotr에오 counting이 있는데 일반적으로는 count();를 사용한다
           System.out.println("");
-  ```
+```
 
 
 
 ### 병렬 스트림 => 내용보충
 
-- 보통의 프로그램이 한줄씩 실행된다면 다중 스레드 상황에서는 동시에 여러줄이 실행될 수 있고 이 실행되는 덩어리를 스레드라고한다
-  - 순차처리와는 다른 개념으로 순수 함수를 통해 동시에 어려 코드를 처리하여 처리속도를 높이는것
-
+- 보통의 프로그램의 코드가 순서에 따라 한줄씩 실행된다면 다중 스레드 상황에서는 동시에 여러줄이 독립적으로 실행할 수 있는데 이것을 병렬처리라고 한다
+  
+- 순수함수의 경우 입력값이 동일한 경우 출력값이 동일한 특성을 가졌기 때문에 동시에 여러줄을 처리하더라도 서로의 값의 영향을 미치지 않는다
+  - 이러한 수수함수를 활용하여 동시에 여러스레드에서 코드를 처리하여 수행 속도를 높이는 것이 병렬처리이다.
+  - 병렬처리로 수행한 결과는 순서대로 실행 되지 않기 때문에  뒤죽박죽섞이게 될 수 있다.
+  
 - 병렬 스트림의 생성
-  - stream() 대신 parallelStream()으로 변경
-  - stream 생성 후 parallel()으로 병렬화
+  
+  - 스트림의 경우 이러한 병렬처리를 하기위한 병렬스트림을 간단하게 생성할 수 있다
+    - stream() 대신 parallelStream()으로 변경
+    - stream 생성 후 parallel()으로 병렬화
   
   ```java
-  Stream<String> parStream = Arrays.stream(array2).parallel();// stream  생숭 후 parallet()으로 병렬화
+  Stream<String> parStream = Arrays.stream(array2).parallel();// stream  생성 후 parallet()으로 병렬화
   System.out.println(parStream.map(String::length)
           .count());//6
   
   List<String> list4 = List.of("atwe","bff","cqqqw","dtwer");
-  // parallelStream을 사용하면 연산 수서가 달라질 수 있다.
+  // parallelStream을 사용하면 연산 순서가 달라질 수 있다.
   Stream<String> stream8 = list4.parallelStream(); //stream()대신 prallelStream()으로 변경
   // System.out.println(stream8.isParallel());//parallel인지 검사도 가능하다
   
@@ -552,3 +559,13 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
 - ombiner를 이용해 병렬 스트림으로 생성된 컬렉션을 결합
   
   - `BiConsumer<T, K> combiner` : T 객체에 K 객체를 결합
+
+```java
+Integer reducedParallel = Arrays.asList(1,2,3)
+        .parallelStream()
+        .reduce(10,(a,b)->a*b,(a,b)-> a+b);
+
+System.out.println(reducedParallel); //60
+// 10*1 + 10 *2 + 10 *3 = 60;
+// 병렬처리한 값을 마지막에 결합한다
+```

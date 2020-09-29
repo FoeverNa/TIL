@@ -16,7 +16,7 @@
 
   | 메소드                                                      | 설명                                                       |
   | ----------------------------------------------------------- | ---------------------------------------------------------- |
-  | `public final native Class<?> getClass()`                   | 현재 객체의 클래스를 반환한다.                             |
+  | `public final native Class<?> getClass()`                   | 현재 객체의 원본 클래스를 반환한다.                        |
   | `public native int hashCode()`                              | 현재 객체의 해시코드 값을 반환한다.                        |
   | `public boolean equals()`                                   | 현재 객체와 대상이 같은 객체를 참조하는지 여부를 반환한다. |
   | `public String toString()`                                  | 객체를 문자열로 변환하여 반환한다.                         |
@@ -88,6 +88,7 @@
   System.out.println("");
   
   //우리도 새로운 클래스를 만든다면 eqauls()를 잘 오버라이딩해야된다, 어떤 것들이 같으면 같다고할지
+  //이전에 클래스에 멤버 변수가 같으면 같은 클래스라고 출력하던것
   ```
 
 
@@ -99,15 +100,16 @@
 - `native` 메소드이므로 구현 내용을 볼 수 없음
   - native : C 또는  C++ 등 외부언어로 작성된 코드 => 굉장히 효율적으로 작성해야하는 알고리즘의 경우 다른언어로 작성하기도 한다
 - hashCode()의 제한 사항
-  - 한 객체의 hashCode()를 여러번 호출할 경우, equals()에 사용하는 값이 변하지 않으면 동일한 값을 반환해야 한다.
-    - 즉, 객체가 변하지 않으면 hashCode는 그대로 유지되어야 한다는 뜻
+  - 한 객체의 hashCode()를 여러번 호출할 경우, equals()에 사용하는 값이 변하지 않으면 동일한 값을 반환해야 한다.(equals()에서 사용하지 않는 값은 변해도 상관이 없다)
+    - 객체가 변하지 않는다면 hashCode도 동일하게 유지가 되어야 한다는 뜻
   - equals() 메소드가 같다고 판단한 두 객체의 hashCode() 반환값은 같아야 한다.
-    - 두번째것을 실행하는 첫번째것이
-  - 권고사항 : equals() 메소드가 다르다고 판단한 두 객체의 hashCode()가 반드시 다를 필요는 없으나, 다른 값이 나오면 HashTable 성능이 향상된다.
+    - eqauls()가 hashCode로 객체를 구분하는 기준이 된다.
+  - 권고사항 : equals() 메소드가 다르다고 판단한 두 객체의 hashCode()가 반드시 다를 필요는 없으나, 다른 값이 나오면 Hash기반 자료구조의 성능이 향상된다.
     - equals()가 다른데 hashCode()값이 같은 경우가 있는데 가능하면 다르게 나오게 해주는 것이 HashTable성능에 도움이 된다는 뜻
+      - 이런 경우를 해쉬 충돌이라고 한다 => HashTable & HashMap 자료구조에서 더자세히 배우는 것 같다
     - 즉 eqauls()가 같으면 hashCode()는 반드시 같고, equals()가 다를때 hashCode()가 반드시 다른 것은 아니다.
 
-### clone() => 구현해보기
+### clone() 
 
 - 자신을 복제하여 새로운 객체를 생성하는 메소드
 
@@ -120,7 +122,7 @@
   int [] ints2 = ints.clone();
   ```
 
-### getClass() => 내용보충
+### getClass()
 
 - Class 에 대한 정보를 담고 있는 Class 객체를 반환
 
@@ -141,7 +143,7 @@
   
           System.out.println(barClass.getName()); // s06.Main$1Bar
                                                   // 패키지. Main클래스안에 로컬내부클래스는 숫자로구분된 클래스명이존재
-          System.out.println(barClass.getDeclaredMethods().length); //1 // Method클래스도 존재한다
+          System.out.println(barClass.getDeclaredMethods().length); //1 // 선언되어 있는 메소드의 수를 반환한다
           barClass.getDeclaredMethod("methodA").invoke(bar);// methodA is called.
   													//해당 객체의 메소드에 접근할 수 있음
           System.out.println("");
@@ -187,48 +189,51 @@
 ```java
 System.out.println(System.out); // out은 정적변수이고 PrinStream의 객체이다(객체를 담고있다)
 System.out.println(System.err); // err도 PritStream 객체를 담고 있다
-System.out.println(System.in); // in은 InputStream
+System.out.println(System.in); // in은 InputStream 객체
 //위의 나온 Stream은 Stream API와는 전혀 다른, I/O Stream이다.
 
-System.out.println("f");// 표준 출력을 처리하기 위한 객체
-System.err.println("w");//  오류를(표준 출력 장치에) 출력하기 위한 객체-> 그래서 빨갛게출력
-// err에도 동일한 메서드 존재하는 이유는 같은 클래스의 객체 담고 있기 때문에
-Scanner scanner = new Scanner(System.in); // 표준 입력장치를 사용하기 위한
+System.out.println("f");//f // 표준 출력을 처리하기 위한 객체
+System.err.println("w");//w(빨간색 글씨) //  오류를(표준 출력 장치에) 출력하기 위한 객체-> 그래서 빨갛게출력
+// err에도 out과 동일한 메서드 존재하는 이유는 동일한 클래스의 객체 담고 있기 때문에
+Scanner scanner = new Scanner(System.in); // 표준 입력장치를 사용하기 위한 객체
 System.out.println("");
 
-int[] ints = {1,2,3,4};// 인트스트림안쓰나 이런생각도 해볼수 있겠지
+int[] ints = {1,2,3,4};// 이제 배열 만들 때 IntStream 안쓰나 이런생각도 해볼수 있겠지
 int[] ints1 = new int[10];
 System.arraycopy(ints,0,ints1, 0, ints.length);
 // native로 더 효율적으로 구현되어있음, Arrays에 있지 않고 System에 구현되어 있는 이유
 System.out.println(ints1);
 System.out.println("");
 
-    //시간에 관련된 메서드
+ //시간에 관련된 메서드
 //currentTimeMillis(), nanoTime()
 System.out.println(System.currentTimeMillis()); //1601282787547
 System.out.println(System.currentTimeMillis()); //1601282787547 //밀리초는 큰차이가 없네
 System.out.println(System.nanoTime()); //594530045231600 -> 끝이 00인 이유는 1나노단으로 측정이 안되는것
 System.out.println(System.nanoTime()); //594530045261300 -> 나노타임으로 하니까 차이가나네
-// 일반적인 머신은 RTOS(Retime machine)가 아니기 때문에 정확하지 않을 수 있음
+// 일반적인 머신은 RTOS(Realtime machine)가 아니기 때문에 정확하지 않을 수 있음
 
     // 종료에 관한 메서드
-//System.exit(0); // 프로그램 강제 종료
-// Process finished with exit code 0, 원래 프로그램 종료시 나오는아이네
+//System.exit(0); // 프로그램 강제 종료 할수 있음
+// Process finished with exit code 0, 원래 프로그램 종료시 나오는 메세지.
 //관습적으로 status =0: 정상 종료. status != 0: 비정상 종료 (1)
 
     //가비지컬렉션
 System.gc(); //Garbage Collection
             //꼭 실행할 필요는 없으나, 좀더 빨리 해달라고 용처하는 정도
                 //요청했다고 바로 gc가 작동하는 것도 아니다
-    // 환경변수
+
+// 환경변수
 System.out.println(System.getenv()); //모든 환경변수를 출력해준다 => os랑 통신하는애라 가능
 System.out.println("");
 System.out.println(System.getProperties());
 System.out.println(System.getProperty("user.country")); // KR //사용자 국적을 알수 있게됨
 System.out.println(System.getProperty("java.io.tmpdir")); // 기본 Temp 위치를 알 수 있음
-System.out.println(System.getProperty("line.separator")); // windows -
+System.out.println(System.getProperty("line.separator")); // windows - \r\n, UNIX \n, 줄바꿀때 필요한 것 OS별로 체크해줌
 System.out.println(System.getProperty("user.home")); // windows보단 mac에서 중요한의미를 가진다
-System.out.println(System.getProperty("file.separator")); // 직접 사용하는 것보다 이렇게 화룡ㅇ할수있게 해주면좋다
+System.out.println(System.getProperty("file.separator")); 
+// 사용자의 oS환경 정보에 접근해서 그것을 통해 프로그래밍의 활용할 수 잇겠다
+// 직접 사용하는 것보다 이렇게 화용할수있게 해주면좋다
 ```
 
 
