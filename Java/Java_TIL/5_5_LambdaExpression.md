@@ -83,7 +83,7 @@
                 System.out.println(Arrays.toString(strings));  
   		// 동작을 했으면 하는 부분만 심플하게 작성할 수 있다
           //클래스를 구현하는게 귀찮으니까 익명 내부클래스를 사용할 수있다
-          // 익명내부클래스도 귀찬으니가 람다를 사용할 수 있다. => 줄어드는 양상을 보자고
+          // 익명내부클래스도 번거로우니 람다를 사용할 수 있다. => 줄어드는 양상을 보자고
   ```
 
   ```java
@@ -249,7 +249,7 @@ public class Main {
       void methodA(){
           functionalMethod(() -> { 
               System.out.println("this: " + this);// => Main의 this
-                                                  // => 람다식은 익명 클래스와 달리 내부 클래스가 만들어지지 않음
+                                                  // => 람다식은 익명 클래	스와 달리 내부 클래스가 만들어지지 않음
                                                   // 실제로 함수처럼 구현이 된다 // JVM에 작동방식이 다르다
               System.out.println("OuterClass.this: " + Main.this);// => Mian의 this
               return "Lambda expression used.";

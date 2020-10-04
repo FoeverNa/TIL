@@ -1,3 +1,7 @@
+# 예외 처리(Handling Exception)
+
+
+
 ## 	오류와 예외
 
 ### 오류(Errors)
@@ -24,9 +28,9 @@
       - 외부 요청에 반응할 수 없는 Down Time을 최소화하는게 백엔드의 목표라면 예외처리는 그초석이라 할 수 있다
     
 - 예외의 클래스는 Exception클래스이다
-    
+  
     - https://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html
-        
+      
     - 그 하위 클래스들로 우리가 접할 수 있는 모든 예외 클래스들이 존재한다
     
         - 객체 지향프로그래밍은 예외마저도 객체로 만들어서어떻게하나부다...

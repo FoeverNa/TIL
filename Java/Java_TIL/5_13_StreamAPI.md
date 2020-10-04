@@ -504,7 +504,7 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
   
 
   - 그룹화 + DownStream collector 
-  - 그룹화해서 List에 담길 요소들을 DownStream Collecotr를 통해 처리하는 방법
+  - 그룹화해서 List에 담길 요소들을 DownStream Collector를 통해 처리하는 방법
     - `counting()`, `summingP()`, `averagingP()`, `maxBy()`, `minBy()`, `reducing()` 을 사용할 수 있다
 ```java
           // 그룹화 + DownStream collector
@@ -556,7 +556,7 @@ forEach() 메소드로 스트림 요소를 순차적으로 `Consumer<T>`를 이�
   
   
   
-- ombiner를 이용해 병렬 스트림으로 생성된 컬렉션을 결합
+- combiner를 이용해 병렬 스트림으로 생성된 컬렉션을 결합
   
   - `BiConsumer<T, K> combiner` : T 객체에 K 객체를 결합
 

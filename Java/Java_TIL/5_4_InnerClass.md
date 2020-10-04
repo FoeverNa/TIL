@@ -79,6 +79,8 @@
   
   ```
 
+  
+
 - 외부 클래스의 멤버 변수와 이름이 겹치는 경우 `this` 활용한다
 
   - this.는 본인의 객체를 가르킨다
@@ -382,7 +384,7 @@ public class Main{
             }
         });
 
-        //Thisi is Lambda!! Exprsion
+        //Thisi is Lambda!! Exprssion
         runIBar((x,y)-> {
             System.out.println("LAMBDA!!!");
         });// 익명클래스를 한번더 줄여서 쓴게 Lambda expresion
