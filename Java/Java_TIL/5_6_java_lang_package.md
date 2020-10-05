@@ -8,6 +8,8 @@
 
 ## Object Class
 
+- Java.lang 패키지에 대표적인 클래스
+
 - 모든 클래스의 조상 클래스로, 클래스가 갖춰야할 기본 기능을 제공한다
 
 - 필요한 경우 Object 클래스에 정의된 메소드를 Override하여 사용한다
@@ -103,7 +105,7 @@
   - 한 객체의 hashCode()를 여러번 호출할 경우, equals()에 사용하는 값이 변하지 않으면 동일한 값을 반환해야 한다.(equals()에서 사용하지 않는 값은 변해도 상관이 없다)
     - 객체가 변하지 않는다면 hashCode도 동일하게 유지가 되어야 한다는 뜻
   - equals() 메소드가 같다고 판단한 두 객체의 hashCode() 반환값은 같아야 한다.
-    - eqauls()가 hashCode로 객체를 구분하는 기준이 된다.
+    - equals()가 같다고 판단했을때는 같아야 하지만 다르다고 판단했을때는 다를 필요는 없다 => 햇깔리게 하는 부분이긴하네
   - 권고사항 : equals() 메소드가 다르다고 판단한 두 객체의 hashCode()가 반드시 다를 필요는 없으나, 다른 값이 나오면 Hash기반 자료구조의 성능이 향상된다.
     - equals()가 다른데 hashCode()값이 같은 경우가 있는데 가능하면 다르게 나오게 해주는 것이 HashTable성능에 도움이 된다는 뜻
       - 이런 경우를 해쉬 충돌이라고 한다 => HashTable & HashMap 자료구조에서 더자세히 배우는 것 같다
@@ -155,9 +157,11 @@
 
 ### System
 
-- 실행 중인 OS와 interact하기 위한 클래스
+- 실행 중인 OS와 interact하기 위한 클래스 
 
-- System 클래스의 주요 정적 변수 => 객체를 만들지 않는다
+  - 객체화 될수 없는 클래스이다
+
+- System 클래스의 주요 정적 변수 => 객체를 만들지 않고 사용한다
 
   | 속성                                  | 설명                                  |
   | ------------------------------------- | ------------------------------------- |
@@ -226,7 +230,7 @@ System.gc(); //Garbage Collection
 // 환경변수
 System.out.println(System.getenv()); //모든 환경변수를 출력해준다 => os랑 통신하는애라 가능
 System.out.println("");
-System.out.println(System.getProperties());
+System.out.println(System.getProperties());//시스템 속성을 Property로 반환한다
 System.out.println(System.getProperty("user.country")); // KR //사용자 국적을 알수 있게됨
 System.out.println(System.getProperty("java.io.tmpdir")); // 기본 Temp 위치를 알 수 있음
 System.out.println(System.getProperty("line.separator")); // windows - \r\n, UNIX \n, 줄바꿀때 필요한 것 OS별로 체크해줌
