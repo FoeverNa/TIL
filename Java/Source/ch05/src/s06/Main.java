@@ -141,6 +141,62 @@ public class Main {
         System.out.println(System.getProperty("user.home")); // windows보단 mac에서 중요한의미를 가진다
         System.out.println(System.getProperty("file.separator")); // 직접 사용하는 것보다 이렇게 화룡ㅇ할수있게 해주면좋다
 
+        // 유용한것들이 있다고 알아두고 나중에 비슷한 것 나오면 이거랑 연관되어 있구나 라고 알아들으면 좋다
+
+
+        // Math 클래스
+
+        System.out.println(Math.abs(-4)); // 4 // int long float double 오버로딩
+
+        System.out.println(Math.ceil(1.2)); // 2.0 // double 형 입력, 출력도 double 형 -> 값의 범위(Overflow 가 발생할수있음)
+                                            // overFlow 같은 경우는 실무나, 코딩테스트에서 고려해야 될 대상이 될 수 있으니 알아두어야 한다
+                                            // workAround 한 방식을 왜 하는지 그리고 어떻게 하는지를 이해해야 한다.
+
+        System.out.println(Math.floor(1524.4)); // 1524.0 // 내림 연산 // 더블 입력 더블 출력
+
+        System.out.println(Math.max(4, 2)); // 4 // 2개의 값만을 비교하게 되어 있음 -> Reduce 방식을 이용해서 처리하기 때문에(Accumulation?)
+        // 다른 언어에서는 max({1,2,3,4,5,}) 이런식으로 여러수를 비교할 수 있게 하게 되어 있음 => 두 방식다 장단점이 있음
+
+        System.out.println(Math.min(4, 2)); // 2
+
+        System.out.println(Math.random()); // 0.0 이상, 1.0 미만의 값을 임의로 출력
+        System.out.println(Math.random() > 0.7); // true, false 로 확률을 출력해준다 -> 이경우는 30& 확률로 true
+
+        // random을 통한 확률 표현
+        int count =0;
+        for (int i = 0; i < 10000; i++) {
+             if(Math.random() < 0.3){ // 30% 확률
+                count += 1;
+            }
+        }
+        System.out.println(count); // 2928 // 3073 // 3033 // 2990 거의 확률과 비슷하게 출력되게 설정되어 있다
+        // 몬테카를로?
+
+        // 랜덤한 정수
+        int minVal = 2;
+        int maxVal = 10;
+        int randInt = (int)(Math.random() * (maxVal - minVal + 1) // 0~8이 나오려면 random값에 9를 곱해줘야한다
+        + minVal); // 0~8에 +2를 해주면 2~10값이 나온다
+        System.out.println(randInt); // 2 // 9 // 4
+
+        System.out.println(Math.round(1.4f)); // 입력 float -> 출력 int, double -> long
+
+        System.out.println(Integer.MAX_VALUE + 10); // OverFlow 발생
+        try {
+            System.out.println(Math.addExact(Integer.MAX_VALUE, 10)); // OverFlow 발생시 ArithmaticException 예외를 발생시켜줌
+            System.out.println(Math.subtractExact(Integer.MAX_VALUE, -10));
+            System.out.println(Math.multiplyExact(Integer.MAX_VALUE, 4));
+        } catch(ArithmeticException e) {
+            e.printStackTrace();
+        }
+        System.out.println("end");
+
+        // 일반적으로 OverFlow가 나는것은 버그가 아니고 특징이다, 그 특징을 어떻게 다룰 것인가
+
+
+
+
+
 
 
 
