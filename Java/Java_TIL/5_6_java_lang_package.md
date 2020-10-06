@@ -155,7 +155,7 @@
           
   ```
 
-### System
+## System Class
 
 - 실행 중인 OS와 interact하기 위한 클래스 
 
@@ -242,10 +242,16 @@ System.out.println(System.getProperty("file.separator"));
 
 
 
-### Math
+## Math Class
 
 - 수학 계산에 필요한 메소드를 가진 final 클래스
 
+  - 상속이 불가능 하다 => 상속해봐야 구현해봐야 기존 구현보다 나을리 없다라는 의미
+  
+- 모든 메소드가 static 메소드로 구현되어 있다
+
+  - 객체를 생성하지 않고 그대로 사용하게 되어 있다
+  
   | 메소드            | 설명                                                        |
   | ----------------- | ----------------------------------------------------------- |
   | `abs()`           | 절대값을 반환한다.                                          |
@@ -258,3 +264,59 @@ System.out.println(System.getProperty("file.separator"));
   | `addExact()`      | 덧셈 연산으로, Overflow 발생 시 `ArithmaticException` 발생. |
   | `subtractExact()` | 뺄셈 연산으로, Overflow 발생 시 `ArithmaticException` 발생. |
   | `multiplyExact()` | 곱셈 연산으로, Overflow 발생 시 `ArithmaticException` 발생. |
+
+```java
+// Math 클래스
+
+System.out.println(Math.abs(-4)); // 4 // 절대값 반환 // int long float double 오버로딩이 되어 있다
+
+System.out.println(Math.ceil(1.2)); // 2.0 // 올림값 반환 // double 형 입력, 출력도 double 형 -> 값의 범위(Overflow 가 발생할수있음)
+                                    // overFlow 같은 경우는 실무나, 코딩테스트에서 고려해야 될 대상이 될 수 있으니 알아두어야 한다
+                                    // workAround 한 방식을 왜 하는지 그리고 어떻게 하는지를 이해해야 한다.
+
+System.out.println(Math.floor(1524.4)); // 1524.0 // 내림 값 반환 // double 입력 double 출력
+
+System.out.println(Math.max(4, 2)); // 4 // 두 값 중 더 큰 값 반환
+                                    // 2개의 값만을 비교하게 되어 있음 -> Reduce 방식을 이용해서 처리하기 때문에(Accumulation?)
+                                 // 다른 언어에서는 max({1,2,3,4,5,}) 이런식으로 여러수를 비교할 수 있게 하게 되어 있음 => 두 방식다 장단점이 있음
+
+System.out.println(Math.min(4, 2)); // 2 // 두 값 중 더 작은 값 반환
+
+System.out.println(Math.random()); // 0.0 이상, 1.0 미만의 값을 임의로 출력
+System.out.println(Math.random() < 0.3); // true, false 로 확률을 출력해준다 -> 이경우는 30& 확률로 true
+
+// random을 통한 확률 표현
+int count =0;
+for (int i = 0; i < 10000; i++) {
+     if(Math.random() < 0.3){ // 30% 확률
+        count += 1;
+    }
+}
+System.out.println(count); // 2928 // 3073 // 3033 // 2990 거의 확률과 비슷하게 출력되게 설정되어 있다
+// 몬테카를로 방법? 과 연관되어 있다고 한다
+
+// 랜덤한 정수
+int minVal = 2;
+int maxVal = 10;
+int randInt = (int)(Math.random() * (maxVal - minVal + 1) // 0~8이 나오려면 random값에 9를 곱해줘야한다
++ minVal); // 0~8으로 나온 값에 +2를 해주면 2~10값이 나온다
+           // 알아두면 도움이 될것 같은 알고리즘이다
+System.out.println(randInt); // 2 // 9 // 4
+
+System.out.println(Math.round(1.4f)); // 소숫점 첫째자리에서 반올림한 정수값을 반환한다
+                                      // 입력 float -> 출력 int, double -> long
+
+// addExact, subtractExact, multiplyExact
+System.out.println(Integer.MAX_VALUE + 10); //-2147483639 // OverFlow 발생
+
+try {
+    System.out.println(Math.addExact(Integer.MAX_VALUE, 10)); // OverFlow 발생시 ArithmaticException 예외를 발생시켜줌
+    System.out.println(Math.subtractExact(Integer.MAX_VALUE, -10)); //위에서 예외발생되면 아래예외는 고려 하지 않는다
+    System.out.println(Math.multiplyExact(Integer.MAX_VALUE, 4));
+} catch(ArithmeticException e) {
+    e.printStackTrace();
+}
+System.out.println("end");
+
+// 일반적으로 OverFlow가 나는것은 버그가 아니고 특징이다, 그 특징을 어떻게 다룰 것인가 = 강의로 보충하자
+```

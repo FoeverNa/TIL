@@ -19,7 +19,7 @@
 - 간결한 코드 작성
 
 ```java
-// JAVA7
+       // JAVA7에서의 코드
         List<String> list =  Arrays.asList("fast", "campus", "rocks");
         List<String> newList = new ArrayList<>();
 
