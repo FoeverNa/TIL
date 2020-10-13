@@ -1,6 +1,8 @@
 package s11;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 
 public class Main {
@@ -9,7 +11,7 @@ public class Main {
     static void copyStream(InputStream input, OutputStream output) throws IOException {
         byte[] buff = new byte[1024];
         int read = 0;
-        while ((read = input.read(buff))>0) {
+        while ((read = input.read(buff)) > 0) {
             output.write(buff, 0, read);
         }
     }
@@ -20,7 +22,7 @@ public class Main {
 
         // Stream/Reader 등을 사용하는 이유는
         // 노드(입출력 장치/파일//메모리 등)으로부터 데이터를 읽고 쓰는 기본적인 방식 => 이해하고 있어야 한다
-            // 스캐너 쓰면 좋지만 이해하기 어렵고 제어하기도 어렵다
+        // 스캐너 쓰면 좋지만 이해하기 어렵고 제어하기도 어렵다
         // 보통은 컴퓨터를 사용하지만, Embedded machine 의 경우 Stream 을 사용하는 경우가 많다
         // 그래서 Scanner가 편리하기는 하지만, Stream/Reader 동작을 이해할 필요가 있다
 
@@ -101,7 +103,6 @@ public class Main {
 //        } catch (IOException e){
 //            e.printStackTrace();
 //        }
-
 
 
         // Stream의 mark/reset 기능
@@ -221,7 +222,7 @@ public class Main {
 //            e.printStackTrace();
 //        }
 
-      // Reader를 이용한 파일의 복사 ( byte단위) // 체크
+        // Reader를 이용한 파일의 복사 ( byte단위) // 체크
 //        try(FileReader src = new FileReader(srcFile);
 //            FileWriter dst = new FileWriter(dstFile);) {
 //            int read = -1; // 더 읽을게 없으면 -1을 출력한다
@@ -247,9 +248,9 @@ public class Main {
 //        } // 버퍼를 이용해서 파일을 복사하는것
 
         // append = true 로 FileWriter 를 생성하면 이어서 작성한다 (txt, ini(설정값담는파일), properties..파일에만 사용한다)
-            // Log 를 작성할 때 활용할 수 있다
+        // Log 를 작성할 때 활용할 수 있다
         // binary 파일 - 문자열로 작성된 것이 아닌, decoding 이 된 상태의 파일
-            // 그림파일, 동영상파일, exe파일 .. (텍스트가 아닌 모든 파일)
+        // 그림파일, 동영상파일, exe파일 .. (텍스트가 아닌 모든 파일)
 //        try(FileReader src = new FileReader(srcFile);
 //            FileWriter dst = new FileWriter(dstFile, true);) {
 //            int read = 0;
@@ -302,8 +303,8 @@ public class Main {
         // 기본형 데이터
         // DataInputStream  ┬  기본형 데이터 (Primitive Type)을 전송하기 위한 스트림
         // DataOutputStream ┘  Stream, Read(Writer)는 byte/ char 단위로 전송한다
-                              // readBoolean, readByte, readShort ... readUTF (String type)
-                              // writeBoolean, writeByte, writeShort ...readUTF (String type)
+        // readBoolean, readByte, readShort ... readUTF (String type)
+        // writeBoolean, writeByte, writeShort ...readUTF (String type)
 
 //        File src = new File("C:/Temp/MyTemp/data.dat"); // 윈도우는 \가 맞지만 /을 사용해도 괜찮다
 //        DataOutputStream out = new DataOutputStream(new FileOutputStream(src)); // 보조 스트림이기때문에 메인 스트림을 생성해서 입력할 필요하다
@@ -328,81 +329,83 @@ public class Main {
         // 필요한 내용만 딱딱 모아주는 것,
         // 직렬화 된 객체를 입력 받았을 시 다시 힙내용에 풀어서 쓰는것을 deSerialization이라고 한다
         // Serialization <=> DeSerialization
-
-        class Foo implements Serializable {// Serialize를 할 수 있는 객체를 만드는 클래스이다.
-                                           // has-a관계에 있는 클래스들 모두 Serialzable해야 한다( 다같이 직렬화해야되니까)
-                                           // foo 안에 bar 객체가 있다면 bar도 Seraiizable해야 한다는 뜻
-
-            static final long serialVersionUID = 1L; // 클래스 버전 관리 // 클래스 수정할때 버전이 바뀌어서 버전을 관리한다 (UID = UniqueID)
-            // 객체를 저장할때와 불러올 때 같은지 체크하여
-            // serialVersionUID가 일치하지 않으면 실패(하도록 되어 있다)
-
-            String userName;
-            int userID;
-            transient String passWord;
-            // transient (접근자?제어자?)의 경우 Serialize에 포함하지 않음 ( 저장/불러오기 대상에서 제외
-
-            public Foo() {}
-
-            public Foo(String userName, int userID, String passWord) {
-                this.userName = userName;
-                this.userID = userID;
-                this.passWord = passWord;
-            }
-
-            @Override
-            public String toString() {
-                return userName + " " + userID + " " + passWord;
-            }
-        }
-
-        Foo foo = new Foo("HanSol-The=Outsider",
-                 1423, "negazeilzalnaga");
-        System.out.println(foo); // HanSol-The=Outsider 1423 negazeilzalnaga
-
-        File dst = new File("C:/Temp/MyTemp/obj.data"); //확장자는 상관이 없다
-
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dst));
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(dst))) {
-            out.writeObject(foo);
-            Object read = in.readObject();
-            if (read != null && read instanceof Foo) {
-                Foo readFoo = (Foo)read;
-                System.out.println(readFoo); // HanSol-The=Outsider 1423 null
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-       // 구현실패해서 설명만봣음
-        //결과가 password가 null로 나온것은 transient로 만들었기 때문이다
-        //용도는 다양하다고 설명해주셨는데 역시 내가 이해못하는 부분들이 있었나보다
-
-        // 부모클래스는 Serializable하지 않을 때,
-        // 자식클래스를 Serializable하게 구현하기
-
-        class ParentFoo{
-            int memVarOne;
-            double memVarTwo;
-
-        }
-
-        class ChildFoo extends ParentFoo implements Serializable {
-            int childMember; // 얘는 childMember이기 때문에 알아서 직렬화된다
-
-
-            private void writeObject(ObjectOutputStream out) throws IOException {
-                out.writeInt(memVarOne); // 직접 부모객체의 멤버 변수를 직접 out에 써주기어야 한다
-                out.writeDouble(memVarTwo); // 원하지 않는 변수가 있다면 trsient대신 그냥 생략해주어도 된다
-                out.defaultWriteObject(); //child foo에 있는애들을 직렬화해주는 애
-            }
-
-            private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-                   memVarOne = in.read(); // write를 한 순서 그대로 읽어야만 읽는게 가능하다
-                   memVarTwo = in.readDouble();
-                   in.defaultReadObject();
-
-            }
-        }
+//
+//        class Foo implements Serializable {// Serialize를 할 수 있는 객체를 만드는 클래스이다.
+//                                           // has-a관계에 있는 클래스들 모두 Serialzable해야 한다( 다같이 직렬화해야되니까)
+//                                           // foo 안에 bar 객체가 있다면 bar도 Seraiizable해야 한다는 뜻
+//
+//            static final long serialVersionUID = 1L; // 클래스 버전 관리 // 클래스 수정할때 버전이 바뀌어서 버전을 관리한다 (UID = UniqueID)
+//            // 객체를 저장할때와 불러올 때 같은지 체크하여
+//            // serialVersionUID가 일치하지 않으면 실패(하도록 되어 있다)
+//
+//            String userName;
+//            int userID;
+//            transient String passWord;
+//            // transient (접근자?제어자?)의 경우 Serialize에 포함하지 않음 ( 저장/불러오기 대상에서 제외
+//
+//            public Foo() {}
+//
+//            public Foo(String userName, int userID, String passWord) {
+//                this.userName = userName;
+//                this.userID = userID;
+//                this.passWord = passWord;
+//            }
+//
+//            @Override
+//            public String toString() {
+//                return userName + " " + userID + " " + passWord;
+//            }
+//        }
+//
+//        Foo foo = new Foo("HanSol-The=Outsider",
+//                 1423, "negazeilzalnaga");
+//        System.out.println(foo); // HanSol-The=Outsider 1423 negazeilzalnaga
+//
+//        File dst = new File("C:/Temp/MyTemp/obj.data"); //확장자는 상관이 없다
+//
+//        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dst));
+//            ObjectInputStream in = new ObjectInputStream(new FileInputStream(dst))) {
+//            out.writeObject(foo);
+//            Object read = in.readObject();
+//            if (read != null && read instanceof Foo) {
+//                Foo readFoo = (Foo)read;
+//                System.out.println(readFoo); // HanSol-The=Outsider 1423 null
+//            }
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//       // 구현실패해서 설명만봣음
+//        //결과가 password가 null로 나온것은 transient로 만들었기 때문이다
+//        //용도는 다양하다고 설명해주셨는데 역시 내가 이해못하는 부분들이 있었나보다
+//
+//        // 부모클래스는 Serializable하지 않을 때,
+//        // 자식클래스를 Serializable하게 구현하기
+//
+//        class ParentFoo{
+//            int memVarOne;
+//            double memVarTwo;
+//
+//        }
+//
+//        class ChildFoo extends ParentFoo implements Serializable {
+//
+//
+//            int childMember; // 얘는 childMember이기 때문에 알아서 직렬화된다
+//
+//
+//            private void writeObject(ObjectOutputStream out) throws IOException {
+//                out.writeInt(memVarOne); // 직접 부모객체의 멤버 변수를 직접 out에 써주기어야 한다
+//                out.writeDouble(memVarTwo); // 원하지 않는 변수가 있다면 trsient대신 그냥 생략해주어도 된다
+//                out.defaultWriteObject(); //child foo에 있는애들을 직렬화해주는 애
+//            }
+//
+//            private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+//                   memVarOne = in.read(); // write를 한 순서 그대로 읽어야만 읽는게 가능하다
+//                   memVarTwo = in.readDouble();
+//                   in.defaultReadObject();
+//
+//            }
+//        }
 
 
 
