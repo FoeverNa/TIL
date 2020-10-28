@@ -21,23 +21,122 @@ package s01.p01;
  *      - 예를 들면 게임의 진행 상태, GUI 전체를 통솔하기 위해
  */
 
-class Singleton {
-    private static Singleton instance; // private으로 선언
+//class Singleton {
+//    private static Singleton instance; // private으로 선언
+//
+//    private Singleton() {}
+//
+//    public static Singleton getInstance() {
+//        if (instance == null) { // Lazy instanciation객체화 /
+//                                //  객체를 만드는 것 자체가 메모리를 사용하고 로딩속도에 영향을 주기 때문에 실제 사용할 때 객체를 만드는 것
+//            instance = new Singleton();
+//        }
+//        // 로딩속도 개선, 메모리 낭비 방지
+//        return instance;
+//    }
+//}
 
-    private Singleton() {}
+    interface Shape {
+        void draw();
+}
 
-    public static Singleton getInstance() {
-        if (instance == null) { // Lazy instanciation객체화 /
-                                //  객체를 만드는 것 자체가 메모리를 사용하고 로딩속도에 영향을 주기 때문에 실제 사용할 때 객체를 만드는 것
-            instance = new Singleton();
-        }
-        // 로딩속도 개선, 메모리 낭비 방지
-        return instance;
+class RoundedRectangle implements Shape {
+
+    @Override
+    public void draw() {
+        System.out.println("Rounded Rectangle::draw() method.");
     }
 }
 
+class RoundedSquare implements Shape {
+
+    @Override
+    public void draw() {
+        System.out.println("Rounded Rectangle::draw() method.");
+    }
+}
+
+class Rectangle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Inside Rectangle::draw() method.");
+    }
+}
+
+class Square implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Inside Square::draw() method.");
+    }
+}
+
+class Circle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Inside Circle::draw() method.");
+    }
+}
+
+abstract class AbstractFactory {
+        abstract Shape getShape(String ShapeType) ;
+}
+
+
+class ShapeFactory extends AbstractFactory {
+
+        Shape getShape(String shapeType) {
+            if(shapeType.equalsIgnoreCase("CIRCLE")) {
+                return new Circle();
+            } else if(shapeType.equalsIgnoreCase("RECTANGLE")) {
+                return new Rectangle();
+            } else if(shapeType.equalsIgnoreCase("SQUARE")) {
+                return new Square();
+            } else {
+                return null;
+            }
+        }
+
+}
+
+class RoundedShapeFactory extends AbstractFactory {
+
+    Shape getShape(String shapeType) {
+
+        if(shapeType.equalsIgnoreCase("RECTANGLE")) {
+            return new RoundedRectangle();
+        } else if(shapeType.equalsIgnoreCase("SQUARE")) {
+            return new RoundedSquare();
+        } else {
+            return null;
+        }
+    }
+
+}
+
+class FactoryProducer {
+        public static AbstractFactory getFactory(boolean rounded) {
+            if(rounded) {
+                return new RoundedShapeFactory();
+            } else {
+                return new ShapeFactory();
+            }
+        }
+}
 
 public class Main {
+    public static void main(String[] args) {
+
+//        ShapeFactory shapeFactory = new ShapeFactory();
+//
+//        Shape shape1 = shapeFactory.getShape("CIRCLE");
+//        shape1.draw();
+//        Shape shape2 = shapeFactory.getShape("RECTANGLE");
+//        shape2.draw();
+//        Shape shape3 = shapeFactory.getShape("SQUARE");
+//        shape3.draw();
+
+        FactoryProducer.getFactory(true).getShape("rectangle").draw();
+    }
 
 }
 
