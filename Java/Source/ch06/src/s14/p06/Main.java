@@ -1,4 +1,4 @@
-package s01.s14.p06;
+package s14.p06;
 
 class WorkObject {
     public synchronized void methodA() {

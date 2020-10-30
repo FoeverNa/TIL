@@ -1,4 +1,4 @@
-package s01.s14.p08;
+package s14.p08;
 
 
 import java.util.concurrent.Semaphore;

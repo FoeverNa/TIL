@@ -1,4 +1,4 @@
-package s01.s14.p04;
+package s14.p04;
 
 /**
  * 데몬 스레드 (Daemon thread)

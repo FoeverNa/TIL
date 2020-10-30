@@ -1,4 +1,4 @@
-package s01.s14.p02;
+package s14.p02;
 
 
 public class Main {

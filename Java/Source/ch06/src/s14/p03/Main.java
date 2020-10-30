@@ -1,4 +1,4 @@
-package s01.s14.p03;
+package s14.p03;
 
 public class Main {
     public static void main(String[] args) {

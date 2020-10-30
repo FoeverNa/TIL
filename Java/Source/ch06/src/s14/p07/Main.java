@@ -1,4 +1,4 @@
-package s01.s14.p07;
+package s14.p07;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;

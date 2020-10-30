@@ -1,4 +1,4 @@
-package s01.s14.p05;
+package s14.p05;
 
 /**
  * Inte
