@@ -1,4 +1,0 @@
-package first;
-
-interface Player {
-}
