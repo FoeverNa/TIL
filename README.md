@@ -18,7 +18,13 @@ https://velog.io/@foeverna
 
 ## Java
 
+[2_1_Variable](https://github.com/FoeverNa/TIL/blob/master/Java/2_1_Variable.md)
 
+[2_2_DataType](https://github.com/FoeverNa/TIL/blob/master/Java/2_2_DataType.md)
+
+[2_3_InputsAndOutputs](https://github.com/FoeverNa/TIL/blob/master/Java/2_3_InputsAndOutputs.md)
+
+[**2_4_Operator**](https://github.com/FoeverNa/TIL/blob/master/Java/2_4_Operator.md)
 
 
 
